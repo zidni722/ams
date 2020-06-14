@@ -27,7 +27,7 @@ const data = [
   },
   {
     id: "blankpage",
-    icon: "iconsminds-bucket",
+    icon: "simple-icon-fire",
     label: "menu.blank-page",
     to: "/app/blank-page"
   },
