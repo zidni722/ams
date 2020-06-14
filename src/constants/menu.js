@@ -14,7 +14,7 @@ const data = [
   },
   {
     id: "secondmenu",
-    icon: "iconsminds-three-arrow-fork",
+    icon: "simple-icon-ghost",
     label: "menu.second-menu",
     to: "/app/second-menu",
     subs: [
