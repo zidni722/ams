@@ -1,7 +1,7 @@
 const data = [
   {
     id: "gogo",
-    icon: "iconsminds-air-balloon-1",
+    icon: "iconsminds-optimization",
     label: "menu.gogo",
     to: "/app/gogo",
     subs: [
@@ -14,7 +14,7 @@ const data = [
   },
   {
     id: "secondmenu",
-    icon: "iconsminds-three-arrow-fork",
+    icon: "iconsminds-business-man-woman",
     label: "menu.second-menu",
     to: "/app/second-menu",
     subs: [
@@ -27,13 +27,13 @@ const data = [
   },
   {
     id: "blankpage",
-    icon: "iconsminds-bucket",
+    icon: "iconsminds-laptop-3",
     label: "menu.blank-page",
     to: "/app/blank-page"
   },
   {
     id: "docs",
-    icon: "iconsminds-library",
+    icon: "iconsminds-add-cart",
     label: "menu.docs",
     to: "https://gogo-react-docs.coloredstrategies.com/",
     newWindow:true
