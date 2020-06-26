@@ -4,14 +4,12 @@ import {
   UncontrolledDropdown,
   DropdownItem,
   DropdownToggle,
-  DropdownMenu,
-  Input
+  DropdownMenu
 } from "reactstrap";
 
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
-import IntlMessages from "../../helpers/IntlMessages";
 import {
   setContainerClassnames,
   clickOnMobileMenu,
@@ -21,12 +19,10 @@ import {
 import {
   menuHiddenBreakpoint,
   searchPath,
-  localeOptions,
   isDarkSwitchActive,
 } from "../../constants/defaultValues";
 
 import { MobileMenuIcon, MenuIcon } from "../../components/svg";
-import TopnavEasyAccess from "./Topnav.EasyAccess";
 import TopnavNotifications from "./Topnav.Notifications";
 import TopnavDarkSwitch from "./Topnav.DarkSwitch";
 
@@ -197,8 +193,8 @@ class TopNav extends Component {
   };
 
   render() {
-    const { containerClassnames, menuClickCount, locale } = this.props;
-    const { messages } = this.props.intl;
+    const { containerClassnames, menuClickCount } = this.props;
+    //const { messages } = this.props.intl;
     return (
       <nav className="navbar fixed-top">
         <div className="d-flex align-items-center navbar-left">
@@ -219,56 +215,6 @@ class TopNav extends Component {
             <MobileMenuIcon />
           </NavLink>
 
-          <div className="search" data-search-path="/app/pages/search">
-            <Input
-              name="searchKeyword"
-              id="searchKeyword"
-              placeholder={messages["menu.search"]}
-              value={this.state.searchKeyword}
-              onChange={e => this.handleSearchInputChange(e)}
-              onKeyPress={e => this.handleSearchInputKeyPress(e)}
-            />
-            <span
-              className="search-icon"
-              onClick={e => this.handleSearchIconClick(e)}
-            >
-              <i className="simple-icon-magnifier" />
-            </span>
-          </div>
-
-          <div className="d-inline-block">
-            <UncontrolledDropdown className="ml-2">
-              <DropdownToggle
-                caret
-                color="light"
-                size="sm"
-                className="language-button"
-              >
-                <span className="name">{locale.toUpperCase()}</span>
-              </DropdownToggle>
-              <DropdownMenu className="mt-3" right>
-                {localeOptions.map(l => {
-                  return (
-                    <DropdownItem
-                      onClick={() => this.handleChangeLocale(l.id, l.direction)}
-                      key={l.id}
-                    >
-                      {l.name}
-                    </DropdownItem>
-                  );
-                })}
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </div>
-          <div className="position-relative d-none d-none d-lg-inline-block">
-            <a
-              className="btn btn-outline-primary btn-sm ml-2"
-              target="_top"
-              href="https://themeforest.net/cart/configure_before_adding/22544383?license=regular&ref=ColoredStrategies&size=source"
-            >
-              <IntlMessages id="user.buy" />
-            </a>
-          </div>
         </div>
         <a className="navbar-logo" href="/">
           <span className="logo d-none d-xs-block" />
@@ -279,20 +225,8 @@ class TopNav extends Component {
 
           <div className="header-icons d-inline-block align-middle">
 
-            <TopnavEasyAccess />
             <TopnavNotifications />
-            <button
-              className="header-icon btn btn-empty d-none d-sm-inline-block"
-              type="button"
-              id="fullScreenButton"
-              onClick={this.toggleFullScreen}
-            >
-              {this.state.isInFullScreen ? (
-                <i className="simple-icon-size-actual d-block" />
-              ) : (
-                  <i className="simple-icon-size-fullscreen d-block" />
-                )}
-            </button>
+          
           </div>
           <div className="user d-inline-block">
             <UncontrolledDropdown className="dropdown-menu-right">
