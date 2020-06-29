@@ -2794,11 +2794,11 @@ main {
     cursor: default;
   }
 
-  border-radius: calc(0.15rem - 1px);
+  border-radius: calc(0.75rem - 1px);
   @include depth(1);
 
   .card-body {
-    padding: 1.75rem;
+    padding: 2rem;
 
     @include respond-below(xs) {
       padding: 1.25rem;
@@ -2810,7 +2810,7 @@ main {
   }
 
   .card-title {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     @include respond-below(sm) {
       margin-bottom: 1.25rem;
     }
@@ -2895,7 +2895,7 @@ main {
 
 
 .list-thumbnail {
-  border-radius: $border-radius;
+  border-radius: 0.25rem;
   padding: 0;
   border: initial;
   height: auto;

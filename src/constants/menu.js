@@ -2,8 +2,8 @@ const data = [
   {
     id: "dashboard",
     icon: "iconsminds-digital-drawing",
-    label: "menu.dashboard",
-    to: "/app/dashboard",
+    label: "Dashboards",
+    to: "/app/dashboards-menu",
     // subs: [
     //   {
     //     icon: "simple-icon-paper-plane",

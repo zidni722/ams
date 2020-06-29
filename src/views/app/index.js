@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import AppLayout from '../../layout/AppLayout';
 
 const DashboardMenu = React.lazy(() =>
-  import(/* webpackChunkName: "viwes-dashboard-menu" */ './dashboard-menu')
+  import(/* webpackChunkName: "viwes-dashboard-menu" */ './dashboards-menu')
 );
 const SecondMenu = React.lazy(() =>
   import(/* webpackChunkName: "viwes-second-menu" */ './second-menu')
@@ -23,9 +23,9 @@ class App extends Component {
         <div className="dashboard-wrapper">
           <Suspense fallback={<div className="loading" />}>
             <Switch>
-              <Redirect exact from={`${match.url}/`} to={`${match.url}/dashboard-menu`} />
+              <Redirect exact from={`${match.url}/`} to={`${match.url}/dashboards-menu`} />
               <Route
-                path={`${match.url}/dashboard-menu`}
+                path={`${match.url}/dashboards-menu`}
                 render={props => <DashboardMenu {...props} />}
               />
               <Route
