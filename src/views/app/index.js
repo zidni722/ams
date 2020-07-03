@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import AppLayout from '../../layout/AppLayout';
 
 const DashboardMenu = React.lazy(() =>
-  import(/* webpackChunkName: "viwes-dashboard-menu" */ './dashboard-menu')
+  import(/* webpackChunkName: "viwes-dashboard-menu" */ './dashboards-menu')
 );
-const SecondMenu = React.lazy(() =>
-  import(/* webpackChunkName: "viwes-second-menu" */ './second-menu')
+const MenuBarang = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-barang" */ './menu-barang')
 );
-const BlankPage = React.lazy(() =>
-  import(/* webpackChunkName: "viwes-blank-page" */ './blank-page')
+const MenuPeminjaman = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-peminjaman" */ './menu-peminjaman')
 );
 
 class App extends Component {
@@ -23,18 +23,18 @@ class App extends Component {
         <div className="dashboard-wrapper">
           <Suspense fallback={<div className="loading" />}>
             <Switch>
-              <Redirect exact from={`${match.url}/`} to={`${match.url}/dashboard-menu`} />
+              <Redirect exact from={`${match.url}/`} to={`${match.url}/dashboards-menu`} />
               <Route
-                path={`${match.url}/dashboard-menu`}
+                path={`${match.url}/dashboards-menu`}
                 render={props => <DashboardMenu {...props} />}
               />
               <Route
-                path={`${match.url}/second-menu`}
-                render={props => <SecondMenu {...props} />}
+                path={`${match.url}/menu-barang`}
+                render={props => <MenuBarang {...props} />}
               />
               <Route
-                path={`${match.url}/blank-page`}
-                render={props => <BlankPage {...props} />}
+                path={`${match.url}/menu-peminjaman`}
+                render={props => <MenuPeminjaman {...props} />}
               />
               <Redirect to="/error" />
             </Switch>

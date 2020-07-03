@@ -7,12 +7,22 @@
         themeColor4 : rootStyle.getPropertyValue("--theme-color-4").trim(),
         themeColor5 : rootStyle.getPropertyValue("--theme-color-5").trim(),
         themeColor6 : rootStyle.getPropertyValue("--theme-color-6").trim(),
+        themeColor7 : rootStyle.getPropertyValue("--theme-color-7").trim(),
+        themeColor8 : rootStyle.getPropertyValue("--theme-color-8").trim(),
+        themeColor9 : rootStyle.getPropertyValue("--theme-color-9").trim(),
+
+
         themeColor1_10 : rootStyle.getPropertyValue("--theme-color-1-10").trim(),
         themeColor2_10 : rootStyle.getPropertyValue("--theme-color-2-10").trim(),
         themeColor3_10 : rootStyle.getPropertyValue("--theme-color-3-10").trim(),
         themeColor4_10 : rootStyle.getPropertyValue("--theme-color-3-10").trim(),
         themeColor5_10 : rootStyle.getPropertyValue("--theme-color-3-10").trim(),
         themeColor6_10 : rootStyle.getPropertyValue("--theme-color-3-10").trim(),
+        themeColor7_10 : rootStyle.getPropertyValue("--theme-color-7-10").trim(),
+        themeColor8_10 : rootStyle.getPropertyValue("--theme-color-8-10").trim(),
+        themeColor9_10 : rootStyle.getPropertyValue("--theme-color-9-10").trim(),
+
+
         primaryColor: rootStyle.getPropertyValue("--primary-color").trim(),
         foregroundColor: rootStyle.getPropertyValue("--foreground-color").trim(),
         separatorColor: rootStyle.getPropertyValue("--separator-color").trim()

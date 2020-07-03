@@ -11,7 +11,7 @@ Table of Contents
 
 module.exports = {
   /* 01.General */
-  "general.copyright": "Gogo React © 2018 All Rights Reserved.",
+  "general.copyright": "Team4 Skripsi Binus © 2020 All Rights Reserved.",
 
   /* 02.User Login, Logout, Register */
   "user.login-title": "Login",
@@ -30,7 +30,21 @@ module.exports = {
   /* 03.Menu */
   "menu.app": "Home",
   "menu.dashboards": "Dashboards",
-  "menu.gogo": "Gogo",
+  "menu.barang": "Barang",
+  "menu.peminjaman": "Peminjaman",
+  "menu.pengembalian": "Pengembalian",
+  "menu.perbaikan": "Perbaikan",
+  "menu.pengadaan": "Pengadaan",
+  "menu.karyawan": "Karyawan",
+
+  "menu.dashboards-menu": "Dashboards Menu",
+  "menu.menu-barang": "Menu Barang",
+  "menu.menu-peminjaman": "Menu Peminjaman",
+  "menu.menu-pengembalian": "Menu Pengembalian",
+  "menu.menu-perbaikan": "Menu Perbaikan",
+  "menu.menu-pengadaan": "Menu Pengadaan",
+  "menu.menu-karyawan": "Menu Karyawan",
+
   "menu.start": "Start",
   "menu.second-menu": "Second Menu",
   "menu.second": "Second",
@@ -44,7 +58,7 @@ module.exports = {
   "menu.blank-page": "Blank Page",
 
  /* 04.Error Page */
- "pages.error-title": "Ooops... looks like an error occurred!",
+ "pages.error-title": "Ooops... Halaman yang anda tuju tidak tersedia!",
  "pages.error-code": "Error code",
  "pages.go-back-home": "GO BACK HOME",
 };

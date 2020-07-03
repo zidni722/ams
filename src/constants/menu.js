@@ -2,8 +2,8 @@ const data = [
   {
     id: "dashboard",
     icon: "iconsminds-digital-drawing",
-    label: "menu.dashboard",
-    to: "/app/dashboard",
+    label: "Dashboards",
+    to: "/app/dashboards-menu",
     // subs: [
     //   {
     //     icon: "simple-icon-paper-plane",
@@ -16,7 +16,7 @@ const data = [
     id: "barang",
     icon: "iconsminds-box-full",
     label: "Barang",
-    to: "/app/second-menu",
+    to: "/app/menu-barang",
     // subs: [
     //   {
     //     icon: "simple-icon-paper-plane",
@@ -29,34 +29,34 @@ const data = [
     id: "peminjaman",
     icon: "iconsminds-inbox-into",
     label: "Peminjaman",
-    to: "/app/blank-page"
+    to: "/app/menu-peminjaman"
   },
   {
     id: "pengembalian",
     icon: "iconsminds-inbox-out",
     label: "Pengembalian",
-    to: "/app/pengembalian",
+    to: "/app/menu-pengembalian",
     newWindow:false
   },
   {
     id: "perbaikan",
     icon: "iconsminds-gears",
     label: "Perbaikan",
-    to: "/app/perbaikan",
+    to: "/app/menu-perbaikan",
     newWindow:false
   },
   {
     id: "pengadaan",
     icon: "iconsminds-add-cart",
     label: "Pengadaan",
-    to: "/app/pengadaan",
+    to: "/app/menu-pengadaan",
     newWindow:false
   },
   {
     id: "karyawan",
     icon: "iconsminds-business-man-woman",
     label: "Karyawan",
-    to: "/app/karyawan",
+    to: "/app/menu-karyawan",
     newWindow:false
   }
 
