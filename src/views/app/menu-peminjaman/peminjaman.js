@@ -11,7 +11,6 @@ import ListPageHeadingNull from "../../../containers/pages/ListPageHeadingNull";
 import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPeminjaman from "../../../containers/pages/ListPeminjaman";
 
-
 const apiUrl = servicePath + "/cakes/paging";
 
 class Peminjaman extends Component {
