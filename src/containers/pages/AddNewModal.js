@@ -18,19 +18,23 @@ const AddNewModal = ({ modalOpen, toggleModal, categories }) => {
     <Modal
       isOpen={modalOpen}
       toggle={toggleModal}
-      wrapClassName="modal-right"
+      wrapClassName="modal-size"
       backdrop="static"
     >
       <ModalHeader toggle={toggleModal}>
-        <IntlMessages id="pages.add-new-modal-title" />
+        <IntlMessages id="Tambah Barang" />
       </ModalHeader>
       <ModalBody>
         <Label>
-          <IntlMessages id="pages.product-name" />
+          <IntlMessages id="Code Barang " />
         </Label>
         <Input />
         <Label className="mt-4">
-          <IntlMessages id="pages.category" />
+          <IntlMessages id="Nama Barang " />
+        </Label>
+        <Input />
+        <Label className="mt-4">
+          <IntlMessages id="Jenis Barang" />
         </Label>
         <Select
           components={{ Input: CustomSelectInput }}
@@ -44,7 +48,7 @@ const AddNewModal = ({ modalOpen, toggleModal, categories }) => {
         </Label>
         <Input type="textarea" name="text" id="exampleText" />
         <Label className="mt-4">
-          <IntlMessages id="pages.status" />
+          <IntlMessages id="Status" />
         </Label>
         <CustomInput
           type="radio"
@@ -61,10 +65,10 @@ const AddNewModal = ({ modalOpen, toggleModal, categories }) => {
       </ModalBody>
       <ModalFooter>
         <Button color="secondary" outline onClick={toggleModal}>
-          <IntlMessages id="pages.cancel" />
+          <IntlMessages id="Batal" />
         </Button>
         <Button color="primary" onClick={toggleModal}>
-          <IntlMessages id="pages.submit" />
+          <IntlMessages id="Tambah" />
         </Button>{" "}
       </ModalFooter>
     </Modal>

@@ -77,37 +77,37 @@ class BestSellers extends Component {
           <CardTitle>
             <IntlMessages id={"Riwayat Terbaru"} />
             {controls && (
-          <div className="btn-group float-right float-none-xs mt-2">
-            <UncontrolledDropdown>
-              <DropdownToggle caret color="primary" className="btn-xs" outline>
-                <IntlMessages id="Peminjaman" />
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>
-                  <IntlMessages id="Pengembalian" />
-                </DropdownItem>
-                <DropdownItem>
-                  <IntlMessages id="Perbaikan" />
-                </DropdownItem>
-                <DropdownItem>
-                  <IntlMessages id="Pengadaan" />
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </div>
+              <div className="btn-group float-right float-none-xs mt-2">
+                <UncontrolledDropdown>
+                  <DropdownToggle caret color="primary" className="btn-xs" outline>
+                    <IntlMessages id="Peminjaman" />
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem>
+                      <IntlMessages id="Pengembalian" />
+                    </DropdownItem>
+                    <DropdownItem>
+                      <IntlMessages id="Perbaikan" />
+                    </DropdownItem>
+                    <DropdownItem>
+                      <IntlMessages id="Pengadaan" />
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </div>
         )}
           </CardTitle>
             <ReactTable
               data={this.state.data}
-              defaultPageSize={6}
+              defaultPageSize={5}
               showPageJump={false}
               showPageSizeOptions={false}
               PaginationComponent={Pagination}
               columns={[
                 {
                   Header: "Kode Barang",
-                  accessor: "title",
-                  Cell: props => <p className="text-muted">{props.value}</p>
+                  accessor: "code",
+                  Cell: props => <p className="text-muted mb-0">{props.value}</p>
                 },
                 {
                   Header: "Nama Barang",

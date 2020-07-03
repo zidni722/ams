@@ -5,6 +5,7 @@ import Breadcrumb from "../../../containers/navs/Breadcrumb";
 import IconCardsCarousel from '../../../containers/dashboards/IconCardsCarousel';
 import ProductCategoriesDoughnut from '../../../containers/dashboards/ProductCategoriesDoughnut'
 import BestSellers from '../../../containers/dashboards/BestSellers'
+import IntlMessages from "../../../helpers/IntlMessages";
 
 export default class Dashboards extends Component {
     render() {
@@ -17,18 +18,31 @@ export default class Dashboards extends Component {
               </Colxx>
             </Row>
             <Row>
-          <Colxx lg="12" xl="6">
-            <IconCardsCarousel />
-            <Row>
-              <Colxx md="12" className="mb-4">
-                <ProductCategoriesDoughnut />
+              <Colxx xxs="12" className="mb-4">
+                <img alt="Banner" src="/assets/img/banner-dashboard.png" />
               </Colxx>
             </Row>
-          </Colxx>
-          <Colxx lg="12" xl="6" className="mb-4">
-            <BestSellers />
-          </Colxx>
-        </Row>
+
+            <Row>
+              <Colxx lg="12" xl="6">
+                <h5 className="mb-4">
+                  <IntlMessages id="Total Status" />
+                </h5>
+              </Colxx>
+            </Row>
+            <Row>
+                  <Colxx lg="12" xl="6">
+                  <IconCardsCarousel />
+                <Row>
+                  <Colxx md="12" className="mb-4">
+                    <ProductCategoriesDoughnut />
+                  </Colxx>
+                </Row>
+              </Colxx>
+              <Colxx lg="12" xl="6" className="mb-4">
+                <BestSellers />
+              </Colxx>
+            </Row>
           </Fragment>
         );
     }

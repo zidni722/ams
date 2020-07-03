@@ -95,6 +95,9 @@ $info-color: #3195a5;
 $success-color: #3e884f;
 $warning-color: #b69329;
 $error-color: #c43d4b;
+$selesai-color: #1CA011;
+$tolak-color: #D50000;
+$menunggu-color: #F4911E;
 
 /* 01.Base */
 html {
@@ -110,12 +113,21 @@ html {
   --theme-color-4: #{$theme-color-4};
   --theme-color-5: #{$theme-color-5};
   --theme-color-6: #{$theme-color-6};
+  --theme-color-7: #{$theme-color-7};
+  --theme-color-8: #{$theme-color-8};
+  --theme-color-9: #{$theme-color-9};
+
+
   --theme-color-1-10: #{rgba($theme-color-1, 0.1)};
   --theme-color-2-10: #{rgba($theme-color-2, 0.1)};
   --theme-color-3-10: #{rgba($theme-color-3, 0.1)};
   --theme-color-4-10: #{rgba($theme-color-4, 0.1)};
   --theme-color-5-10: #{rgba($theme-color-5, 0.1)};
   --theme-color-6-10: #{rgba($theme-color-6, 0.1)};
+  --theme-color-7-10: #{rgba($theme-color-7, 0.1)};
+  --theme-color-8-10: #{rgba($theme-color-8, 0.1)};
+  --theme-color-9-10: #{rgba($theme-color-9, 0.1)};
+
 
   --primary-color: #{$primary-color};
   --foreground-color: #{$foreground-color};
@@ -428,6 +440,10 @@ p {
   color: $secondary-color !important;
 }
 
+.text-p{
+  text-align: center;
+}
+
 .font-weight-medium {
   font-weight: 500;
 }
@@ -442,6 +458,18 @@ p {
 
 .color-theme-2 {
   color: $theme-color-2;
+}
+
+.icon-color1 {
+  color: $theme-color-7;
+}
+
+.icon-color2 {
+  color: $theme-color-8;
+}
+
+.icon-color3 {
+  color: $theme-color-9;
 }
 
 .view-icon {
@@ -1311,10 +1339,25 @@ button {
   background-color: $error-color;
 }
 
+.badge-selesai {
+  background-color: $selesai-color;
+}
+
+.badge-tolak {
+  background-color: $tolak-color;
+}
+
+.badge-menunggu {
+  background-color: $menunggu-color;
+}
+
 .badge-success,
 .badge-danger,
 .badge-warning,
-.badge-info {
+.badge-info,
+.badge-selesai,
+.badge-tolak,
+.badge-menunggu {
   color: $button-text-color;
 }
 
@@ -1607,6 +1650,10 @@ button {
     i {
       font-size: 28px;
       line-height: 42px;
+    }
+
+    .text-p{
+      text-align: center;
     }
 
     span {
@@ -3158,14 +3205,14 @@ main {
   }
 
   .lead {
-    color: $theme-color-1;
+    //color: $theme-color-1;
     margin-bottom: 0;
   }
 
   i {
     font-size: 46px;
     line-height: 66px;
-    color: $theme-color-1;
+    //color: $theme-color-1;
   }
 
   .card {
@@ -3176,6 +3223,11 @@ main {
   @include respond-below(xl) {
     .card-text {
       height: 48px;
+      line-height: 18px;
+    }
+
+    .card-size {
+      height: 1rem;
       line-height: 18px;
     }
 

@@ -6,9 +6,9 @@ import CustomSelectInput from "../../components/common/CustomSelectInput";
 import { Colxx } from "../../components/common/CustomBootstrap";
 
 const selectData = [
-    { label: "Cake", value: "cake", key: 0 },
-    { label: "Cupcake", value: "cupcake", key: 1 },
-    { label: "Dessert", value: "dessert", key: 2 }
+    { label: "Laptop", value: "cake", key: 0 },
+    { label: "Aksesoris", value: "cupcake", key: 1 },
+    { label: "Lainnya", value: "dessert", key: 2 }
   ];
 
 export default class ReactSelectExample extends Component {

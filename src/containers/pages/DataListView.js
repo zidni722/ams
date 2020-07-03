@@ -1,11 +1,12 @@
 import React from "react";
-import { Card, CustomInput, Badge } from "reactstrap";
+import { Card, Badge } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import classnames from "classnames";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { Colxx } from "../../components/common/CustomBootstrap";
 
 const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
+  
   return (
     <Colxx xxs="12" className="mb-3">
       <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
@@ -22,7 +23,7 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                   {product.title}
                 </p>
               </NavLink>
-              <p className="mb-1 text-muted text-small w-15 w-sm-100">
+              <p className="mb-1 text-default text-small w-15 w-sm-100">
                 {product.category}
               </p>
               <p className="mb-1 text-muted text-small w-15 w-sm-100">
@@ -33,16 +34,6 @@ const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
                   {product.status}
                 </Badge>
               </div>
-            </div>
-            <div className="custom-control custom-checkbox pl-1 align-self-center pr-4">
-              <CustomInput
-                className="item-check mb-0"
-                type="checkbox"
-                id={`check_${product.id}`}
-                checked={isSelect}
-                onChange={() => {}}
-                label=""
-              />
             </div>
           </div>
         </Card>

@@ -13,6 +13,7 @@ export const localeOptions = [
   { id: "enrtl", name: "English - RTL", direction: "rtl" }
 ];
 
+
 export const searchPath = "/app/pages/search";
 export const servicePath = "https://api.coloredstrategies.com";
 

@@ -76,7 +76,7 @@ const cakes = [
     link: '/app/pages/details'
   },
   {
-    title: 'Bebinca',
+    title: 'Macbook Pro',
     link: '/app/pages/details'
   }
 ]
