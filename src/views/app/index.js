@@ -13,7 +13,15 @@ const MenuBarang = React.lazy(() =>
 const MenuPeminjaman = React.lazy(() =>
   import(/* webpackChunkName: "viwes-menu-peminjaman" */ './menu-peminjaman')
 );
-
+const MenuPengembalian = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-pengembalian" */ './menu-pengembalian')
+);
+const MenuPerbaikan = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-perbaikan" */ './menu-perbaikan')
+);
+const MenuPengadaan = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-pengadaan" */ './menu-pengadaan')
+);
 class App extends Component {
   render() {
     const { match } = this.props;
@@ -36,6 +44,18 @@ class App extends Component {
                 path={`${match.url}/menu-peminjaman`}
                 render={props => <MenuPeminjaman {...props} />}
               />
+              <Route
+                path={`${match.url}/menu-pengembalian`}
+                render={props => <MenuPengembalian {...props} />}
+              />
+              {/* <Route
+                path={`${match.url}/menu-perbaikan`}
+                render={props => <MenuPerbaikan {...props} />}
+              />
+              <Route
+                path={`${match.url}/menu-pengadaan`}
+                render={props => <MenuPengadaan {...props} />}
+              /> */}
               <Redirect to="/error" />
             </Switch>
           </Suspense>
