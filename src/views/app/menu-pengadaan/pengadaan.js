@@ -273,6 +273,7 @@ class Pengadaan extends Component {
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
           />
+          
           <AddNewModal
             modalOpen={modalOpen}
             toggleModal={this.toggleModal}
