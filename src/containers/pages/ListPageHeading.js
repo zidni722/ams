@@ -69,7 +69,7 @@ class ListPageHeading extends Component {
                 onClick={()=>toggleModal()}>
                 <IntlMessages id="Tambah Barang" />
               </Button>
-              {"  "}
+              {" "}
             </div>
             <Breadcrumb match={match} />
           </div>
@@ -95,13 +95,13 @@ class ListPageHeading extends Component {
                     {selectedOrderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {orderOptions.map((order, index) => {
+                    {orderOptions.map((ListBarang, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeOrderBy(order.column)}
+                          onClick={() => changeOrderBy(ListBarang.products)}
                         >
-                          {order.label}
+                          {ListBarang.label}
                         </DropdownItem>
                       );
                     })}
