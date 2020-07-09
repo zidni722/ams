@@ -91,7 +91,7 @@ class ListPageHeading extends Component {
               <div className="d-block d-md-inline-block pt-1">
                 <UncontrolledDropdown className="mr-1 float-md-left btn-group mb-1">
                   <DropdownToggle caret color="outline-dark" size="xs">
-                    <IntlMessages id="Order by : " />
+                    <IntlMessages id="Sort by : " />
                     {selectedOrderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
