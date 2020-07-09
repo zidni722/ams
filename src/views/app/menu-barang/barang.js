@@ -12,7 +12,6 @@ import AddNewModal from "../../../containers/pages/AddNewModal";
 import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemBarang from "../../../containers/pages/ListBarang";
 
-
 const apiUrl = servicePath + "/cakes/paging";
 
 class Barang extends Component {
