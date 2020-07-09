@@ -8,24 +8,25 @@ import { servicePath } from "../../../constants/defaultValues";
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
 import ListPageHeading from "../../../containers/pages/ListPageHeading";
-import AddNewModal from "../../../containers/pages/AddNewModal";
 import { Colxx } from "../../../components/common/CustomBootstrap";
-import ListItemBarang from "../../../containers/pages/ListBarang";
+import ListItemPengadaan from "../../../containers/pages/ListPengadaan";
+import AddNewModal from "../../../containers/pages/AddNewModal";
 
 const apiUrl = servicePath + "/cakes/paging";
 
-class Barang extends Component {
+class Pengadaan extends Component {
   constructor(props) {
     super(props);
     this.mouseTrap = require("mousetrap");
 
     this.state = {
+      displayMode: "list",
 
       selectedPageSize: 10, 
       orderOptions: [
-        { products: "code", label: "Kode Barang" },
-        { products: "category", label: "Jenis Barang" },
-        { products: "status", label: "Status" }
+        { column: "code", label: "Kode Barang" },
+        { column: "category", label: "Jenis Barang" },
+        { column: "status", label: "Status" }
       ],
       pageSizes: [10, 20, 30, 50, 100],
 
@@ -35,13 +36,15 @@ class Barang extends Component {
         { label: "Lainnya", value: "Lainnya", key: 2 }
       ],
 
-      selectedOrderOption: { products: "code", label: "Kode Barang" },
+      selectedOrderOption: { column: "code", label: "Kode Barang" },
       dropdownSplitOpen: false,
       modalOpen: false,
       currentPage: 1,
       totalItemCount: 0,
       totalPage: 1,
       search: "",
+      selectedItems: [],
+      lastChecked: null,
       isLoading: false
     };
   }
@@ -71,11 +74,11 @@ class Barang extends Component {
     });
   };
 
-  changeOrderBy = products => {
+  changeOrderBy = column => {
     this.setState(
       {
         selectedOrderOption: this.state.orderOptions.find(
-          x => x.products === products
+          x => x.column === column
         )
       },
       () => this.dataListRender()
@@ -116,46 +119,46 @@ class Barang extends Component {
     }
   };
 
-  // onCheckItem = (event, id) => {
-  //   if (
-  //     event.target.tagName === "A" ||
-  //     (event.target.parentElement && event.target.parentElement.tagName === "A")
-  //   ) {
-  //     return true;
-  //   }
-  //   if (this.state.lastChecked === null) {
-  //     this.setState({
-  //       lastChecked: id
-  //     });
-  //   }
+  onCheckItem = (event, id) => {
+    if (
+      event.target.tagName === "A" ||
+      (event.target.parentElement && event.target.parentElement.tagName === "A")
+    ) {
+      return true;
+    }
+    if (this.state.lastChecked === null) {
+      this.setState({
+        lastChecked: id
+      });
+    }
 
-  //   let selectedItems = this.state.selectedItems;
-  //   if (selectedItems.includes(id)) {
-  //     selectedItems = selectedItems.filter(x => x !== id);
-  //   } else {
-  //     selectedItems.push(id);
-  //   }
-  //   this.setState({
-  //     selectedItems
-  //   });
+    let selectedItems = this.state.selectedItems;
+    if (selectedItems.includes(id)) {
+      selectedItems = selectedItems.filter(x => x !== id);
+    } else {
+      selectedItems.push(id);
+    }
+    this.setState({
+      selectedItems
+    });
 
-  //   if (event.shiftKey) {
-  //     var items = this.state.items;
-  //     var start = this.getIndex(id, items, "id");
-  //     var end = this.getIndex(this.state.lastChecked, items, "id");
-  //     items = items.slice(Math.min(start, end), Math.max(start, end) + 1);
-  //     selectedItems.push(
-  //       ...items.map(item => {
-  //         return item.id;
-  //       })
-  //     );
-  //     selectedItems = Array.from(new Set(selectedItems));
-  //     this.setState({
-  //       selectedItems
-  //     });
-  //   }
-  //   document.activeElement.blur();
-  // };
+    if (event.shiftKey) {
+      var items = this.state.items;
+      var start = this.getIndex(id, items, "id");
+      var end = this.getIndex(this.state.lastChecked, items, "id");
+      items = items.slice(Math.min(start, end), Math.max(start, end) + 1);
+      selectedItems.push(
+        ...items.map(item => {
+          return item.id;
+        })
+      );
+      selectedItems = Array.from(new Set(selectedItems));
+      this.setState({
+        selectedItems
+      });
+    }
+    document.activeElement.blur();
+  };
 
   getIndex(value, arr, prop) {
     for (var i = 0; i < arr.length; i++) {
@@ -165,21 +168,21 @@ class Barang extends Component {
     }
     return -1;
   }
-  // handleChangeSelectAll = isToggle => {
-  //   if (this.state.selectedItems.length >= this.state.items.length) {
-  //     if (isToggle) {
-  //       this.setState({
-  //         selectedItems: []
-  //       });
-  //     }
-  //   } else {
-  //     this.setState({
-  //       selectedItems: this.state.items.map(x => x.id)
-  //     });
-  //   }
-  //   document.activeElement.blur();
-  //   return false;
-  // };
+  handleChangeSelectAll = isToggle => {
+    if (this.state.selectedItems.length >= this.state.items.length) {
+      if (isToggle) {
+        this.setState({
+          selectedItems: []
+        });
+      }
+    } else {
+      this.setState({
+        selectedItems: this.state.items.map(x => x.id)
+      });
+    }
+    document.activeElement.blur();
+    return false;
+  };
 
   dataListRender() {
     const {
@@ -191,7 +194,7 @@ class Barang extends Component {
     axios
       .get(
         `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${
-          selectedOrderOption.products
+          selectedOrderOption.column
         }&search=${search}`
       )
       .then(res => {
@@ -251,7 +254,7 @@ class Barang extends Component {
       <Fragment>
         <div className="disable-text-selection">
           <ListPageHeading
-            heading="Barang"
+            heading="Pengadaan"
             displayMode={displayMode}
             changeDisplayMode={this.changeDisplayMode}
             handleChangeSelectAll={this.handleChangeSelectAll}
@@ -270,6 +273,7 @@ class Barang extends Component {
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
           />
+          
           <AddNewModal
             modalOpen={modalOpen}
             toggleModal={this.toggleModal}
@@ -277,7 +281,10 @@ class Barang extends Component {
           />
           <Row>
             <Colxx xxs="12" className="mb-4">
-                <ListItemBarang/>              
+                <ListItemPengadaan
+               
+                defaultPageSize={10}
+                />              
             </Colxx>
             <Pagination
               currentPage={this.state.currentPage}
@@ -294,4 +301,4 @@ class Barang extends Component {
     );
   }
 }
-export default Barang;
+export default Pengadaan;
