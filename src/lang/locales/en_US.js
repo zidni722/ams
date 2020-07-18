@@ -35,7 +35,7 @@ module.exports = {
   "menu.pengembalian": "Pengembalian",
   "menu.perbaikan": "Perbaikan",
   "menu.pengadaan": "Pengadaan",
-  "menu.karyawan": "Karyawan",
+  "menu.pegawai": "Pegawai",
 
   "menu.dashboards-menu": "Dashboards Menu",
   "menu.menu-barang": "Menu Barang",
@@ -43,7 +43,7 @@ module.exports = {
   "menu.menu-pengembalian": "Menu Pengembalian",
   "menu.menu-perbaikan": "Menu Perbaikan",
   "menu.menu-pengadaan": "Menu Pengadaan",
-  "menu.menu-karyawan": "Menu Karyawan",
+  "menu.menu-pegawai": "Menu Pegawai",
 
   "menu.start": "Start",
   "menu.second-menu": "Second Menu",

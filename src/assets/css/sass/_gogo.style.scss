@@ -1449,6 +1449,24 @@ button {
   color: $info-color;
 }
 
+.badge-outline-selesai {
+  background: unset;
+  border: 1px solid $selesai-color;
+  color: $selesai-color;
+}
+
+.badge-outline-menunggu {
+  background: unset;
+  border: 1px solid $menunggu-color;
+  color: $menunggu-color;
+}
+
+.badge-outline-tolak {
+  background: unset;
+  border: 1px solid $tolak-color;
+  color: $tolak-color;
+}
+
 .badge-outline-light {
   background: unset;
   border: 1px solid $light-btn-background;

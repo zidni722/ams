@@ -1,6 +1,6 @@
 const knowledgebase = [
     {
-        title: "USING GOGO",
+        title: "Pawoon - Assets Management System",
         icon: "iconsminds-director ",
         detail: "Systems thinking correlation, social impact; when revolutionary fully ethical life bandwidth and thought partnership.",
         subtitles: [

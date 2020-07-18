@@ -53,10 +53,10 @@ const data = [
     newWindow:false
   },
   {
-    id: "karyawan",
+    id: "pegawai",
     icon: "iconsminds-business-man-woman",
-    label: "Karyawan",
-    to: "/app/menu-karyawan",
+    label: "Pegawai",
+    to: "/app/menu-pegawai",
     newWindow:false
   }
 
