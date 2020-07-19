@@ -17,13 +17,6 @@ const data = [
     icon: "iconsminds-box-full",
     label: "Barang",
     to: "/app/menu-barang",
-    // subs: [
-    //   {
-    //     icon: "simple-icon-paper-plane",
-    //     label: "menu.second",
-    //     to: "/app/second-menu/second"
-    //   }
-    // ]
   },
   {
     id: "peminjaman",
@@ -53,10 +46,10 @@ const data = [
     newWindow:false
   },
   {
-    id: "karyawan",
+    id: "pegawai",
     icon: "iconsminds-business-man-woman",
-    label: "Karyawan",
-    to: "/app/menu-karyawan",
+    label: "Pegawai",
+    to: "/app/menu-pegawai",
     newWindow:false
   }
 

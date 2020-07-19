@@ -1,8 +1,8 @@
 import React from "react";
-import { Row, Card, CardBody} from "reactstrap";
+import { Row, Card, CardBody, Badge } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { NavLink } from "react-router-dom";
-import products from "../../data/products";
+import user from "../../data/user";
 import IntlMessages from "../../helpers/IntlMessages";
 
 const Title = () => {
@@ -12,25 +12,22 @@ const Title = () => {
       <div className="d-flex flex-grow-1 min-width-zero">
         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center sm">
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="No" />
+            <IntlMessages id="NPK" />
           </p>
           <p className=" mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Kode Barang" />
+            <IntlMessages id="Nama Pegawai" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Nama Barang" />
+            <IntlMessages id="Email" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Jenis Barang" />
+            <IntlMessages id="Divisi" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Merk" />
+            <IntlMessages id="Role" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Tahun" />
-          </p>
-          <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Stok" />
+            <IntlMessages id="Status" />
           </p>
         </CardBody>
       </div>
@@ -38,7 +35,7 @@ const Title = () => {
   );
 };
 
-const ListBarang = ({ id, code, title, category, merk, year, status, statusColor, stock }) => {
+const Listpegawai = ({ npk, name, email, divisi, role, status, statusColor }) => {
   
   return (
     
@@ -46,34 +43,46 @@ const ListBarang = ({ id, code, title, category, merk, year, status, statusColor
       <div className="d-flex flex-grow-1 min-width-zero">
         
         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-          <p className="mb-1 text-p text-small w-50">{id}</p>
-          <p className="mb-1 text-p text-small w-50">{code}</p>
-          <NavLink
-            to="/app/menu-barang/detail-barang"
+        <NavLink
+            to="#"
             className="mb-1 text-p text-small w-50"
-          >{title}
+          >
+            {npk}
           </NavLink>
-          <p className="mb-1 text-p text-small w-50">{category}</p>
-          <p className="mb-1 text-p text-small w-50">{merk}</p>
-          <p className="mb-1 text-p text-small w-50">{year}</p>
-          <p className="mb-1 text-p text-small w-50">{stock}</p>
+          <NavLink
+            to="#"
+            className="mb-1 text-p text-small w-50"
+          >{name}
+          </NavLink>
+          <NavLink
+            to="#"
+            className="mb-1 text-p text-small w-50"
+          >{email}
+          </NavLink>
+          <p className="mb-1 text-p text-small w-50">{divisi}</p>
+          <p className="mb-1 text-p text-small w-50">{role}</p>
+          <div className="mb-1 text-p text-small w-50 text-relative">
+            <Badge color={statusColor} pill>
+              {status}
+            </Badge>
+          </div>
         </CardBody>
       </div>
     </Card>
   );
 };
 
-const ListItemBarang = () => {
+const ListItemPegawai = () => {
   return (
     <Row>
       <Colxx>
       <Title/>
-        {products.map((products, index) => {
-          return <ListBarang key={`products_${index}`} {...products} />;
+        {user.map((user, index) => {
+          return <Listpegawai key={`user_${index}`} {...user} />;
         })}
       </Colxx>
     </Row>
   );
 };
 
-export default ListItemBarang;
+export default ListItemPegawai;

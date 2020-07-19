@@ -411,6 +411,10 @@ p {
   font-size: 1rem !important;
 }
 
+.text-medium {
+  font-size: 1.5rem !important;
+}
+
 .text-xlarge {
   font-size: 2.7rem !important;
 }
@@ -1447,6 +1451,24 @@ button {
   background: unset;
   border: 1px solid $info-color;
   color: $info-color;
+}
+
+.badge-outline-selesai {
+  background: unset;
+  border: 1px solid $selesai-color;
+  color: $selesai-color;
+}
+
+.badge-outline-menunggu {
+  background: unset;
+  border: 1px solid $menunggu-color;
+  color: $menunggu-color;
+}
+
+.badge-outline-tolak {
+  background: unset;
+  border: 1px solid $tolak-color;
+  color: $tolak-color;
 }
 
 .badge-outline-light {
@@ -2872,11 +2894,11 @@ main {
 }
 
 .card-img {
-  border-radius: calc(0.25rem - 1px);
+  border-radius: calc(0.75rem - 1px);
   height: 100%;
   object-fit: cover;
   max-height: 200px;
-  width: unset;
+  width: 100%;
 }
 
 .card-img-fluid {
@@ -2884,16 +2906,23 @@ main {
   object-fit: cover;
 }
 
+.card-img-fit {
+  width: 100%;
+  object-fit: cover;
+  border-radius: calc(0.75rem - 1px);
+}
+
 .card-img-bottom {
   width: 100%;
+  padding: 2rem;
   border-bottom-left-radius: calc(0.15rem - 1px);
   border-bottom-right-radius: calc(0.15rem - 1px);
 }
 
 .card-img-top {
   width: 100%;
-  border-top-left-radius: calc(0.15rem - 1px);
-  border-top-right-radius: calc(0.15rem - 1px);
+  border-top-left-radius: calc(0.75rem - 1px);
+  border-top-right-radius: calc(0.75rem - 1px);
 }
 
 .card-img-left {

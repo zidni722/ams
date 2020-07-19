@@ -3,7 +3,7 @@ const produtcs = [
     id: 1,
     code: 'A0001',
     title: 'Macbook Pro',
-    img: '/assets/img/marble-cake-thumb.jpg',
+    img: '/assets/img/Macbook-Pro-2020.jpg',
     category: 'Laptop',
     merk: 'Apple',
     year: '2020',
@@ -11,7 +11,7 @@ const produtcs = [
     verificationDate: '-',
     tenant: 'Jhon Doe',
     status: 'Menunggu',
-    statusColor: 'menunggu',
+    statusColor: 'outline-menunggu',
     description: 'Wedding cake with flowers Macarons and blueberries',
     sales: 1647,
     stock: 62
@@ -28,7 +28,7 @@ const produtcs = [
     verificationDate: '10-04-2020',
     tenant: 'Jane Doe',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Cheesecake with chocolate cookies and Cream biscuits',
     sales: 1240,
     stock: 48
@@ -45,7 +45,7 @@ const produtcs = [
     verificationDate: '13-04-2020',
     tenant: 'Sarah Kotnie',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Homemade cheesecake with fresh berries and mint',
     sales: 1080,
     stock: 57
@@ -62,7 +62,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Eliza Pill',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Chocolate cake with berries',
     sales: 1014,
     stock: 41
@@ -79,7 +79,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Tolak',
-    statusColor: 'tolak',
+    statusColor: 'outline-tolak',
     description: 'Chocolate cake with mascarpone',
     sales: 985,
     stock: 23
@@ -96,7 +96,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Wedding cake decorated with donuts and wild berries',
     sales: 962,
     stock: 34
@@ -113,7 +113,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Cheesecake with fresh berries and mint for dessert',
     sales: 921,
     stock: 31
@@ -130,7 +130,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Tolak',
-    statusColor: 'tolak',
+    statusColor: 'outline-tolak',
     description: 'Delicious vegan chocolate cake',
     sales: 887,
     stock: 21
@@ -147,7 +147,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description:
       'White chocolate strawberry yogurt cake decorated with fresh fruits and chocolate',
     sales: 865,
@@ -165,7 +165,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Christmas fruit cake, pudding on top',
     sales: 824,
     stock: 55
@@ -182,7 +182,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Selesai',
-    statusColor: 'tolak',
+    statusColor: 'outline-tolak',
     description: 'Wedding cake decorated with donuts and wild berries',
     sales: 714,
     stock: 12
@@ -199,7 +199,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Christmas fruit cake, pudding on top',
     sales: 702,
     stock: 14
@@ -216,7 +216,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Tolak',
-    statusColor: 'tolak',
+    statusColor: 'outline-tolak',
     description:
       'White chocolate strawberry yogurt cake decorated with fresh fruits and chocolate',
     sales: 689,
@@ -234,7 +234,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Delicious vegan chocolate cake',
     sales: 645,
     stock: 55
@@ -251,7 +251,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Tolak',
-    statusColor: 'tolak',
+    statusColor: 'outline-tolak',
     description: 'Cheesecake with fresh berries and mint for dessert',
     sales: 632,
     stock: 20
@@ -268,7 +268,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Menunggu',
-    statusColor: 'menunggu',
+    statusColor: 'outline-menunggu',
     description: 'Chocolate cake with mascarpone',
     sales: 621,
     stock: 6
@@ -285,7 +285,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Chocolate cake with berries',
     sales: 595,
     stock: 17
@@ -302,7 +302,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Selesai',
-    statusColor: 'selesai',
+    statusColor: 'outline-selesai',
     description: 'Homemade cheesecake with fresh berries and mint',
     sales: 574,
     stock: 16
@@ -319,7 +319,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Tolak',
-    statusColor: 'tolak',
+    statusColor: 'outline-tolak',
     description: 'Cheesecake with chocolate cookies and Cream biscuits',
     sales: 562,
     stock: 9
@@ -336,7 +336,7 @@ const produtcs = [
     verificationDate: '20-04-2020',
     tenant: 'Jhon Doe',
     status: 'Tolak',
-    statusColor: 'tolak',
+    statusColor: 'outline-tolak',
     description: 'Wedding cake with flowers Macarons and blueberries',
     sales: 524,
     stock: 14

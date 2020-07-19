@@ -4,6 +4,9 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const Barang = React.lazy(() =>
   import(/* webpackChunkName: "barang" */ './barang')
 );
+const DetailsPages = React.lazy(() =>
+  import(/* webpackChunkName: "detail-barang" */ './detail-barang')
+);
 const MenuBarang = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -11,6 +14,10 @@ const MenuBarang = ({ match }) => (
       <Route
         path={`${match.url}/barang`}
         render={props => <Barang {...props} />}
+      />
+      <Route
+        path={`${match.url}/detail-barang`}
+        render={props => <DetailsPages {...props} />}
       />
       <Redirect to="/error" />
     </Switch>
