@@ -3,7 +3,7 @@ const produtcs = [
     id: 1,
     code: 'A0001',
     title: 'Macbook Pro',
-    img: '/assets/img/marble-cake-thumb.jpg',
+    img: '/assets/img/Macbook-Pro-2020.jpg',
     category: 'Laptop',
     merk: 'Apple',
     year: '2020',

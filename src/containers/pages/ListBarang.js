@@ -46,19 +46,10 @@ const ListBarang = ({ id, code, title, category, merk, year, status, statusColor
       <div className="d-flex flex-grow-1 min-width-zero">
         
         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+          <p className="mb-1 text-p text-small w-50">{id}</p>
+          <p className="mb-1 text-p text-small w-50">{code}</p>
           <NavLink
-            to="#"
-            className="mb-1 text-p text-small w-50"
-          >
-            {id}
-          </NavLink>
-          <NavLink
-            to="#"
-            className="mb-1 text-p text-small w-50"
-          >{code}
-          </NavLink>
-          <NavLink
-            to="#"
+            to="/app/menu-barang/detail-barang"
             className="mb-1 text-p text-small w-50"
           >{title}
           </NavLink>

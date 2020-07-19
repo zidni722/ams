@@ -17,13 +17,6 @@ const data = [
     icon: "iconsminds-box-full",
     label: "Barang",
     to: "/app/menu-barang",
-    // subs: [
-    //   {
-    //     icon: "simple-icon-paper-plane",
-    //     label: "menu.second",
-    //     to: "/app/second-menu/second"
-    //   }
-    // ]
   },
   {
     id: "peminjaman",
