@@ -31,8 +31,8 @@ export default class Dashboards extends Component {
               </Colxx>
             </Row>
             <Row>
-                  <Colxx lg="12" xl="6">
-                  <IconCardsCarousel />
+              <Colxx lg="12" xl="6">
+                <IconCardsCarousel />
                 <Row>
                   <Colxx md="12" className="mb-4">
                     <ProductCategoriesDoughnut />

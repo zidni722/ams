@@ -50,6 +50,7 @@ module.exports = {
   "menu.menu-perbaikan": "Menu Perbaikan",
   "menu.menu-pengadaan": "Menu Pengadaan",
   "menu.menu-pegawai": "Menu Pegawai",
+  
 
   "menu.start": "Start",
   "menu.details":" Detail",

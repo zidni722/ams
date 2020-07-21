@@ -237,10 +237,14 @@ class TopNav extends Component {
                 </span>
               </DropdownToggle>
               <DropdownMenu className="mt-3" right>
-                <DropdownItem>Account</DropdownItem>
+                <DropdownItem>
+                  Account
+                </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={() => this.handleLogout()}>
+                  <NavLink to="/user/login">
                   Sign out
+                  </NavLink>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

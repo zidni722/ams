@@ -10,7 +10,7 @@ import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer
 import ListPageHeadingUser from "../../../containers/pages/ListPageHeadingUser";
 import { Colxx } from "../../../components/common/CustomBootstrap";
 import AddNewModalUser from "../../../containers/pages/AddNewModalUser";
-import ListItemPegawai from "../../../containers/pages/ListPegawai";
+import ListPegawai from "../../../containers/pages/ListPegawai";
 
 const apiUrl = servicePath + "/cakes/paging";
 
@@ -281,7 +281,7 @@ class Pengadaan extends Component {
           />
           <Row>
             <Colxx xxs="12" className="mb-4">
-                <ListItemPegawai
+                <ListPegawai
                
                 defaultPageSize={10}
                 />              
