@@ -6882,6 +6882,7 @@ input:-webkit-autofill {
 }
 
 .social-profile-img {
+  width: 120px;
   height: 120px;
   border: 3px solid $foreground-color;
   position: absolute;
@@ -6968,6 +6969,13 @@ input:-webkit-autofill {
 }
 
 .col-left {
+  padding-right: 20px;
+  @include respond-below(md) {
+    padding-right: 15px;
+  }
+}
+
+.col-center {
   padding-right: 20px;
   @include respond-below(md) {
     padding-right: 15px;

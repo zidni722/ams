@@ -28,7 +28,6 @@ class DetailPages extends Component {
                 <Row>
                     <Colxx xxs="12" xl="5" className="col-left">
                       <Card className="mb-3">
-                      
                        {
                           barang.map((itemBarang, index) => {
                             return (
@@ -42,7 +41,6 @@ class DetailPages extends Component {
                     <Colxx xxs="12" xl="7" className="col-right">
                     <Card className="mb-4">
                             <CardBody>
-                                
                                 {
                                     barang.map((itemBarang, index) => {
                                         return (
@@ -97,7 +95,8 @@ class DetailPages extends Component {
                                                 </div>
                                             </div>
                                         )
-                                    })}
+                                    })
+                                  }
                             </CardBody>
                         </Card>
                     </Colxx>

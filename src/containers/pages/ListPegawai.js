@@ -43,22 +43,13 @@ const Listpegawai = ({ npk, name, email, divisi, role, status, statusColor }) =>
       <div className="d-flex flex-grow-1 min-width-zero">
         
         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-        <NavLink
-            to="#"
-            className="mb-1 text-p text-small w-50"
-          >
-            {npk}
-          </NavLink>
+        <p className="mb-1 text-p text-small w-50">{npk}</p>
           <NavLink
-            to="#"
+            to="/app/menu-pegawai/detail-pegawai"
             className="mb-1 text-p text-small w-50"
           >{name}
           </NavLink>
-          <NavLink
-            to="#"
-            className="mb-1 text-p text-small w-50"
-          >{email}
-          </NavLink>
+          <p className="mb-1 text-p text-small w-50">{email}</p>
           <p className="mb-1 text-p text-small w-50">{divisi}</p>
           <p className="mb-1 text-p text-small w-50">{role}</p>
           <div className="mb-1 text-p text-small w-50 text-relative">

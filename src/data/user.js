@@ -1,9 +1,13 @@
-const User = [
+export const User = [
   {
     id: 1,
+    img:"/assets/img/profile-pic-l-8.jpg",
+    banner: "/assets/img/social-header.jpg",
     npk: '3031',
     name: 'Jhon Doe',
     email: 'jhondoe@pawoon.com',
+    noHP:'0811188001',
+    address:'Jln. Pegangsaan Timur no.46',
     divisi: 'Developer',
     role: 'Pegawai',
     status: 'Aktif',
