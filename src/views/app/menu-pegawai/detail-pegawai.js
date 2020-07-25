@@ -5,9 +5,9 @@ import { Separator, Colxx } from "../../../components/common/CustomBootstrap";
 import { injectIntl } from "react-intl";
 import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
-import { NavLink } from "react-router-dom";
+//import { NavLink } from "react-router-dom";
 import User from "../../../data/user";
-import IconCardsCarousel from "../../../containers/dashboards/IconCardsCarousel";
+//import IconCardsCarousel from "../../../containers/dashboards/IconCardsCarousel";
 
 
 class DetailPages extends Component {

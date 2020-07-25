@@ -15,7 +15,7 @@ export const localeOptions = [
 
 
 export const searchPath = "/app/pages/search";
-export const servicePath = "https://api.coloredstrategies.com";
+export const servicePath = "https://30eef97448b8.ngrok.io";
 
 /* 
 Color Options:

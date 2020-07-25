@@ -42,42 +42,35 @@ class FormikBasicFormLevel extends Component {
     render() {
         return (
             <Row className="mb-4">
-                <Colxx xxs="12">
-                    <Card>
-                        <CardBody>
-                            <h6 className="mb-4">Form Level Validation</h6>
-                            <Formik
-                                validate={this.validate}
-                                initialValues={{
-                                    name: '',
-                                    email: '',
-                                }}
-                                onSubmit={this.handleSubmit}>
-                                {({ errors, touched, isValidating }) => (
-                                    <Form className="av-tooltip tooltip-label-right">
+                <Colxx xxs="6" >
+                    <Formik
+                        validate={this.validate}
+                        initialValues={{
+                            name: '',
+                            email: '',
+                        }}
+                        onSubmit={this.handleSubmit}>
+                        {({ errors, touched, isValidating }) => (
+                            <Form className="av-tooltip tooltip-label-right">
+                                <FormGroup>
+                                    <Label>
+                                        Name
+                                    </Label>
+                                    <Field className="form-control" name="name" />
+                                    {errors.name && touched.name && <div className="invalid-feedback d-block">{errors.name}</div>}
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label>
+                                        Email
+                                    </Label>
+                                    <Field className="form-control" name="email" />
+                                    {errors.email && touched.email && <div className="invalid-feedback d-block">{errors.email}</div>}
+                                </FormGroup>
 
-                                        <FormGroup>
-                                            <Label>
-                                                Name
-                                            </Label>
-                                            <Field className="form-control" name="name" />
-                                            {errors.name && touched.name && <div className="invalid-feedback d-block">{errors.name}</div>}
-                                        </FormGroup>
-
-                                        <FormGroup>
-                                            <Label>
-                                                Email
-                                            </Label>
-                                            <Field className="form-control" name="email" />
-                                            {errors.email && touched.email && <div className="invalid-feedback d-block">{errors.email}</div>}
-                                        </FormGroup>
-
-                                        <Button color="primary" type="submit">Submit</Button>
-                                    </Form>
-                                )}
-                            </Formik>
-                        </CardBody>
-                    </Card>
+                                <Button color="primary" type="submit">Submit</Button>
+                            </Form>
+                        )}
+                    </Formik>
                 </Colxx>
             </Row>
         )

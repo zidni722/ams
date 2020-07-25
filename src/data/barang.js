@@ -8,6 +8,8 @@ export const dataBarang = [
         penyimpanan: "SSD 256 GB",
         memori: "Memori terpasang LPDDR3 2133 MHz sebesar 8 GB",
         grafis: "Intel Iris Plus Graphics 645",
+        stock:"10",
+        total:"20",
         badge: "NEW",
         type: "image"
     },

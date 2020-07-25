@@ -12,9 +12,9 @@ const produtcs = [
     tenant: 'Jhon Doe',
     status: 'Menunggu',
     statusColor: 'outline-menunggu',
-    description: 'Wedding cake with flowers Macarons and blueberries',
-    sales: 1647,
-    stock: 62
+    description: '',
+    stock: 62,
+    total: 100
   },
   {
     id: 2,
@@ -344,3 +344,23 @@ const produtcs = [
 ]
 
 export default produtcs
+
+export const dataProducts = [
+    {
+      id: 1,
+      code: 'A0001',
+      title: 'Macbook Pro',
+      img: '/assets/img/Macbook-Pro-2020.jpg',
+      category: 'Laptop',
+      merk: 'Apple',
+      year: '2020',
+      createDate: '02-04-2020',
+      verificationDate: '-',
+      tenant: 'Jhon Doe',
+      status: 'Menunggu',
+      statusColor: 'outline-menunggu',
+      description: '',
+      stock: 62,
+      total: 100
+    },
+]
