@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Badge } from "reactstrap";
+import { Badge } from "reactstrap";
 import classnames from "classnames";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { Colxx } from "../../components/common/CustomBootstrap";
