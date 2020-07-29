@@ -170,8 +170,13 @@ class TopNav extends Component {
   };
 
   handleLogout = () => {
-    //logout
+    //this.props.loginUser(this.props.history);
   };
+
+  handlePageChange() {
+    window.location.hash = "/user/login";
+  }
+
 
   menuButtonClick = (e, menuClickCount, containerClassnames) => {
     e.preventDefault();
@@ -241,10 +246,8 @@ class TopNav extends Component {
                   Account
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem onClick={() => this.handleLogout()}>
-                  <NavLink to="/user/login">
-                  Sign out
-                  </NavLink>
+                <DropdownItem onClick={() => window.location.href="/user/login"}>
+                  Sign Out
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

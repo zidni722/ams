@@ -35,7 +35,8 @@ class App extends Component {
         <div className="dashboard-wrapper">
           <Suspense fallback={<div className="loading" />}>
             <Switch>
-              <Redirect exact from={`${match.url}/`} to={`${match.url}/dashboards-menu`} />
+              <Redirect exact from={`${match.url}/`} 
+                to={`${match.url}/dashboards-menu`} />
               <Route
                 path={`${match.url}/dashboards-menu`}
                 render={props => <DashboardMenu {...props} />}

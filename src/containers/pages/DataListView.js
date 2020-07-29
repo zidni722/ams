@@ -1,46 +1,59 @@
 import React from "react";
-import { Card, Badge } from "reactstrap";
-import { NavLink } from "react-router-dom";
-import classnames from "classnames";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { Colxx } from "../../components/common/CustomBootstrap";
+import IntlMessages from "../../helpers/IntlMessages";
+import Title from "./ListBarang";
+import { Link } from "react-router-dom";
+
 
 const DataListView = ({ product, isSelect, collect, onCheckItem }) => {
-  
   return (
     <Colxx xxs="12" className="mb-3">
       <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
-        <Card
+        <Title/>
+        <Link
+          to="/app/menu-barang/detail-barang" 
+          className="card"
+        >
+        {/* <Card
           onClick={event => onCheckItem(event, product.id)}
-          className={classnames("d-flex flex-row", {
+          className={classnames("d-flex flex-row mb-3", {
             active: isSelect
           })}
-        >
-          <div className="pl-2 d-flex flex-grow-1 min-width-zero">
-            <div className="card-body align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero align-items-lg-center">
-              <NavLink to={`?p=${product.id}`} className="w-40 w-sm-100">
-                <p className="list-item-heading mb-1 truncate">
-                  {product.title}
-                </p>
-              </NavLink>
-              <p className="mb-1 text-default text-small w-15 w-sm-100">
-                {product.category}
+        > */}
+          <div className="d-flex flex-grow-1 min-width-zero">
+            
+            <div className="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+              {/* <NavLink to={`?p=${product.id}`} className="mb-1 text-p text-small w-50"> */}
+              <p className="mb-1 text-p text-small w-50">
+                <IntlMessages id="No" />
               </p>
-              <p className="mb-1 text-muted text-small w-15 w-sm-100">
-                {product.date}
+              {/* </NavLink> */}
+              <p className="mb-1 text-p text-small w-50">
+                {product.code}
               </p>
-              <div className="w-15 w-sm-100">
-                <Badge color={product.statusColor} pill>
-                  {product.status}
-                </Badge>
-              </div>
+              <p className="mb-1 text-p text-small w-50">
+                {product.name}
+              </p>
+              <p className="mb-1 text-p text-small w-50">
+                jenis
+              </p>
+              <p className="mb-1 text-p text-small w-50">
+                merk
+              </p>
+              <p className="mb-1 text-p text-small w-50">
+                tahun
+              </p>
+              <p className="mb-1 text-p text-small w-50">
+                stock
+              </p>
             </div>
           </div>
-        </Card>
+        </Link>
+        {/* </Card> */}
       </ContextMenuTrigger>
     </Colxx>
   );
 };
 
-/* React.memo detail : https://reactjs.org/docs/react-api.html#reactpurecomponent  */
 export default React.memo(DataListView);

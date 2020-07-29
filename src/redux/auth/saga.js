@@ -27,7 +27,10 @@ export function* watchLoginUser() {
 
 const loginWithEmailPasswordAsync = async (email, password) =>
     await auth.signInWithEmailAndPassword(email, password)
-        .then(authUser => authUser)
+        .then(authUser => {
+            console.log(authUser);
+            return authUser;
+        })
         .catch(error => error);
 
 

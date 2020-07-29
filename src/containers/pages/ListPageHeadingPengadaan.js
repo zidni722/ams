@@ -13,8 +13,9 @@ import { injectIntl } from "react-intl";
 import { Colxx, Separator } from "../../components/common/CustomBootstrap";
 import Breadcrumb from "../navs/Breadcrumb";
 import IntlMessages from "../../helpers/IntlMessages";
+import { Link } from "react-router-dom";
 
-class ListPageHeading extends Component {
+class ListPageHeadingPengadaan extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -48,7 +49,6 @@ class ListPageHeading extends Component {
       onSearchKey,
       orderOptions,
       pageSizes,
-      toggleModal,
       heading
     } = this.props;
 
@@ -62,14 +62,11 @@ class ListPageHeading extends Component {
             </h1>
 
             <div className="text-zero top-right-button-container">
-              <Button
-                color="primary"
-                size="lg"
-                className="top-right-button"
-                onClick={()=>toggleModal()}>
-                <IntlMessages id="Tambah Barang" />
-              </Button>
-              {" "}
+            <Link 
+              to="/app/menu-pengadaan/form-pengadaan" 
+              className="btn btn-lg btn-primary">
+              Tambah Barang
+            </Link>
             </div>
             <Breadcrumb match={match} />
           </div>
@@ -147,4 +144,4 @@ class ListPageHeading extends Component {
   }
 }
 
-export default injectIntl(ListPageHeading);
+export default injectIntl(ListPageHeadingPengadaan);

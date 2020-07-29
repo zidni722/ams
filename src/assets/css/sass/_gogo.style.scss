@@ -633,6 +633,11 @@ button {
   transition: background-color box-shadow 0.1s linear;
 }
 
+.btn-right{
+  float: right;
+  position: relative;
+}
+
 .btn-shadow {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15), 0 1px 3px 1px rgba(0, 0, 0, 0.15) !important;
   transition: background-color box-shadow 0.1s linear;
@@ -5972,6 +5977,17 @@ input:-webkit-autofill {
     }
   }
 
+  .image-side-p {
+    width: 40%;
+    background: url("/assets/img/Img-Login.png") no-repeat center;
+    background-size: 100%;
+    padding: 80px 40px;
+
+    .h3 {
+      line-height: 0.8rem;
+    }
+  }
+
   .form-side {
     width: 60%;
     padding: 80px;
@@ -6126,7 +6142,7 @@ input:-webkit-autofill {
 }
 
 .ck.ck-toolbar {
-  background: !important;
+  background: initial !important;
 }
 
 .RichEditor-root {
