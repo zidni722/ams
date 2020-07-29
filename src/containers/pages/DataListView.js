@@ -1,6 +1,4 @@
 import React from "react";
-import { Badge } from "reactstrap";
-import classnames from "classnames";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";

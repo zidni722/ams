@@ -7,10 +7,11 @@ import {
   Redirect
 } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
+import './helpers/Firebase';
 import AppLocale from './lang';
 import ColorSwitcher from './components/common/ColorSwitcher';
 import NotificationContainer from './components/common/react-notifications/NotificationContainer';
-import { isMultiColorActive } from './constants/defaultValues';
+import { isMultiColorActive, isDemo } from './constants/defaultValues';
 import { getDirection } from './helpers/Utils';
 
 const ViewMain = React.lazy(() =>
@@ -19,9 +20,32 @@ const ViewMain = React.lazy(() =>
 const ViewApp = React.lazy(() =>
   import(/* webpackChunkName: "views-app" */ './views/app')
 );
+const ViewUser = React.lazy(() =>
+  import(/* webpackChunkName: "views-user" */ './views/user')
+);
 const ViewError = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ './views/error')
 );
+
+const AuthRoute = ({ component: Component, authUser, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        authUser || isDemo ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/user/login',
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
 
 class App extends Component {
   constructor(props) {
@@ -37,7 +61,7 @@ class App extends Component {
   }
 
   render() {
-    const { locale } = this.props;
+    const { locale, loginUser } = this.props;
     const currentAppLocale = AppLocale[locale];
 
     return (
@@ -52,9 +76,14 @@ class App extends Component {
             <Suspense fallback={<div className="loading" />}>
               <Router>
                 <Switch>
-                  <Route
+                  <AuthRoute
                     path="/app"
-                    render={props => <ViewApp {...props} />}
+                    authUser={loginUser}
+                    component={ViewApp}
+                  />
+                  <Route
+                    path="/user"
+                    render={props => <ViewUser {...props} />}
                   />
                   <Route
                     path="/error"
@@ -77,9 +106,10 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ settings }) => {
+const mapStateToProps = ({ authUser, settings }) => {
+  const { user: loginUser } = authUser;
   const { locale } = settings;
-  return { locale };
+  return { loginUser, locale };
 };
 const mapActionsToProps = {};
 

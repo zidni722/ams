@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Row, CardBody, Card} from "reactstrap";
-import IntlMessages from "../../../helpers/IntlMessages";
 import { Colxx, Separator } from "../../../components/common/CustomBootstrap";
 import Breadcrumb from "../../../containers/navs/Breadcrumb";
 
-import FormikBasicFormLevel from "../../../containers/form-validations/FormikBasicFormLevel";
 import FormikPengadaan from "../../../containers/form-validations/FormikPengadaan";
 
 export default class FormPengadaan extends Component {

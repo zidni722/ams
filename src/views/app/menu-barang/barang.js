@@ -9,7 +9,6 @@ import DataListView from "../../../containers/pages/DataListView";
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
 import ListPageHeading from "../../../containers/pages/ListPageHeadingPengadaan";
-import AddNewModal from "../../../containers/pages/AddNewModal";
 
 function collect(props) {
   return { data: props.data };
@@ -277,8 +276,6 @@ class DataListPages extends Component {
       selectedItems,
       orderOptions,
       pageSizes,
-      modalOpen,
-      categories
     } = this.state;
     const { match } = this.props;
     const startIndex = (currentPage - 1) * selectedPageSize;
@@ -309,11 +306,6 @@ class DataListPages extends Component {
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
           />  
-          <AddNewModal
-            modalOpen={modalOpen}
-            toggleModal={this.toggleModal}
-            categories={categories}
-          />
           <Row>
             {this.state.items.map(product => {
                 return (
