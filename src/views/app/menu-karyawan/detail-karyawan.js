@@ -21,7 +21,7 @@ class DetailPages extends Component {
             <Fragment>
                 <Row>
                     <Colxx xxs="12">
-                        <Breadcrumb heading="menu.detail-pegawai" match={this.props.match} />
+                        <Breadcrumb heading="menu.detail-karyawan" match={this.props.match} />
                         <div className="text-zero top-right-button-container">
                           <UncontrolledDropdown>
                             <DropdownToggle

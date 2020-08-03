@@ -48,7 +48,6 @@ class ListPageHeadingUser extends Component {
       onSearchKey,
       orderOptions,
       pageSizes,
-      toggleModal,
       heading
     } = this.props;
 
@@ -66,7 +65,7 @@ class ListPageHeadingUser extends Component {
                 color="primary"
                 size="lg"
                 className="top-right-button"
-                onClick={()=>toggleModal()}>
+                onClick={ () =>  window.location.href='/app/menu-karyawan/tambah-karyawan'}>
                 <IntlMessages id="Tambah Pegawai" />
               </Button>
               {" "}

@@ -46,10 +46,10 @@ const data = [
     newWindow:false
   },
   {
-    id: "pegawai",
+    id: "karyawan",
     icon: "iconsminds-business-man-woman",
-    label: "Pegawai",
-    to: "/app/menu-pegawai",
+    label: "Karyawan",
+    to: "/app/menu-karyawan",
     newWindow:false
   }
 

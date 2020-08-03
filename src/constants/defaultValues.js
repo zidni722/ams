@@ -24,7 +24,7 @@ export const firebaseConfig = {
 
 
 export const searchPath = "/app/pages/search";
-export const servicePath = "https://30eef97448b8.ngrok.io";
+export const servicePath = "http://ams-aaz-backend.herokuapp.com";
 
 /* 
 Color Options:
