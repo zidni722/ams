@@ -25,6 +25,8 @@ export const firebaseConfig = {
 
 export const searchPath = "/app/pages/search";
 export const servicePath = "http://ams-aaz-backend.herokuapp.com";
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXVpZCI6IjU2NzkyZTFjLTc3MDEtNDdjZC1iMzdkLTg1Y2VjMzI3MjkyZCIsIm5hbWUiOiJCaXlhbiIsImVtYWlsIjoiYml5YW4uYmVsaW5kYUBwYXdvb24uY29tIiwicm9sZV9pZCI6MSwiZGl2aXNpb25faWQiOjQsInN0YXR1cyI6MCwiaWF0IjoxNTk2NjM2NTk2fQ.kGWMHFGjkQ-J7qxWwtA-HzyMe4EhEvv_aSBkMJHrN6w';
+
 
 /* 
 Color Options:

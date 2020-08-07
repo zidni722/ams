@@ -28,7 +28,7 @@ const SignupSchema = Yup.object().shape({
     .required("State is required!")
 });
 
-const options = [
+const category = [
   { value: "laptop", label: "Laptop" },
   { value: "aksesoris", label: "Aksesoris"},
   { value: "lainnya", label: "Lainnya" }
@@ -83,7 +83,7 @@ class FormikPengadaan extends Component {
                           name="category"
                           id="category"
                           value={values.state}
-                          options={options}
+                          options={category}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />
@@ -101,7 +101,7 @@ class FormikPengadaan extends Component {
                           name="barang"
                           id="barang"
                           value={values.state}
-                          options={options}
+                          options={category}
                           onChange={setFieldValue}
                           onBlur={setFieldTouched}
                         />

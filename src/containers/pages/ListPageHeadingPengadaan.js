@@ -63,7 +63,7 @@ class ListPageHeadingPengadaan extends Component {
 
             <div className="text-zero top-right-button-container">
             <Link 
-              to="/app/menu-pengadaan/form-pengadaan" 
+              to="/app/menu-barang/form-tambah-barang" 
               className="btn btn-lg btn-primary">
               Tambah Barang
             </Link>
@@ -92,13 +92,13 @@ class ListPageHeadingPengadaan extends Component {
                     {selectedOrderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {orderOptions.map((ListBarang, index) => {
+                    {orderOptions.map((product, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeOrderBy(ListBarang.products)}
+                          onClick={() => changeOrderBy(product.column)}
                         >
-                          {ListBarang.label}
+                          {product.label}
                         </DropdownItem>
                       );
                     })}

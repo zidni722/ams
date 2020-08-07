@@ -8,6 +8,12 @@ import { Formik, Form, Field } from "formik";
 import { loginUser } from "../../redux/actions";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
+import { servicePath, token } from "../../constants/defaultValues";
+
+import Axios from "axios";
+
+const apiUrl = servicePath;
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +27,13 @@ class Login extends Component {
     if (!this.props.loading) {
       if (values.email !== "" && values.password !== "") {
         this.props.loginUser(values, this.props.history);
+          Axios.post(
+            `${apiUrl}/auth/login`,
+          {
+            headers : {
+              Authorization: 'Bearer ' + token
+            }
+          })
       }
     }
   }

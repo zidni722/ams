@@ -9,7 +9,11 @@ import { FormikReactSelect } from "./FormikFields";
 import ImageUpload from "./UploadImg";
 import PhoneInput from 'react-phone-input-2'
 import { NotificationManager } from "../../components/common/react-notifications";
+import { servicePath, token } from "../../constants/defaultValues";
 
+import Axios from "axios";
+
+const apiUrl = servicePath;
 
 const SignupSchema = Yup.object().shape({
   npk: Yup.string()
@@ -40,11 +44,9 @@ const SignupSchema = Yup.object().shape({
     .required("Divisi harus diisi!"),
   phone: Yup.string()
     .min(10, "Terlalu Pendek!")
-    .max(13, "Terlalu Panjang!")
     .required("NoTlpn Harus diisi!"),
   address: Yup.string()
     .min(10, "Terlalu Pendek!")
-    .max(30, "Terlalu Panjang!")
     .required("Alamat Harus diisi!"),
   role: Yup.object()
   .shape({
@@ -54,23 +56,50 @@ const SignupSchema = Yup.object().shape({
   .nullable()
   .required("Role harus diisi!")
 });
-const selectRole = [
-  { label: "Human Resource", value: "hr"},
-  { label: "Manager Departement", value: "manager"},
-  { label: "Karyawan", value: "karyawan" }
-];
-const selectDivisi = [
-  { label: "Human Resource", value: "hr"},
-  { label: "Quality Asurance", value: "qa"},
-  { label: "Developer", value: "dev" }
-];
 
 class FormikPenambahanKaryawan extends Component {
   constructor(props) {
     super(props);
-    this.state = { pictures: [] };
+    this.state = { 
+      pictures: [],
+      divisions: [],
+      roles: []
+    };
     this.onDrop = this.onDrop.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentDidMount() {
+    Axios.get(
+      `${apiUrl}/roles`,
+    {
+      headers : {
+        Authorization: 'Bearer ' + token
+      }
+    })
+      .then(res => {
+        let dataRoles = []
+        const roles = res.data.data;
+        for(const role of roles) {
+          dataRoles.push({value:role.id, label:role.name})
+        }
+        this.setState( {dataRoles} );
+      })
+  
+      Axios.get(
+        `${apiUrl}/divisions`,
+      {
+        headers : {
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          let dataDivisions = []
+          const divisions = res.data.data;
+          for(const division of divisions) {
+            dataDivisions.push({value:division.id, label:division.name})
+          }
+          this.setState( {dataDivisions} );
+        })
   }
   onDrop(picture) {
     this.setState({
@@ -218,6 +247,23 @@ class FormikPenambahanKaryawan extends Component {
                       ) : null}
                     </FormGroup>
                     
+                    <FormGroup className="error-l-50">
+                      <Label>Role</Label>
+                      <FormikReactSelect
+                        name="role"
+                        id="role"
+                        value={values.role}
+                        isMulti={false}
+                        options={this.state.dataRoles}
+                        onChange={setFieldValue}
+                        onBlur={setFieldTouched}
+                      />
+                      {errors.role && touched.role ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.role}
+                        </div>
+                      ) : null}
+                    </FormGroup>
 
                     <FormGroup className="error-l-50">
                       <Label>Divisi</Label>
@@ -226,7 +272,7 @@ class FormikPenambahanKaryawan extends Component {
                         id="divisi"
                         value={values.divisi}
                         isMulti={false}
-                        options={selectDivisi}
+                        options={this.state.dataDivisions}
                         onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
@@ -243,6 +289,7 @@ class FormikPenambahanKaryawan extends Component {
                         className="form-control" 
                         name="noTlpn"
                         country='id'
+                        type="tel"
                       />
                       {errors.phone && touched.phone ? (
                         <div className="invalid-feedback d-block">
@@ -261,24 +308,6 @@ class FormikPenambahanKaryawan extends Component {
                       {errors.address && touched.address ? (
                         <div className="invalid-feedback d-block">
                           {errors.address}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
-                    <FormGroup className="error-l-50">
-                      <Label>Role</Label>
-                      <FormikReactSelect
-                        name="role"
-                        id="role"
-                        value={values.role}
-                        isMulti={false}
-                        options={selectRole}
-                        onChange={setFieldValue}
-                        onBlur={setFieldTouched}
-                      />
-                      {errors.role && touched.role ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.role}
                         </div>
                       ) : null}
                     </FormGroup>

@@ -33,6 +33,7 @@ module.exports = {
   "menu.barang": "Barang",
   "menu.detail-barang": "Detail Barang",
   "menu.peminjaman": "Peminjaman",
+  "menu.form-peminjaman": "Form Peminjaman",
   "menu.detail-peminjaman": "Detail Peminjaman",
   "menu.pengembalian": "Pengembalian",
   "menu.detail-pengembalian": "Detail Pengembalian",
