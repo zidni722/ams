@@ -5,10 +5,10 @@ import IntlMessages from "../../helpers/IntlMessages";
 import { Card } from "reactstrap";
 
 
-const DataListView = ({ product, collect }) => {
+const DataListViewKaryawan = ({ karyawan, collect }) => {
   return (
-    <Colxx xxs="12" className="mb-3" key  ={product.code}>
-      <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
+    <Colxx xxs="12" className="mb-3" key={karyawan.code}>
+      <ContextMenuTrigger id="menu_id" data={karyawan.id} collect={collect}>
         <Card className="btn-shadow" onClick={() => window.location.href="/app/menu-barang/detail-barang"}>
           <div className="d-flex flex-grow-1 min-width-zero">
             <div className="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
@@ -16,23 +16,23 @@ const DataListView = ({ product, collect }) => {
                 <IntlMessages id="No" />
               </p>
               <p className="mb-1 text-p text-small w-50">
-                {product.code}
+                {karyawan.id}
               </p>
               <p className="mb-1 text-p text-small w-50">
-                {product.name}
+                {karyawan.name}
               </p>
               <p className="mb-1 text-p text-small w-50">
-                {product.category}
+                {karyawan.email}
+              </p>
+              {/* <p className="mb-1 text-p text-small w-50">
+                {karyawan.brand}
               </p>
               <p className="mb-1 text-p text-small w-50">
-                {product.brand}
+                {karyawan.year}
               </p>
               <p className="mb-1 text-p text-small w-50">
-                {product.year}
-              </p>
-              <p className="mb-1 text-p text-small w-50">
-                {product.qty}
-              </p>
+                {karyawan.qty}
+              </p> */}
             </div>
           </div>
         </Card>
@@ -41,4 +41,4 @@ const DataListView = ({ product, collect }) => {
   );
 };
 
-export default React.memo(DataListView);
+export default React.memo(DataListViewKaryawan);

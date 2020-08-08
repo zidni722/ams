@@ -27,10 +27,19 @@ class DetailPages extends Component {
           Authorization: 'Bearer ' + token
         }
       })
-        .then(res => {
-          const asset = res.data.data;
-          this.setState( {asset} );
-        })
+      .then(response => {
+        let res = response.data
+        return {
+                data: res.data,
+
+              };
+      })
+      .then(res => {
+        this.setState({
+          items: res.data,
+          isLoading: true
+        });
+      });
     }
     render() {
       const barang = dataProducts.slice(0,1);
