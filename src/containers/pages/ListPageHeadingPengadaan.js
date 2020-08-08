@@ -63,7 +63,7 @@ class ListPageHeadingPengadaan extends Component {
 
             <div className="text-zero top-right-button-container">
             <Link 
-              to="/app/menu-barang/form-tambah-barang" 
+              to="/app/menu-pengadaan/form-pengadaan" 
               className="btn btn-lg btn-primary">
               Tambah Barang
             </Link>

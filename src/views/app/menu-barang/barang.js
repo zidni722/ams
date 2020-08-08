@@ -31,7 +31,7 @@ class DataListPages extends Component {
         { column: "name", label: "Nama Barang" },
         { column: "qty", label: "Stok" }
       ],
-      
+
       pageSizes: [10, 20, 30, 50, 100],
 
       selectedOrderOption: { column: "name", label: "Nama Barang" },
@@ -276,7 +276,7 @@ class DataListPages extends Component {
       <Fragment>
         <div className="disable-text-selection">
           <ListPageHeading
-            heading="menu.data-barang"
+            heading="menu.barang"
             displayMode={displayMode}
             changeDisplayMode={this.changeDisplayMode}
             handleChangeSelectAll={this.handleChangeSelectAll}

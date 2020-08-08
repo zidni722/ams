@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { FormikReactSelect } from "./FormikFields";
-import ImageUpload from "./UploadImg";
 import PhoneInput from 'react-phone-input-2'
 import { NotificationManager } from "../../components/common/react-notifications";
 import { servicePath, token } from "../../constants/defaultValues";
@@ -121,8 +120,6 @@ class FormikPenambahanKaryawan extends Component {
     return (
       <Row className="mb-4">
         <Colxx xxs="12">
-        <Colxx xxs="12" lg="5" xl="4" className="mb-5"><br/><br/>
-        </Colxx>
           <Card>
             <CardBody>
               
@@ -164,13 +161,6 @@ class FormikPenambahanKaryawan extends Component {
                   isSubmitting
                 }) => (
                   <Form className="av-tooltip tooltip-label-right">
-                    <FormGroup className="img-thumbnail card-img social-profile-img">
-                      <ImageUpload 
-                          name="picture"
-                          id="picture"   
-                      />
-                    </FormGroup><br/><br/>
-
                     <FormGroup className="error-l-50">
                       <Label>NPK</Label>
                       <Field 
@@ -289,13 +279,17 @@ class FormikPenambahanKaryawan extends Component {
                         className="form-control" 
                         name="noTlpn"
                         country='id'
-                        type="tel"
+                        validate={{
+                          number: {
+                            value: true,
+                            errorMessage: "Value must be a number"
+                          },
+                          required: {
+                            value: true,
+                            errorMessage: "Please enter a number"
+                          }
+                        }}
                       />
-                      {errors.phone && touched.phone ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.phone}
-                        </div>
-                      ) : null}
                     </FormGroup>
 
                     <FormGroup>

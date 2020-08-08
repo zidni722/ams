@@ -20,20 +20,18 @@ class DetailPages extends Component {
         };
     }
     categoryList() {
-      Axios
-        .get(
-          `${apiUrl}/assets`,
-          {
-            headers : {
-              Authorization: 'Bearer ' + token
-            }
-          }
-        )
-        .then(response => {
-          let res = response.data
-          console.log(res);
-        });
-    };
+      Axios.get(
+        `${apiUrl}/assets`,
+      {
+        headers : {
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          const asset = res.data.data;
+          this.setState( {asset} );
+        })
+    }
     render() {
       const barang = dataProducts.slice(0,1);
         return (

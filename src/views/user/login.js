@@ -13,6 +13,9 @@ import { servicePath, token } from "../../constants/defaultValues";
 import Axios from "axios";
 
 const apiUrl = servicePath;
+const apiClient = Axios.create({
+  baseURL: apiUrl
+})
 
 class Login extends Component {
   constructor(props) {
@@ -27,13 +30,28 @@ class Login extends Component {
     if (!this.props.loading) {
       if (values.email !== "" && values.password !== "") {
         this.props.loginUser(values, this.props.history);
-          Axios.post(
-            `${apiUrl}/auth/login`,
-          {
-            headers : {
-              Authorization: 'Bearer ' + token
-            }
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsInV1aWQiOiJlOGViN2QxZS03MDU1LTQxYzUtOWM3OC1hNDIyYWJjYzBkMWYiLCJuYW1lIjoiQXNyaSIsImVtYWlsIjoiYXNyaUBwYXdvb24uY29tIiwicm9sZV9pZCI6MjEsImRpdmlzaW9uX2lkIjoxLCJzdGF0dXMiOjAsImlhdCI6MTU5NjcyNjU3N30.bzIoNbnxSqxuzuV1d49S7JypGP9kC-wneFVZ6dMecPk';
+        apiClient.defaults.headers.common['Accept'] = 'application/json';
+
+        const url = '/auth/login'
+        let data = {
+          "email" : values.email,
+          "password" : values.password
+      }
+        console.log(data)
+
+        apiClient.post(url, data)
+          .then((res) => {
+            const category = res.data.data;
+            console.log(res)
           })
+          // Axios.post(
+          //   apiUrl + '/auth/login',
+          // {
+          //   headers : {
+          //     Authorization: 'Bearer ' + token
+          //   }
+          // })
       }
     }
   }

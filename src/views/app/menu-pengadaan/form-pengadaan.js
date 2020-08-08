@@ -19,13 +19,9 @@ export default class FormPengadaan extends Component {
           </Colxx>
         </Row>
         <Row>
-          <Colxx xxs="12" lg="3" className="mb-3"/>
-          <Colxx xxs="12" lg="6" className="mb-3">
-          <Card>
-            <CardBody>
-              <FormikPengadaan />
-            </CardBody>
-          </Card>
+          <Colxx xxs="12" lg="2" className="mb-3"/>
+          <Colxx xxs="12" lg="8" className="mb-3">
+            <FormikPengadaan />
           </Colxx>
         </Row>
       </Fragment>

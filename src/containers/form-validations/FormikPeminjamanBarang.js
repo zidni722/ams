@@ -120,8 +120,7 @@ class FormikPeminjamanBarang extends Component {
       <Row className="mb-4">
         <Colxx xxs="12" lg="12" xl="12" className="mb-3">
           <Card className="d-flex flex-row mb-3">
-            <CardBody> 
-              
+            <CardBody>              
               <Formik>
                 {({
                   setFieldValue,
