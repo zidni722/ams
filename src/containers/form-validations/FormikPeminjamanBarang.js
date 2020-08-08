@@ -30,7 +30,7 @@ const SignupSchema = Yup.object().shape({
   .required("Nama Barang harus diisi!")
 });
 
-class FormikPengadaan extends Component {
+class FormikPeminjamanBarang extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,6 +55,7 @@ class FormikPengadaan extends Component {
         }
         this.setState( {dataCategories} );
       })
+      
 
       Axios.get(
         `${apiUrl}/assets`,
@@ -97,6 +98,8 @@ class FormikPengadaan extends Component {
     apiClient.defaults.headers.common['Accept'] = 'application/json';
 
     const url = '/borrows'
+    console.log("---")
+    console.log(this.state.assetID)
     let data = {
       //"asset_id" : "7caaa334-8f6e-42b0-96eb-dde2a483804e"
       "asset_id" : this.state.categoryID
@@ -117,8 +120,7 @@ class FormikPengadaan extends Component {
       <Row className="mb-4">
         <Colxx xxs="12" lg="12" xl="12" className="mb-3">
           <Card className="d-flex flex-row mb-3">
-            <CardBody> 
-              
+            <CardBody>              
               <Formik>
                 {({
                   setFieldValue,
@@ -187,4 +189,4 @@ class FormikPengadaan extends Component {
   }
 }
 
-export default FormikPengadaan;
+export default FormikPeminjamanBarang;

@@ -11,8 +11,11 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export class FormikReactSelect extends React.Component {
-  handleChange = value => {
-    this.props.onChange(this.props.name, value);
+  handleChange = event => {
+    this.props.onChange(this.props.name, event);
+    console.log(event)
+    this.setState( {assetID: event.value} );
+    //this.props.assetID = event.value;
   };
   handleBlur = () => {
     this.props.onBlur(this.props.name, true);

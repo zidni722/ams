@@ -7,7 +7,11 @@ import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
 import { dataProducts } from "../../../data/products";
 import { DataPeminjam } from "../../../containers/ui/TablePeminjam";
+import Axios from "axios";
+import { servicePath, token } from "../../../constants/defaultValues";
 
+
+const apiUrl = servicePath;
 
 class DetailPages extends Component {
     constructor(props) {
@@ -15,7 +19,19 @@ class DetailPages extends Component {
         this.state = {
         };
     }
-
+    categoryList() {
+      Axios.get(
+        `${apiUrl}/assets`,
+      {
+        headers : {
+          Authorization: 'Bearer ' + token
+        }
+      })
+        .then(res => {
+          const asset = res.data.data;
+          this.setState( {asset} );
+        })
+    }
     render() {
       const barang = dataProducts.slice(0,1);
         return (

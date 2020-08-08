@@ -7,6 +7,9 @@ const Barang = React.lazy(() =>
 const DetailsPages = React.lazy(() =>
   import(/* webpackChunkName: "detail-barang" */ './detail-barang')
 );
+const FormTambahBarang = React.lazy(() =>
+  import(/* webpackChunkName: "form-tambah-barang" */ './form-tambah-barang')
+);
 const MenuBarang = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -18,6 +21,10 @@ const MenuBarang = ({ match }) => (
       <Route
         path={`${match.url}/detail-barang`}
         render={props => <DetailsPages {...props} />}
+      />
+      <Route
+        path={`${match.url}/form-tambah-barang`}
+        render={props => <FormTambahBarang {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

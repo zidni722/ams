@@ -30,7 +30,7 @@ const SignupSchema = Yup.object().shape({
   .required("Nama Barang harus diisi!")
 });
 
-class FormikPengadaan extends Component {
+class FormikTambahBarang extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -187,4 +187,4 @@ class FormikPengadaan extends Component {
   }
 }
 
-export default FormikPengadaan;
+export default FormikTambahBarang;

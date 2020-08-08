@@ -3,7 +3,7 @@ import { Row } from "reactstrap";
 
 import axios from "axios";
 
-import { servicePath } from "../../../constants/defaultValues";
+import { servicePath, token } from "../../../constants/defaultValues";
 
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
@@ -11,7 +11,7 @@ import ListPageHeading from "../../../containers/pages/ListPageHeadingPengadaan"
 import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPengadaan from "../../../containers/pages/ListPengadaan";
 
-const apiUrl = servicePath + "/cakes/paging";
+const apiUrl = servicePath;
 
 class Pengadaan extends Component {
   constructor(props) {
@@ -261,7 +261,6 @@ class Pengadaan extends Component {
           <Row>
             <Colxx xxs="12" className="mb-4">
                 <ListItemPengadaan
-               
                 defaultPageSize={10}
                 />              
             </Colxx>

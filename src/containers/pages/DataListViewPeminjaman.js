@@ -5,12 +5,13 @@ import IntlMessages from "../../helpers/IntlMessages";
 import { Card } from "reactstrap";
 
 
-const DataListView = ({ product, collect }) => {
+const DataListViewPeminjaman = ({ product, collect }) => {
   return (
-    <Colxx xxs="12" className="mb-3" key={product.code}>
+    <Colxx xxs="12" className="mb-3">
       <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
         <Card className="btn-shadow" onClick={() => window.location.href="/app/menu-barang/detail-barang"}>
           <div className="d-flex flex-grow-1 min-width-zero">
+            
             <div className="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
               <p className="mb-1 text-p text-small w-50">
                 <IntlMessages id="No" />
@@ -41,4 +42,4 @@ const DataListView = ({ product, collect }) => {
   );
 };
 
-export default React.memo(DataListView);
+export default React.memo(DataListViewPeminjaman);
