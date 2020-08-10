@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
@@ -115,53 +115,108 @@ class FormikTambahBarang extends Component {
                 }) => (
 
                   <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
-                    <FormGroup row>
-                      <Colxx sm={6}>
-                        <FormGroup className="error-l-100">
-                          <Label>Jenis Barang</Label>
-                          <FormikReactSelect
-                            name="JenisBarang"
-                            id="jenisbarang"
-                            value={values.dataCategories}
-                            isMulti={false}
-                            options={this.state.dataCategories}
-                            onChange={handleChange}
-                            onBlur={setFieldTouched}
-                          />
-                          {errors.categories && touched.categories ? (
-                            <div className="invalid-feedback d-block">
-                              {errors.categories}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                      </Colxx>
-                      <Colxx sm={6}>
-                        <FormGroup className="error-l-100">
-                          <Label>Nama Barang</Label>
-                          <FormikReactSelect
-                            name="NamaBarang"
-                            id="namabarang"
-                            value={values.dataAssets}
-                            isMulti={false}
-                            options={this.state.dataAssets}
-                            onChange={handleChange}
-                            onBlur={setFieldTouched}
-                          />
-                          {errors.assets && touched.assets ? (
-                            <div className="invalid-feedback d-block">
-                              {errors.assets}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                      </Colxx>
+                    <FormGroup className="error-l-100">
+                      <Label>Kode Barang</Label>
+                      <Field className="form-control" name="code" />
+                      {errors.firstName && touched.firstName ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.firstName}
+                        </div>
+                      ) : null}
                     </FormGroup>
 
-                      <div className="d-flex justify-content-between align-items-center"><p/>
-                        <Button color="primary" type="submit">
-                          Submit
-                        </Button>
-                      </div>
+                    <FormGroup className="error-l-100">
+                      <Label>Nama Barang</Label>
+                      <Field className="form-control" name="name" />
+                      {errors.firstName && touched.firstName ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.firstName}
+                        </div>
+                      ) : null}
+                    </FormGroup>
 
+                    <FormGroup className="error-l-100">
+                      <Label>Jenis Barang</Label>
+                      <FormikReactSelect
+                        name="category"
+                        id="category"
+                        value={values.dataCategories}
+                        isMulti={false}
+                        options={this.state.dataCategories}
+                        onChange={handleChange}
+                        onBlur={setFieldTouched}
+                      />
+                      {errors.categories && touched.categories ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.categories}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+
+                    <FormGroup className="error-l-100">
+                      <Label>Merek</Label>
+                      <Field className="form-control" name="brand" />
+                      {errors.firstName && touched.firstName ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.firstName}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+
+                    <FormGroup className="error-l-50">
+                      <Label>Tahun</Label>
+                      <Field 
+                        className="form-control" 
+                        name="year"
+                        type="number" 
+                      />
+                      {errors.npk && touched.npk ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.npk}
+                        </div>
+                      ) : null}
+                    </FormGroup>
+
+                    <FormGroup className="error-l-50">
+                      <Label>Jumlah Barang</Label>
+                      <Field 
+                        className="form-control" 
+                        name="jumlah"
+                        type="number" 
+                      />
+                      {errors.npk && touched.npk ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.npk}
+                        </div>
+                      ) : null}
+                    </FormGroup>    
+
+                    <FormGroup className="error-l-50">
+                      <Label>Harga Barang</Label>
+                      <Field 
+                        className="form-control" 
+                        name="jumlah"
+                        type="number" 
+                      />
+                      {errors.npk && touched.npk ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.npk}
+                        </div>
+                      ) : null}
+                    </FormGroup>  
+
+                    <FormGroup className="error-l-50">
+                      <Label>Upload Gambar</Label>
+                        <div className="mb-2">
+                          <input type="file" name="image" onChange= {this.onChange} />
+                        </div>
+                    </FormGroup>
+
+                    <div className="d-flex justify-content-between align-items-center"><p/>
+                      <Button color="primary" size="lg" type="submit">
+                        Submit
+                      </Button>
+                    </div>
                   </Form>
                 )}
               </Formik>

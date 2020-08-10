@@ -30,23 +30,32 @@ module.exports = {
   /* 03.Menu */
   "menu.app": "Home",
   "menu.dashboards": "Dashboards",
+  
   "menu.barang": "Barang",
   "menu.detail-barang": "Detail Barang",
+  "menu.form-tambah-barang": "Form Tambah Barang",
+
   "menu.peminjaman": "Peminjaman",
   "menu.form-peminjaman": "Form Peminjaman",
   "menu.detail-peminjaman": "Detail Peminjaman",
+
   "menu.pengembalian": "Pengembalian",
   "menu.form-pengembalian": "Pengembalian Barang",
   "menu.detail-pengembalian": "Detail Pengembalian",
+
   "menu.perbaikan": "Perbaikan",
   "menu.form-perbaikan": "Perbaikan Perbaikan",
   "menu.detail-perbaikan": "Detail Perbaikan",
+
   "menu.pengadaan": "Pengadaan",
   "menu.detail-pengadaan": "Detail Pengadaan",
+  "menu.form-pengadaan": "Form Pengadaan",
+
   "menu.karyawan": "Karyawan",
   "menu.menu-karyawan": "Menu Karyawan",
   "menu.detail-karyawan": "Detail Karyawan",
   "menu.tambah-karyawan": "Tambah Karyawan",
+
   "menu.Profil": "Profil",
   "menu.profil": "Profil",
 

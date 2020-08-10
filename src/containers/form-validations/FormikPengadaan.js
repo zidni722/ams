@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
@@ -117,8 +117,7 @@ class FormikPengadaan extends Component {
       <Row className="mb-4">
         <Colxx xxs="12" lg="12" xl="12" className="mb-3">
           <Card className="d-flex flex-row mb-3">
-            <CardBody> 
-              
+            <CardBody>  
               <Formik>
                 {({
                   setFieldValue,
@@ -168,13 +167,12 @@ class FormikPengadaan extends Component {
                           ) : null}
                         </FormGroup>
                       </Colxx>
-                    </FormGroup>
-
-                      <div className="d-flex justify-content-between align-items-center"><p/>
-                        <Button color="primary" type="submit">
-                          Submit
-                        </Button>
-                      </div>
+                    </FormGroup>                
+                    <div className="d-flex justify-content-between align-items-center"><p/>
+                      <Button color="primary" size="lg" type="submit">
+                        Submit
+                      </Button>
+                    </div>
 
                   </Form>
                 )}

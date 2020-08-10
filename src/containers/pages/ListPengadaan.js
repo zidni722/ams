@@ -14,9 +14,6 @@ const Title = () => {
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
             <IntlMessages id="No" />
           </p>
-          <p className=" mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Kode Barang" />
-          </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
             <IntlMessages id="Nama Barang" />
           </p>
@@ -24,7 +21,7 @@ const Title = () => {
             <IntlMessages id="Jenis Barang" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Nama Peminjam" />
+            <IntlMessages id="Jumlah Barang" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
             <IntlMessages id="Tanggal Pengajuan" />
@@ -49,7 +46,7 @@ const Listpengadaan = ({ id, code, title, category, tenant, createDate, verifica
       <div className="d-flex flex-grow-1 min-width-zero">
         
         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-        <NavLink
+          <NavLink
             to="#"
             className="mb-1 text-p text-small w-50"
           >
@@ -58,15 +55,10 @@ const Listpengadaan = ({ id, code, title, category, tenant, createDate, verifica
           <NavLink
             to="#"
             className="mb-1 text-p text-small w-50"
-          >{code}
-          </NavLink>
-          <NavLink
-            to="#"
-            className="mb-1 text-p text-small w-50"
           >{title}
           </NavLink>
           <p className="mb-1 text-p text-small w-50">{category}</p>
-          <p className="mb-1 text-p text-small w-50">{tenant}</p>
+          <p className="mb-1 text-p text-small w-50">10</p>
           <p className="mb-1 text-p text-small w-50">{createDate}</p>
           <p className="mb-1 text-p text-small w-50">{verificationDate}</p>
           
