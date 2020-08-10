@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
@@ -33,10 +33,9 @@ const SignupSchema = Yup.object().shape({
 class FormikTambahBarang extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      categories: [],
-      assets: []
+      'categories': '',
+      'assets': ''
     };
   }
   componentDidMount() {
@@ -86,30 +85,15 @@ class FormikTambahBarang extends Component {
     }
   }
 
-  handleSubmit = event => {
+  handlerChange = (e) =>{
+    this.setState({[e.target.name] : e.target.value})
+  }
+
+  handlerSubmit = async (event) => {
     event.preventDefault();
-    
-    const apiClient = Axios.create({
-      baseURL: apiUrl
-    })
 
-    apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsInV1aWQiOiJlOGViN2QxZS03MDU1LTQxYzUtOWM3OC1hNDIyYWJjYzBkMWYiLCJuYW1lIjoiQXNyaSIsImVtYWlsIjoiYXNyaUBwYXdvb24uY29tIiwicm9sZV9pZCI6MjEsImRpdmlzaW9uX2lkIjoxLCJzdGF0dXMiOjAsImlhdCI6MTU5NjcyNjU3N30.bzIoNbnxSqxuzuV1d49S7JypGP9kC-wneFVZ6dMecPk';
-    apiClient.defaults.headers.common['Accept'] = 'application/json';
-
-    const url = '/borrows'
-    let data = {
-      //"asset_id" : "7caaa334-8f6e-42b0-96eb-dde2a483804e"
-      "asset_id" : this.state.categoryID
-    }
-    console.log(this.state)
-    console.log(data)
-
-    apiClient.post(url, data)
-      .then((res) => {
-        const category = res.data.data;
-        console.log(res)
-        this.setState( {category} );
-      })
+    await Axios.post(`${apiUrl}/users`, this.state)
+    this.props.history.push('/karyawan')
   }
 
   render() {
@@ -122,13 +106,15 @@ class FormikTambahBarang extends Component {
               <Formik>
                 {({
                   setFieldValue,
+                  handleChange,
+                  handleSubmit,
                   setFieldTouched,
                   values,
                   errors,
                   touched,
                 }) => (
 
-                  <Form onSubmit={this.handleSubmit} className="av-tooltip tooltip-label-right">
+                  <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
                     <FormGroup row>
                       <Colxx sm={6}>
                         <FormGroup className="error-l-100">
@@ -139,7 +125,7 @@ class FormikTambahBarang extends Component {
                             value={values.dataCategories}
                             isMulti={false}
                             options={this.state.dataCategories}
-                            onChange={setFieldValue}
+                            onChange={handleChange}
                             onBlur={setFieldTouched}
                           />
                           {errors.categories && touched.categories ? (
@@ -158,7 +144,7 @@ class FormikTambahBarang extends Component {
                             value={values.dataAssets}
                             isMulti={false}
                             options={this.state.dataAssets}
-                            onChange={setFieldValue}
+                            onChange={handleChange}
                             onBlur={setFieldTouched}
                           />
                           {errors.assets && touched.assets ? (

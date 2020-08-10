@@ -9,7 +9,7 @@ import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
 import ListPageHeadingNull from "../../../containers/pages/ListPageHeadingNull";
 import { Colxx } from "../../../components/common/CustomBootstrap";
-import ListItemPengembalian from "../../../containers/pages/ListPeminjaman";
+import ListItemPengembalian from "../../../containers/pages/ListPengembalian";
 
 const apiUrl = servicePath + "/cakes/paging";
 

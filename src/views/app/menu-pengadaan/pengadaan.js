@@ -3,7 +3,7 @@ import { Row } from "reactstrap";
 
 import axios from "axios";
 
-import { servicePath, token } from "../../../constants/defaultValues";
+import { servicePath } from "../../../constants/defaultValues";
 
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";

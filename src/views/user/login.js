@@ -8,7 +8,7 @@ import { Formik, Form, Field } from "formik";
 import { loginUser } from "../../redux/actions";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
-import { servicePath, token } from "../../constants/defaultValues";
+import { servicePath } from "../../constants/defaultValues";
 
 import Axios from "axios";
 
@@ -42,8 +42,6 @@ class Login extends Component {
 
         apiClient.post(url, data)
           .then((res) => {
-            const category = res.data.data;
-            console.log(res)
           })
           // Axios.post(
           //   apiUrl + '/auth/login',

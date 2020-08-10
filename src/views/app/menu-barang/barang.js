@@ -303,7 +303,6 @@ class DataListPages extends Component {
                 key={product.name}
                 product={product}
                 isSelect={this.state.selectedItems.includes(product.name)}
-                onCheckItem={this.onCheckItem}
                 collect={collect}
               />
             );

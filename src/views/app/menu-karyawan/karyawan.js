@@ -8,10 +8,8 @@ import { servicePath, token } from "../../../constants/defaultValues";
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
 import ListPageHeadingUser from "../../../containers/pages/ListPageHeadingUser";
-import { Colxx } from "../../../components/common/CustomBootstrap";
 import AddNewModalUser from "../../../containers/pages/AddNewModalUser";
-import ListPegawai from "../../../containers/pages/ListPegawai";
-import TitleKaryawan from "../../../containers/pages/ListPegawai";
+import TitleKaryawan from "../../../containers/pages/TitleKaryawan";
 import DataListViewKaryawan from "../../../containers/pages/DataListViewKaryawan";
 
 function collect(props) {
@@ -315,9 +313,9 @@ class Pengadaan extends Component {
             {this.state.employee.map(karyawan => {
             return (
                 <DataListViewKaryawan
-                  key={karyawan.name}
+                  key={karyawan.id}
                   karyawan={karyawan}
-                  karyawan={this.state.selectedItems.includes(karyawan.name)}
+                  isSelect={this.state.selectedItems.includes(karyawan.name)}
                   collect={collect}
                   defaultPageSize={10}
                 /> 

@@ -62,10 +62,10 @@ class FormikPenambahanKaryawan extends Component {
     this.state = { 
       pictures: [],
       divisions: [],
-      roles: []
+      roles: [],
+      access_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXVpZCI6IjU2NzkyZTFjLTc3MDEtNDdjZC1iMzdkLTg1Y2VjMzI3MjkyZCIsIm5hbWUiOiJCaXlhbiIsImVtYWlsIjoiYml5YW4uYmVsaW5kYUBwYXdvb24uY29tIiwicm9sZV9pZCI6MSwiZGl2aXNpb25faWQiOjQsInN0YXR1cyI6MCwiaWF0IjoxNTk2OTQ1NjUxfQ.GRw5DCBxkbtZt9VcTDcA9_KWAXqw23Xav17AC3BdKTg'
     };
     this.onDrop = this.onDrop.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
     Axios.get(
@@ -105,16 +105,24 @@ class FormikPenambahanKaryawan extends Component {
         pictures: this.state.pictures.concat(picture),
     });
   }
-  handleSubmit = (values, { setSubmitting }) => {
-    const payload = {
-      ...values,
-      role: values.role.value
-    };
-    setTimeout(() => {
-      console.log(JSON.stringify(payload, null, 2));
-      setSubmitting(false);
-    }, 1000);
-  };
+
+  handleChange = (e) =>{
+    const{name,value} = e.target
+    this.setState({ [name]: value })
+    console.log(value)
+  }
+
+  handlerSubmit = async (event,values) => {
+    event.preventDefault();
+    console.log(values)
+
+    await Axios.post(`${apiUrl}/users`, this.state, {
+      headers : {
+        Authorization: 'Bearer ' + token
+    }
+  })
+    this.props.history.push('/karyawan')
+  }
 
   render() {
     return (
@@ -147,7 +155,8 @@ class FormikPenambahanKaryawan extends Component {
                     null,
                     null,
                     + JSON.stringify(fields, null, 4)
-                  );
+                  ); 
+                  this.handlerSubmit.bind(this,fields)
               }}>
                 {({
                   handleSubmit,
@@ -160,7 +169,7 @@ class FormikPenambahanKaryawan extends Component {
                   touched,
                   isSubmitting
                 }) => (
-                  <Form className="av-tooltip tooltip-label-right">
+                  <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
                     <FormGroup className="error-l-50">
                       <Label>NPK</Label>
                       <Field 

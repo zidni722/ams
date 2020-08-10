@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, CardBody, Card} from "reactstrap";
+import { Row } from "reactstrap";
 import { Colxx, Separator } from "../../../components/common/CustomBootstrap";
 import Breadcrumb from "../../../containers/navs/Breadcrumb";
 

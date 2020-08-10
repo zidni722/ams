@@ -7,39 +7,17 @@ import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
 import { dataProducts } from "../../../data/products";
 import { DataPeminjam } from "../../../containers/ui/TablePeminjam";
-import Axios from "axios";
-import { servicePath, token } from "../../../constants/defaultValues";
 
-
-const apiUrl = servicePath;
 
 class DetailPages extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          detailAsset:props.detailAsset
         };
     }
-    categoryList() {
-      Axios.get(
-        `${apiUrl}/assets`,
-      {
-        headers : {
-          Authorization: 'Bearer ' + token
-        }
-      })
-      .then(response => {
-        let res = response.data
-        return {
-                data: res.data,
-
-              };
-      })
-      .then(res => {
-        this.setState({
-          items: res.data,
-          isLoading: true
-        });
-      });
+    detailAsset() {
+      console.log(this.state.detailAsset)
     }
     render() {
       const barang = dataProducts.slice(0,1);
