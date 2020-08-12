@@ -26,7 +26,7 @@ class DetailPerbaikan extends Component {
             <Fragment>
                 <Row>
                     <Colxx xxs="12">
-                        <Breadcrumb heading="menu.detail-pengembalian" match={this.props.match} />
+                        <Breadcrumb heading="menu.detail-perbaikan" match={this.props.match} />
                         <div className="text-zero top-right-button-container">
                           <UncontrolledDropdown>
                             <DropdownToggle
@@ -35,7 +35,7 @@ class DetailPerbaikan extends Component {
                               size="lg"
                               outline
                               className="top-right-button top-right-button-single">
-                              <IntlMessages id="Actions" />
+                              <IntlMessages id="ACTIONS" />
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem>

@@ -204,34 +204,6 @@ class FormikPenambahanKaryawan extends Component {
                       ) : null}
                     </FormGroup>
 
-                    <FormGroup className="error-l-75">
-                        <Label>Password</Label>
-                        <Field
-                          className="form-control"
-                          name="password"
-                          type="password"
-                        />
-                        {errors.password && touched.password ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.password}
-                          </div>
-                        ) : null}
-                    </FormGroup>
-                    
-                    <FormGroup className="error-l-125">
-                      <Label>Confirm Password</Label>                      
-                      <Field
-                        className="form-control" 
-                        name="confirmPassword" 
-                        type="password"
-                      /> 
-                      {errors.confirmPassword && touched.confirmPassword ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.confirmPassword}
-                        </div>
-                      ) : null}
-                    </FormGroup>
-
                     <FormGroup>
                       <Label>Email</Label>
                       <Field

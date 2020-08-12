@@ -35,7 +35,7 @@ class DetailPengembalian extends Component {
                               size="lg"
                               outline
                               className="top-right-button top-right-button-single">
-                              <IntlMessages id="Actions" />
+                              <IntlMessages id="ACTIONS" />
                             </DropdownToggle>
                             <DropdownMenu>
                               <DropdownItem>

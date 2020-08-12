@@ -60,13 +60,22 @@ class ListPageHeadingBarang extends Component {
             <h1>
               <IntlMessages id={heading} />
             </h1>
-
+            
             <div className="text-zero top-right-button-container">
-            <Link 
-              to="/app/menu-barang/form-tambah-barang" 
-              className="btn btn-lg btn-primary">
-              Tambah Barang
-            </Link>
+              <Link 
+                to="/app/menu-barang/form-tambah-barang" 
+                className="btn btn-lg btn-primary">
+                Tambah Barang
+              </Link>
+            <div className="position-relative d-none d-none d-lg-inline-block">
+              <a
+                className="btn btn-outline-primary btn-sm ml-2"
+                target="_top"
+                href="#"
+              >
+              <i className="simple-icon-cloud-download"/>
+              </a>
+            </div>
             </div>
             <Breadcrumb match={match} />
           </div>

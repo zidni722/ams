@@ -21,9 +21,6 @@ const Title = () => {
             <IntlMessages id="Jenis Barang" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Jumlah Barang" />
-          </p>
-          <p className="mb-1 text-p text-small font-weight-semibold w-50">
             <IntlMessages id="Tanggal Pengajuan" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
@@ -58,7 +55,6 @@ const Listpengadaan = ({ id, code, title, category, tenant, createDate, verifica
           >{title}
           </NavLink>
           <p className="mb-1 text-p text-small w-50">{category}</p>
-          <p className="mb-1 text-p text-small w-50">10</p>
           <p className="mb-1 text-p text-small w-50">{createDate}</p>
           <p className="mb-1 text-p text-small w-50">{verificationDate}</p>
           
