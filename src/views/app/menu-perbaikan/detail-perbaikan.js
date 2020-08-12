@@ -13,16 +13,58 @@ class DetailPerbaikan extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          detailAsset:props.detailAsset
+          detailAsset:props.detailAsset,
+          modal: false
         };
     }
     detailAsset() {
       console.log(this.state.detailAsset)
     }
+
+    toggle = () => {
+      this.setState(prevState => ({
+        modal: !prevState.modal
+      }));
+    };
     render() {
       const barang = dataProducts.slice(0,1);
       const pegawai = User.slice(0,1);
         return (
+            <Card className="mb-4">
+              <CardBody>
+                <CardTitle>
+                  <IntlMessages id="modal.basic" />
+                </CardTitle>
+                <div>
+                  <Button color="primary" outline onClick={this.toggle}>
+                    <IntlMessages id="modal.launch-demo-modal" />
+                  </Button>
+                  <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                    <ModalHeader toggle={this.toggle}>
+                      <IntlMessages id="modal.modal-title" />
+                    </ModalHeader>
+                    <ModalBody>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                      sint occaecat cupidatat non proident, sunt in culpa qui
+                      officia deserunt mollit anim id est laborum.
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="primary" onClick={this.toggle}>
+                        Do Something
+                      </Button>{" "}
+                      <Button color="secondary" onClick={this.toggle}>
+                        Cancel
+                      </Button>
+                    </ModalFooter>
+                  </Modal>
+                </div>
+              </CardBody>
+            </Card>
             <Fragment>
                 <Row>
                     <Colxx xxs="12">
@@ -38,7 +80,7 @@ class DetailPerbaikan extends Component {
                               <IntlMessages id="ACTIONS" />
                             </DropdownToggle>
                             <DropdownMenu>
-                              <DropdownItem>
+                              <DropdownItem onClick={this.toggle}>
                                 <IntlMessages id="Terima" />
                               </DropdownItem>
                               <DropdownItem >

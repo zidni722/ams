@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import Select from "react-select";
 import { CustomInput } from "reactstrap";
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 import TagsInput from "react-tagsinput";
 import "react-tagsinput/react-tagsinput.css";
@@ -11,11 +12,16 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export class FormikReactSelect extends React.Component {
-  handleChange = event => {
+  constructor(props) {
+    super(props);
+  }
+
+  handleChange = (event) => {
+    const {value} = event;
+    const name = this.props.name
+    this.setState({[name]: value});
+    reactLocalStorage.set(name, value);
     this.props.onChange(this.props.name, event);
-    console.log(event)
-    this.setState( {assetID: event.value} );
-    //this.props.assetID = event.value;
   };
   handleBlur = () => {
     this.props.onBlur(this.props.name, true);
@@ -27,7 +33,7 @@ export class FormikReactSelect extends React.Component {
         classNamePrefix="react-select"
         options={this.props.options}
         isMulti={this.props.isMulti}
-        onChange={this.handleChange}
+        onChange={this.handleChange.bind(this)}
         onBlur={this.handleBlur}
         value={this.props.value}
       />
