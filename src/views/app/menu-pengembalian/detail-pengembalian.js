@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Card, Button, CardBody, CardTitle, DropdownMenu, UncontrolledDropdown, DropdownToggle, DropdownItem, Table } from "reactstrap";
+import { Row, Card, Button, CardBody, CardTitle, DropdownMenu, UncontrolledDropdown, DropdownToggle, DropdownItem, Table, Modal, ModalHeader, ModalFooter, ModalBody } from "reactstrap";
 import Breadcrumb from "../../../containers/navs/Breadcrumb";
 import { Separator, Colxx } from "../../../components/common/CustomBootstrap";
 import { injectIntl } from "react-intl";
@@ -13,42 +13,66 @@ class DetailPengembalian extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          detailAsset:props.detailAsset
+          detailAsset:props.detailAsset,
+          modal: false
         };
     }
     detailAsset() {
       console.log(this.state.detailAsset)
     }
+    toggle = () => {
+      this.setState(prevState => ({
+        modal: !prevState.modal
+      }));
+    };
     render() {
       const barang = dataProducts.slice(0,1);
       const pegawai = User.slice(0,1);
         return (
             <Fragment>
                 <Row>
-                    <Colxx xxs="12">
-                        <Breadcrumb heading="menu.detail-pengembalian" match={this.props.match} />
-                        <div className="text-zero top-right-button-container">
-                          <UncontrolledDropdown>
-                            <DropdownToggle
-                              caret
-                              color="primary"
-                              size="lg"
-                              outline
-                              className="top-right-button top-right-button-single">
-                              <IntlMessages id="ACTIONS" />
-                            </DropdownToggle>
-                            <DropdownMenu>
-                              <DropdownItem>
-                                <IntlMessages id="Terima" />
-                              </DropdownItem>
-                              <DropdownItem >
-                                <IntlMessages id="Tolak" />
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
+                  <Colxx xxs="12">
+                      <Breadcrumb heading="menu.detail-pengembalian" match={this.props.match} />
+                      <div className="text-zero top-right-button-container">
+                        <UncontrolledDropdown>
+                          <DropdownToggle
+                            caret
+                            color="primary"
+                            size="lg"
+                            outline
+                            className="top-right-button top-right-button-single">
+                            <IntlMessages id="ACTIONS" />
+                          </DropdownToggle>
+                          <DropdownMenu>
+                            <DropdownItem onClick={this.toggle}>
+                              <IntlMessages id="Terima" />
+                            </DropdownItem>
+                            <DropdownItem >
+                              <IntlMessages id="Tolak" />
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
+                        <div>
+                          <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                            <ModalHeader toggle={this.toggle}>
+                              <IntlMessages id="Apakah anda yakin?" />
+                            </ModalHeader>
+                            <ModalBody>
+                              Apakah anda yakin akan menyetujui pengajuan pengembalian ini?
+                            </ModalBody>
+                            <ModalFooter>
+                              <Button color="primary" onClick={this.toggle}>
+                                Yakin
+                              </Button>{" "}
+                              <Button color="secondary" onClick={this.toggle}>
+                                Batal
+                              </Button>
+                            </ModalFooter>
+                          </Modal>
                         </div>
-                        <Separator className="mb-5" />
-                    </Colxx>
+                      </div>
+                      <Separator className="mb-5" />
+                  </Colxx>
                 </Row>
                 <Row>
                     <Colxx xxs="12" lg="8" xl="8" className="col-left">
@@ -90,28 +114,28 @@ class DetailPengembalian extends Component {
                           <Table borderless>
                                 <thead>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">NPK</td>
-                                    <td scope="col">{detailUser.npk}</td>
+                                    <th className="text-muted text-small" scope="col">NPK</th>
+                                    <th scope="col">{detailUser.npk}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">Nama</td>
-                                    <td scope="col">{detailUser.name}</td>
+                                    <th className="text-muted text-small" scope="col">Nama</th>
+                                    <th scope="col">{detailUser.name}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">Email</td>
-                                    <td scope="col">{detailUser.email}</td>
+                                    <th className="text-muted text-small" scope="col">Email</th>
+                                    <th scope="col">{detailUser.email}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">Divisi</td>
-                                    <td scope="col">{detailUser.divisi}</td>
+                                    <th className="text-muted text-small" scope="col">Divisi</th>
+                                    <th scope="col">{detailUser.divisi}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">No Telpn</td>
-                                    <td scope="col">{detailUser.noHP}</td>
+                                    <th className="text-muted text-small" scope="col">No Telpn</th>
+                                    <th scope="col">{detailUser.noHP}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">Alamat</td>
-                                    <td scope="col">{detailUser.address}</td>
+                                    <th className="text-muted text-small" scope="col">Alamat</th>
+                                    <th scope="col">{detailUser.address}</th>
                                   </tr>
                                 </thead>
                             </Table>          

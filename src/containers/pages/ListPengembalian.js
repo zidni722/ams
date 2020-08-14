@@ -10,9 +10,6 @@ const TitlePengembalian = () => {
     <Card className="d-flex flex-row mb-3">   
       <div className="d-flex flex-grow-1 min-width-zero">
         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center sm">
-          <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="No" />
-          </p>
           <p className=" mb-1 text-p text-small font-weight-semibold w-50">
             <IntlMessages id="Kode Barang" />
           </p>
@@ -44,11 +41,10 @@ const Listpengembalian = ({ id, code, title, category, tenant, createDate, verif
   
   return (
     
-    <Card onClick = {() => window.location.href="/app/menu-pengembalian/detail-pengembalian"} className="btn-shadow d-flex flex-row mb-3">
+    <Card onClick = {() => window.location.href="/app/menu-pengembalian/form-pengembalian"} className="btn-shadow d-flex flex-row mb-3">
       <div className="d-flex flex-grow-1 min-width-zero">
         
         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-          <p className="mb-1 text-p text-small w-50">{id}</p>
           <p className="mb-1 text-p text-small w-50">{code}</p>
           <p className="mb-1 text-p text-small w-50">{title}</p>
           <p className="mb-1 text-p text-small w-50">{category}</p>
@@ -58,7 +54,7 @@ const Listpengembalian = ({ id, code, title, category, tenant, createDate, verif
           
           <div className="mb-1 text-p text-small w-50 text-relative">
             <Badge color={statusColor} pill>
-              {status}
+              Dalam Peminjaman
             </Badge>
           </div>
         </CardBody>

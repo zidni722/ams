@@ -7,6 +7,9 @@ const Pengadaan = React.lazy(() =>
 const FormPengadaan = React.lazy(() =>
   import(/* webpackChunkName: "forpm-pengadaan" */ './form-pengadaan')
 );
+const DetailPengadaan = React.lazy(() =>
+  import(/* webpackChunkName: "detail-pengadaan" */ './detail-pengadaan')
+);
 const MenuPengadaan = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -18,6 +21,10 @@ const MenuPengadaan = ({ match }) => (
       <Route
         path={`${match.url}/form-pengadaan`}
         render={props => <FormPengadaan {...props} />}
+      />
+      <Route
+        path={`${match.url}/detail-pengadaan`}
+        render={props => <DetailPengadaan {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

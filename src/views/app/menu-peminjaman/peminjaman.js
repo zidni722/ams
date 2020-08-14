@@ -10,6 +10,7 @@ import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer
 import ListPageHeadingNull from "../../../containers/pages/ListPageHeadingNull";
 import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPeminjaman from "../../../containers/pages/ListPeminjaman";
+import ListPageHeadingPeminjaman from "../../../containers/pages/ListPageHeadingPeminjaman";
 
 const apiUrl = servicePath + "/cakes/paging";
 
@@ -250,7 +251,7 @@ class Peminjaman extends Component {
     ) : (
       <Fragment>
         <div className="disable-text-selection">
-          <ListPageHeadingNull
+          <ListPageHeadingPeminjaman
             heading="Peminjaman"
             displayMode={displayMode}
             changeDisplayMode={this.changeDisplayMode}

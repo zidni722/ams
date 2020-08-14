@@ -110,8 +110,10 @@ class FormPerbaikan extends Component {
                                 </div>
                                 <div className="pr-5 mb-3">
                                 <Button className="float-right mb-5" style={{float: 'right'}} size="lg" color="primary" type="submit">
-                                    Kembalikan
+                                    Ajukan Perbaikan
                                 </Button>{" "}
+                                </div>
+                                <div className="pr-2 pl-2">
                                 <Button className="float-right mb-5" style={{float: 'center'}} size="lg" color="outline-primary" type="button" onClick={() => {}}>
                                     Batal
                                   </Button>{" "}

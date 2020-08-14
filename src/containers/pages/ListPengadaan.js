@@ -12,9 +12,6 @@ const Title = () => {
       <div className="d-flex flex-grow-1 min-width-zero">
         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center sm">
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="No" />
-          </p>
-          <p className="mb-1 text-p text-small font-weight-semibold w-50">
             <IntlMessages id="Nama Barang" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
@@ -43,12 +40,6 @@ const Listpengadaan = ({ id, code, title, category, tenant, createDate, verifica
       <div className="d-flex flex-grow-1 min-width-zero">
         
         <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-          <NavLink
-            to="#"
-            className="mb-1 text-p text-small w-50"
-          >
-            {id}
-          </NavLink>
           <NavLink
             to="#"
             className="mb-1 text-p text-small w-50"

@@ -10,6 +10,9 @@ const DetailsPages = React.lazy(() =>
 const PenambahanKaryawan = React.lazy(() =>
   import(/* webpackChunkName: "detail-pegawai" */ './tambah-karyawan')
 );
+const EditKaryawan = React.lazy(() =>
+  import(/* webpackChunkName: "edit-pegawai" */ './edit-karyawan')
+);
 const MenuPegawai = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -25,6 +28,10 @@ const MenuPegawai = ({ match }) => (
       <Route
         path={`${match.url}/tambah-karyawan`}
         render={props => <PenambahanKaryawan {...props} />}
+      />
+      <Route
+        path={`${match.url}/edit-karyawan`}
+        render={props => <EditKaryawan {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

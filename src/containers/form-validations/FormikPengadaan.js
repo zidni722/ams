@@ -160,11 +160,11 @@ class FormikPengadaan extends Component {
                         </FormGroup>
                       </Colxx>
                     </FormGroup>                
-                    <div className="d-flex justify-content-between align-items-center"><p/>
+                    {/* <div className="d-flex justify-content-between align-items-center"><p/>
                       <Button color="primary" size="lg" type="submit">
                         Submit
                       </Button>
-                    </div>
+                    </div> */}
 
                   </Form>
                 )}

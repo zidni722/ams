@@ -33,9 +33,6 @@ const DataListView = ({ product, collect }) => {
           <div className="d-flex flex-grow-1 min-width-zero">
             <div className="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
               <p className="mb-1 text-p text-small w-50">
-                <IntlMessages id="No" />
-              </p>
-              <p className="mb-1 text-p text-small w-50">
                 {product.code}
               </p>
               <p className="mb-1 text-p text-small w-50">

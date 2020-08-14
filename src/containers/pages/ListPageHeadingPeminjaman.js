@@ -13,8 +13,9 @@ import { injectIntl } from "react-intl";
 import { Colxx, Separator } from "../../components/common/CustomBootstrap";
 import Breadcrumb from "../navs/Breadcrumb";
 import IntlMessages from "../../helpers/IntlMessages";
+import { Link } from "react-router-dom";
 
-class ListPageHeadingUser extends Component {
+class ListPageHeadingPeminjaman extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -61,14 +62,11 @@ class ListPageHeadingUser extends Component {
             </h1>
 
             <div className="text-zero top-right-button-container">
-              <Button
-                color="primary"
-                size="lg"
-                className="top-right-button"
-                onClick={ () =>  window.location.href='/app/menu-karyawan/tambah-karyawan'}>
-                <IntlMessages id="Tambah Karyawan" />
-              </Button>
-              {" "}
+            <Link 
+              to="/app/menu-peminjaman/form-peminjaman" 
+              className="btn btn-lg btn-primary">
+              Ajukan Peminjaman
+            </Link>
             </div>
             <Breadcrumb match={match} />
           </div>
@@ -94,13 +92,13 @@ class ListPageHeadingUser extends Component {
                     {selectedOrderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {orderOptions.map((user, index) => {
+                    {orderOptions.map((product, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeOrderBy(user.user)}
+                          onClick={() => changeOrderBy(product.column)}
                         >
-                          {user.label}
+                          {product.label}
                         </DropdownItem>
                       );
                     })}
@@ -146,4 +144,4 @@ class ListPageHeadingUser extends Component {
   }
 }
 
-export default injectIntl(ListPageHeadingUser);
+export default injectIntl(ListPageHeadingPeminjaman);

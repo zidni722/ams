@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Card, Button, CardBody, CardTitle, DropdownMenu, UncontrolledDropdown, DropdownToggle, DropdownItem, Table } from "reactstrap";
+import { Row, Card, Button, CardBody, CardTitle, DropdownMenu, UncontrolledDropdown, DropdownToggle, DropdownItem, Table, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import Breadcrumb from "../../../containers/navs/Breadcrumb";
 import { Separator, Colxx } from "../../../components/common/CustomBootstrap";
 import { injectIntl } from "react-intl";
@@ -30,41 +30,6 @@ class DetailPerbaikan extends Component {
       const barang = dataProducts.slice(0,1);
       const pegawai = User.slice(0,1);
         return (
-            <Card className="mb-4">
-              <CardBody>
-                <CardTitle>
-                  <IntlMessages id="modal.basic" />
-                </CardTitle>
-                <div>
-                  <Button color="primary" outline onClick={this.toggle}>
-                    <IntlMessages id="modal.launch-demo-modal" />
-                  </Button>
-                  <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                    <ModalHeader toggle={this.toggle}>
-                      <IntlMessages id="modal.modal-title" />
-                    </ModalHeader>
-                    <ModalBody>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                      sint occaecat cupidatat non proident, sunt in culpa qui
-                      officia deserunt mollit anim id est laborum.
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button color="primary" onClick={this.toggle}>
-                        Do Something
-                      </Button>{" "}
-                      <Button color="secondary" onClick={this.toggle}>
-                        Cancel
-                      </Button>
-                    </ModalFooter>
-                  </Modal>
-                </div>
-              </CardBody>
-            </Card>
             <Fragment>
                 <Row>
                     <Colxx xxs="12">
@@ -88,6 +53,24 @@ class DetailPerbaikan extends Component {
                               </DropdownItem>
                             </DropdownMenu>
                           </UncontrolledDropdown>
+                          <div>
+                            <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                              <ModalHeader toggle={this.toggle}>
+                                <IntlMessages id="Apakah anda yakin?" />
+                              </ModalHeader>
+                              <ModalBody>
+                                Apakah anda yakin akan menyetujui pengajuan perbaikan ini?                              
+                              </ModalBody>
+                              <ModalFooter>
+                                <Button color="primary" onClick={this.toggle}>
+                                  Yakin
+                                </Button>{" "}
+                                <Button color="secondary" onClick={this.toggle}>
+                                  Batal
+                                </Button>
+                              </ModalFooter>
+                            </Modal>
+                          </div>
                         </div>
                         <Separator className="mb-5" />
                     </Colxx>
@@ -132,28 +115,28 @@ class DetailPerbaikan extends Component {
                           <Table borderless>
                                 <thead>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">NPK</td>
-                                    <td scope="col">{detailUser.npk}</td>
+                                    <th className="text-muted text-small" scope="col">NPK</th>
+                                    <th scope="col">{detailUser.npk}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">Nama</td>
-                                    <td scope="col">{detailUser.name}</td>
+                                    <th className="text-muted text-small" scope="col">Nama</th>
+                                    <th scope="col">{detailUser.name}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">Email</td>
-                                    <td scope="col">{detailUser.email}</td>
+                                    <th className="text-muted text-small" scope="col">Email</th>
+                                    <th scope="col">{detailUser.email}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">Divisi</td>
-                                    <td scope="col">{detailUser.divisi}</td>
+                                    <th className="text-muted text-small" scope="col">Divisi</th>
+                                    <th scope="col">{detailUser.divisi}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">No Telpn</td>
-                                    <td scope="col">{detailUser.noHP}</td>
+                                    <th className="text-muted text-small" scope="col">No Telpn</th>
+                                    <th scope="col">{detailUser.noHP}</th>
                                   </tr>
                                   <tr>
-                                    <td className="text-muted text-small" scope="col">Alamat</td>
-                                    <td scope="col">{detailUser.address}</td>
+                                    <th className="text-muted text-small" scope="col">Alamat</th>
+                                    <th scope="col">{detailUser.address}</th>
                                   </tr>
                                 </thead>
                             </Table>          

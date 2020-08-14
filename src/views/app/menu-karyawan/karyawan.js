@@ -18,7 +18,7 @@ function collect(props) {
 
 const apiUrl = servicePath;
 
-class Pengadaan extends Component {
+class Karyawan extends Component {
   constructor(props) {
     super(props);
     this.mouseTrap = require("mousetrap");
@@ -336,4 +336,4 @@ class Pengadaan extends Component {
     );
   }
 }
-export default Pengadaan;
+export default Karyawan;

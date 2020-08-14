@@ -34,6 +34,7 @@ module.exports = {
   "menu.barang": "Barang",
   "menu.detail-barang": "Detail Barang",
   "menu.form-tambah-barang": "Form Tambah Barang",
+  "menu.edit-barang": "Edit Barang",
 
   "menu.peminjaman": "Peminjaman",
   "menu.form-peminjaman": "Form Peminjaman",
@@ -44,7 +45,7 @@ module.exports = {
   "menu.detail-pengembalian": "Detail Pengembalian",
 
   "menu.perbaikan": "Perbaikan",
-  "menu.form-perbaikan": "Perbaikan Perbaikan",
+  "menu.form-perbaikan": "Perbaikan",
   "menu.detail-perbaikan": "Detail Perbaikan",
 
   "menu.pengadaan": "Pengadaan",
@@ -55,9 +56,11 @@ module.exports = {
   "menu.menu-karyawan": "Menu Karyawan",
   "menu.detail-karyawan": "Detail Karyawan",
   "menu.tambah-karyawan": "Tambah Karyawan",
+  "menu.edit-karyawan": "Edit Karyawan",
 
-  "menu.Profil": "Profil",
   "menu.profil": "Profil",
+  "menu.menu-profil": "Menu Profil",
+  "menu.edit-profil": "Edit Profil",
 
   "menu.dashboards-menu": "Dashboards Menu",
   "menu.menu-barang": "Menu Barang",

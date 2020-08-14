@@ -39,13 +39,6 @@ class DetailPages extends Component {
                               <DropdownItem >
                                 <IntlMessages id="Non Aktif" />
                               </DropdownItem>
-                              <DropdownItem >
-                                <IntlMessages id="Cuti" />
-                              </DropdownItem>
-                              <DropdownItem divider />
-                              <DropdownItem>
-                                <IntlMessages id="Hapus Pegawai" />
-                              </DropdownItem>
                             </DropdownMenu>
                           </UncontrolledDropdown>
                         </div>
@@ -80,23 +73,23 @@ class DetailPages extends Component {
                           </div>
                           <div className="text-center pt-4">
                             <p className="list-item-heading pt-2 mb-2">
-                              {detailUser.name}
+                              asri
                             </p>
                             <p className="mb-2">
-                              {detailUser.email}
+                              asri@pawoon.com
                             </p>
                             <p className="mb-3">
                               <Badge color={detailUser.statusColor} className="mb-1 mr-1" pill>{detailUser.status}</Badge>
                             </p>
                           </div>
                           <p className="text-muted text-small mb-2"><IntlMessages id="NPK" /></p>
-                          <p className="mb-3">{detailUser.npk}</p>
+                          <p className="mb-3">IT-1</p>
                           <p className="text-muted text-small mb-2"><IntlMessages id="Divisi" /></p>
-                          <p className="mb-3">{detailUser.divisi}</p>
+                          <p className="mb-3">Engineering</p>
                           <p className="text-muted text-small mb-2"><IntlMessages id="No Tlpn" /></p>
-                          <p className="mb-3">{detailUser.noHP}</p>
+                          <p className="mb-3">+62 811 189 991 1</p>
                           <p className="text-muted text-small mb-2"><IntlMessages id="Alamat" /></p>
-                          <p className="mb-3">{detailUser.address}</p>                          
+                          <p className="mb-3">Matraman Raya</p>                          
                       </CardBody>
                         )
                       }

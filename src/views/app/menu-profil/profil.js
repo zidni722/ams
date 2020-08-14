@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from "react";
-import { Row, Card, CardBody, Badge} from "reactstrap";
-import Breadcrumb from "../../containers/navs/Breadcrumb";
-import { Separator, Colxx } from "../../components/common/CustomBootstrap";
+import { Row, Card, CardBody, Badge, Button } from "reactstrap";
+import Breadcrumb from "../../../containers/navs/Breadcrumb";
+import { Separator, Colxx } from "../../../components/common/CustomBootstrap";
 import { injectIntl } from "react-intl";
-import SingleLightbox from "../../components/pages/SingleLightbox";
-import IntlMessages from "../../helpers/IntlMessages";
-import User from "../../data/user";
+import SingleLightbox from "../../../components/pages/SingleLightbox";
+import IntlMessages from "../../../helpers/IntlMessages";
+import User from "../../../data/user";
 
-
-class Profil extends Component {
+class UserProfil extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +20,7 @@ class Profil extends Component {
             <Fragment>
                 <Row>
                     <Colxx xxs="12">
-                        <Breadcrumb heading="menu.Profil" match={this.props.match} />
+                        <Breadcrumb heading="menu.profil" match={this.props.match} />
                         <div className="text-zero top-right-button-container"></div>
                         <Separator className="mb-5" />
                     </Colxx>
@@ -47,6 +46,11 @@ class Profil extends Component {
                       pegawai.map((detailUser, index) => {
                         return (
                       <CardBody>
+                        <div className="position-absolute card-top-buttons">
+                            <Button outline color={"black"} onClick = {() => window.location.href="./edit-profil"} className="btn-header-primary-light icon-button">
+                              <i className="simple-icon-pencil" />
+                            </Button>
+                          </div>
                           <div className="text-center pt-4">
                             <p className="list-item-heading pt-2 mb-2">
                               {detailUser.name}
@@ -78,4 +82,4 @@ class Profil extends Component {
         );
     }
 }
-export default injectIntl(Profil);
+export default injectIntl(UserProfil);

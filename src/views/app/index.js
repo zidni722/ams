@@ -25,8 +25,8 @@ const MenuPengadaan = React.lazy(() =>
 const MenuKaryawan = React.lazy(() =>
   import(/* webpackChunkName: "viwes-menu-pegawai" */ './menu-karyawan')
 );
-const Profil = React.lazy(() =>
-  import(/* webpackChunkName: "blank-page" */ './profil')
+const MenuProfil = React.lazy(() =>
+  import(/* webpackChunkName: "views-menu-profil" */ './menu-profil')
 );
 
 class App extends Component {
@@ -69,8 +69,8 @@ class App extends Component {
                 render={props => <MenuKaryawan {...props} />}
               />
               <Route
-                path={`${match.url}/profil`}
-                render={props => <Profil {...props} />}
+                path={`${match.url}/menu-profil`}
+                render={props => <MenuProfil {...props} />}
               />
               <Redirect to="/error" />
             </Switch>

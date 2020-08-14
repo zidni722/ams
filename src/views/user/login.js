@@ -34,7 +34,7 @@ class Login extends Component {
         apiClient.defaults.headers.common['Accept'] = 'application/json';
 
         const url = '/auth/login'
-        let data = {
+        const data = {
           "email" : values.email,
           "password" : values.password
       }
