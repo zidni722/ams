@@ -2,17 +2,18 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 const Karyawan = React.lazy(() =>
-  import(/* webpackChunkName: "pegawai" */ './karyawan')
+  import('./karyawan')
 );
 const DetailsPages = React.lazy(() =>
-  import(/* webpackChunkName: "detail-pegawai" */ './detail-karyawan')
+  import('./detail-karyawan')
 );
 const PenambahanKaryawan = React.lazy(() =>
-  import(/* webpackChunkName: "detail-pegawai" */ './tambah-karyawan')
+  import('./tambah-karyawan')
 );
 const EditKaryawan = React.lazy(() =>
-  import(/* webpackChunkName: "edit-pegawai" */ './edit-karyawan')
+  import('./edit-karyawan')
 );
+
 const MenuPegawai = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -22,7 +23,7 @@ const MenuPegawai = ({ match }) => (
         render={props => <Karyawan {...props} />}
       />
       <Route
-        path={`${match.url}/detail-karyawan`}
+        path={`${match.url}/detail-karyawan/:id`}
         render={props => <DetailsPages {...props} />}
       />
       <Route
@@ -30,7 +31,7 @@ const MenuPegawai = ({ match }) => (
         render={props => <PenambahanKaryawan {...props} />}
       />
       <Route
-        path={`${match.url}/edit-karyawan`}
+        path={`${match.url}/edit-karyawan/:id`}
         render={props => <EditKaryawan {...props} />}
       />
       <Redirect to="/error" />

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {reactLocalStorage} from 'reactjs-localstorage';
 
-import {Field, Form, Formik} from "formik";
+import {Form, Formik} from "formik";
 import * as Yup from "yup";
 
 import {Button, Card, CardBody, FormGroup, Label, Row} from "reactstrap";
@@ -9,8 +9,8 @@ import {Colxx} from "../../components/common/CustomBootstrap";
 import {FormikReactSelect} from "./FormikFields";
 import PhoneInput from 'react-phone-input-2'
 import {NotificationManager} from "../../components/common/react-notifications";
-import {token} from "../../constants/defaultValues";
 import {apiClient} from "../../helpers/ApiService";
+import IntlMessages from "../../helpers/IntlMessages";
 
 const SignupSchema = Yup.object().shape({
     code: Yup.string()
@@ -64,12 +64,10 @@ class FormikPenambahanKaryawan extends Component {
             role_id: "",
             role: "",
             division_id: "",
-            division: "",
-            access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXVpZCI6IjU2NzkyZTFjLTc3MDEtNDdjZC1iMzdkLTg1Y2VjMzI3MjkyZCIsIm5hbWUiOiJCaXlhbiIsImVtYWlsIjoiYml5YW4uYmVsaW5kYUBwYXdvb24uY29tIiwicm9sZV9pZCI6MSwiZGl2aXNpb25faWQiOjQsInN0YXR1cyI6MCwiaWF0IjoxNTk2OTQ1NjUxfQ.GRw5DCBxkbtZt9VcTDcA9_KWAXqw23Xav17AC3BdKTg'
+            division: ""
         };
 
         this.onDrop = this.onDrop.bind(this);
-        apiClient.defaults.headers.common['authorization'] = 'Bearer ' + token;
     }
 
     componentDidMount() {
@@ -140,10 +138,10 @@ class FormikPenambahanKaryawan extends Component {
 
         apiClient.post('/users', data)
             .then(res => {
-                if (res.status === 200)
-                    this.props.history.push('/karyawan')
+                if (res.status === 200) {
+                    window.location.href = "./karyawan" // similar behavior as clicking on a link
+                }
 
-                this.props.history.push('/karyawan')
             }).catch((e) => {
                 console.log(e.message)
         });
@@ -322,8 +320,17 @@ class FormikPenambahanKaryawan extends Component {
                                         </FormGroup>
 
                                         <div className="d-flex justify-content-between align-items-center"><p/>
-                                            <Button color="primary" type="submit">
-                                                Submit
+                                            <Button
+                                                color="primary"
+                                                className={`btn-shadow btn-multiple-state ${this.props.loading ? "show-spinner" : ""}`}
+                                                size="lg"
+                                            >
+                                                <span className="spinner d-inline-block">
+                                                  <span className="bounce1"/>
+                                                  <span className="bounce2"/>
+                                                  <span className="bounce3"/>
+                                                </span>
+                                                <span className="label"><IntlMessages id="user.login-button"/></span>
                                             </Button>
                                         </div>
                                     </Form>

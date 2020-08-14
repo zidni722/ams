@@ -1,15 +1,17 @@
-import React from "react";
+import React, {Component} from "react";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 import { Card, Badge } from "reactstrap";
 
+const DataListViewKaryawan = ({ karyawan, collect, statusColor}) => {
 
-const DataListViewKaryawan = ({ karyawan, collect, statusColor }) => {
   return (
     <Colxx xxs="12" className="mb-3" key={karyawan.id}>
       <ContextMenuTrigger id="menu_id" data={karyawan.id} collect={collect}>
-        <Card className="btn-shadow" onClick={() => window.location.href="/app/menu-barang/detail-karyawan"}>
+        <Card className="btn-shadow" onClick={() => {
+          window.location.href="./detail-karyawan/" + karyawan.id
+        }}>
           <div className="d-flex flex-grow-1 min-width-zero">
             <div className="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
               <p className="mb-1 text-p text-small w-50">
