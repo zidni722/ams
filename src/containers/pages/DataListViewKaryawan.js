@@ -1,11 +1,9 @@
 import React, {Component} from "react";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { Colxx } from "../../components/common/CustomBootstrap";
-import IntlMessages from "../../helpers/IntlMessages";
 import { Card, Badge } from "reactstrap";
 
 const DataListViewKaryawan = ({ karyawan, collect, statusColor}) => {
-
   return (
     <Colxx xxs="12" className="mb-3" key={karyawan.id}>
       <ContextMenuTrigger id="menu_id" data={karyawan.id} collect={collect}>

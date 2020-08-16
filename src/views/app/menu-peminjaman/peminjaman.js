@@ -1,18 +1,15 @@
 import React, { Component, Fragment } from "react";
 import { Row } from "reactstrap";
 
-import axios from "axios";
-
-import { servicePath } from "../../../constants/defaultValues";
-
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
-import ListPageHeadingNull from "../../../containers/pages/ListPageHeadingNull";
 import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPeminjaman from "../../../containers/pages/ListPeminjaman";
 import ListPageHeadingPeminjaman from "../../../containers/pages/ListPageHeadingPeminjaman";
-
-const apiUrl = servicePath + "/cakes/paging";
+import {apiClient} from "../../../helpers/ApiService";
+import TitlePeminjaman from "../../../containers/pages/TitlePeminjaman";
+import DataListViewKaryawan from "../../../containers/pages/DataListViewKaryawan";
+const apiUrl = "/borrows";
 
 class Peminjaman extends Component {
   constructor(props) {
@@ -22,7 +19,7 @@ class Peminjaman extends Component {
     this.state = {
       displayMode: "list",
 
-      selectedPageSize: 10, 
+      selectedPageSize: 10,
       orderOptions: [
         { column: "code", label: "Kode Barang" },
         { column: "category", label: "Jenis Barang" },
@@ -84,6 +81,7 @@ class Peminjaman extends Component {
       () => this.dataListRender()
     );
   };
+
   changePageSize = size => {
     this.setState(
       {
@@ -93,12 +91,14 @@ class Peminjaman extends Component {
       () => this.dataListRender()
     );
   };
+
   changeDisplayMode = mode => {
     this.setState({
       displayMode: mode
     });
     return false;
   };
+
   onChangePage = page => {
     this.setState(
       {
@@ -168,8 +168,9 @@ class Peminjaman extends Component {
     }
     return -1;
   }
+
   handleChangeSelectAll = isToggle => {
-    if (this.state.selectedItems.length >= this.state.items.length) {
+    if (this.state.selectedItems.length >= this.state.borrows.length) {
       if (isToggle) {
         this.setState({
           selectedItems: []
@@ -177,7 +178,7 @@ class Peminjaman extends Component {
       }
     } else {
       this.setState({
-        selectedItems: this.state.items.map(x => x.id)
+        selectedItems: this.state.borrows.map(x => x.id)
       });
     }
     document.activeElement.blur();
@@ -191,9 +192,10 @@ class Peminjaman extends Component {
       selectedOrderOption,
       search
     } = this.state;
-    axios
+
+    apiClient
       .get(
-        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${
+        `${apiUrl}?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
           selectedOrderOption.column
         }&search=${search}`
       )
@@ -203,7 +205,7 @@ class Peminjaman extends Component {
       .then(data => {
         this.setState({
           totalPage: data.totalPage,
-          items: data.data,
+          borrows: data.data,
           selectedItems: [],
           totalItemCount: data.totalItem,
           isLoading: true
@@ -233,7 +235,7 @@ class Peminjaman extends Component {
   render() {
     const {
       currentPage,
-      items,
+      borrows,
       displayMode,
       selectedPageSize,
       totalItemCount,
@@ -265,18 +267,23 @@ class Peminjaman extends Component {
             startIndex={startIndex}
             endIndex={endIndex}
             selectedItemsLength={selectedItems ? selectedItems.length : 0}
-            itemsLength={items ? items.length : 0}
+            itemsLength={borrows ? borrows.length : 0}
             onSearchKey={this.onSearchKey}
             orderOptions={orderOptions}
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
           />
+          <TitlePeminjaman/>
           <Row>
-            <Colxx xxs="12" className="mb-4">
-                <ListItemPeminjaman 
-                defaultPageSize={10}
-                />              
-            </Colxx>
+            {borrows.map(borrow => {
+              return (
+                  <ListItemPeminjaman
+                      key={borrow.id}
+                      borrow={borrow}
+                      defaultPageSize={10}
+                  />
+              );
+            })}
             <Pagination
               currentPage={this.state.currentPage}
               totalPage={this.state.totalPage}

@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import {isAuthorize} from "../../../helpers/AccessAllowed";
 
 const Barang = React.lazy(() =>
   import(/* webpackChunkName: "barang" */ './barang')
@@ -17,22 +18,34 @@ const MenuBarang = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
       <Redirect exact from={`${match.url}/`} to={`${match.url}/barang`} />
-      <Route
-        path={`${match.url}/barang`}
-        render={props => <Barang {...props} />}
-      />
-      <Route
-        path={`${match.url}/detail-barang`}
-        render={props => <DetailsPages {...props} />}
-      />
-      <Route
-        path={`${match.url}/form-tambah-barang`}
-        render={props => <FormTambahBarang {...props} />}
-      />
-      <Route
-        path={`${match.url}/edit-barang`}
-        render={props => <FormEditBarang {...props} />}
-      />
+      {
+        isAuthorize() &&
+        <Route
+          path={`${match.url}/barang`}
+          render={props => <Barang {...props} />}
+        />
+      }
+      {
+        isAuthorize() &&
+        <Route
+            path={`${match.url}/detail-barang`}
+            render={props => <DetailsPages {...props} />}
+        />
+      }
+      {
+        isAuthorize() &&
+        <Route
+            path={`${match.url}/form-tambah-barang`}
+            render={props => <FormTambahBarang {...props} />}
+        />
+      }
+      {
+        isAuthorize() &&
+        <Route
+          path={`${match.url}/edit-barang`}
+          render={props => <FormEditBarang {...props} />}
+        />
+      }
       <Redirect to="/error" />
     </Switch>
   </Suspense>

@@ -14,6 +14,7 @@ import { Colxx, Separator } from "../../components/common/CustomBootstrap";
 import Breadcrumb from "../navs/Breadcrumb";
 import IntlMessages from "../../helpers/IntlMessages";
 import { Link } from "react-router-dom";
+import { me } from "../../constants/defaultValues";
 
 class ListPageHeadingPeminjaman extends Component {
   constructor(props) {
@@ -60,14 +61,16 @@ class ListPageHeadingPeminjaman extends Component {
             <h1>
               <IntlMessages id={heading} />
             </h1>
-
-            <div className="text-zero top-right-button-container">
-            <Link 
-              to="/app/menu-peminjaman/form-peminjaman" 
-              className="btn btn-lg btn-primary">
-              Ajukan Peminjaman
-            </Link>
-            </div>
+            return ({
+              me.role_name.toLowerCase() !== 'super admin' &&
+              <div className="text-zero top-right-button-container">
+                <Link
+                to="/app/menu-peminjaman/form-peminjaman"
+                className="btn btn-lg btn-primary">
+                Ajukan Peminjaman
+                </Link>
+              </div>
+            })
             <Breadcrumb match={match} />
           </div>
 
@@ -139,7 +142,7 @@ class ListPageHeadingPeminjaman extends Component {
           <Separator className="mb-5" />
         </Colxx>
       </Row>
-      
+
     );
   }
 }

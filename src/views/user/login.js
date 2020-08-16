@@ -1,21 +1,16 @@
-import React, { Component } from "react";
-import { Row, Card, CardTitle, Label, FormGroup, Button } from "reactstrap";
-import { connect } from "react-redux";
+import React, {Component} from "react";
+import {reactLocalStorage} from 'reactjs-localstorage';
+import {Button, Card, CardTitle, FormGroup, Label, Row} from "reactstrap";
+import {connect} from "react-redux";
 
-import { NotificationManager } from "../../components/common/react-notifications";
-import { Formik, Form, Field } from "formik";
+import {NotificationManager} from "../../components/common/react-notifications";
+import {Field, Form, Formik} from "formik";
 
-import { loginUser } from "../../redux/actions";
-import { Colxx } from "../../components/common/CustomBootstrap";
+import {loginUser} from "../../redux/actions";
+import {Colxx} from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
-import { servicePath } from "../../constants/defaultValues";
+import {apiClient} from "../../helpers/ApiService";
 
-import Axios from "axios";
-
-const apiUrl = servicePath;
-const apiClient = Axios.create({
-  baseURL: apiUrl
-})
 
 class Login extends Component {
   constructor(props) {
@@ -29,27 +24,21 @@ class Login extends Component {
   onUserLogin = (values) => {
     if (!this.props.loading) {
       if (values.email !== "" && values.password !== "") {
-        this.props.loginUser(values, this.props.history);
-        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsInV1aWQiOiJlOGViN2QxZS03MDU1LTQxYzUtOWM3OC1hNDIyYWJjYzBkMWYiLCJuYW1lIjoiQXNyaSIsImVtYWlsIjoiYXNyaUBwYXdvb24uY29tIiwicm9sZV9pZCI6MjEsImRpdmlzaW9uX2lkIjoxLCJzdGF0dXMiOjAsImlhdCI6MTU5NjcyNjU3N30.bzIoNbnxSqxuzuV1d49S7JypGP9kC-wneFVZ6dMecPk';
-        apiClient.defaults.headers.common['Accept'] = 'application/json';
+        const url = '/auth/login';
 
-        const url = '/auth/login'
-        const data = {
-          "email" : values.email,
-          "password" : values.password
-      }
-        console.log(data)
+        let paramsLogin = {
+          email: values.email,
+          password: values.password
+        };
 
-        apiClient.post(url, data)
-          .then((res) => {
-          })
-          // Axios.post(
-          //   apiUrl + '/auth/login',
-          // {
-          //   headers : {
-          //     Authorization: 'Bearer ' + token
-          //   }
-          // })
+        apiClient.defaults.headers.common['Content-Type'] = 'application/json';
+        apiClient.post(url, paramsLogin).then(result => {
+
+          reactLocalStorage.setObject('me', result.data.data);
+          window.location.href = "/"
+        }).catch(e => {
+          console.log(e.message)
+        })
       }
     }
   }

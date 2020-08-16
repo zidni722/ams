@@ -4,13 +4,6 @@ const data = [
     icon: "iconsminds-digital-drawing",
     label: "Dashboards",
     to: "/app/dashboards-menu",
-    // subs: [
-    //   {
-    //     icon: "simple-icon-paper-plane",
-    //     label: "menu.start",
-    //     to: "/app/gogo/start"
-    //   }     
-    // ]
   },
   {
     id: "barang",

@@ -26,7 +26,7 @@ class Karyawan extends Component {
     this.state = {
       displayMode: "list",
 
-      selectedPageSize: 10, 
+      selectedPageSize: 10,
       orderOptions: [
         { column: "npk", label: "NPK" },
         { column: "nama", label: "Nama Pegawai" },
@@ -302,7 +302,6 @@ class Karyawan extends Component {
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
           />
-          
           <AddNewModalUser
             modalOpen={modalOpen}
             toggleModal={this.toggleModal}
@@ -318,7 +317,7 @@ class Karyawan extends Component {
                   isSelect={this.state.selectedItems.includes(karyawan.name)}
                   collect={collect}
                   defaultPageSize={10}
-                /> 
+                />
             );
             })}{" "}
             <Pagination
