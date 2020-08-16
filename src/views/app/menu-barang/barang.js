@@ -10,6 +10,7 @@ import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
 import ListPageHeading from "../../../containers/pages/ListPageHeadingPengadaan";
 import Title from "../../../containers/pages/ListBarang";
+import ListPageHeadingBarang from "../../../containers/pages/ListPageHeadingBarang";
 
 function collect(props) {
   return { data: props.data };
@@ -275,7 +276,7 @@ class DataListPages extends Component {
     ) : (
       <Fragment>
         <div className="disable-text-selection">
-          <ListPageHeading
+          <ListPageHeadingBarang
             heading="menu.barang"
             displayMode={displayMode}
             changeDisplayMode={this.changeDisplayMode}
@@ -303,7 +304,6 @@ class DataListPages extends Component {
                 key={product.name}
                 product={product}
                 isSelect={this.state.selectedItems.includes(product.name)}
-                onCheckItem={this.onCheckItem}
                 collect={collect}
               />
             );

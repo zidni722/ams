@@ -1991,6 +1991,8 @@ button {
       border-radius: 30px;
       width: 40px;
     }
+    
+
 
     @include respond-below(md) {
       .name {
@@ -2961,8 +2963,8 @@ main {
 
 .card-img-right {
   width: 100%;
-  border-top-right-radius: calc(0.15rem - 1px);
-  border-bottom-right-radius: calc(0.15rem - 1px);
+  border-top-right-radius: calc(0.75rem - 1px);
+  border-bottom-right-radius: calc(0.75rem - 1px);
   height: 100%;
   object-fit: cover;
 }
@@ -3003,6 +3005,69 @@ main {
   height: auto;
   max-width: unset;
   height: 85px;
+  object-fit: cover;
+  width: unset !important;
+
+  @include respond-below(md) {
+    height: 80px;
+  }
+
+  @include respond-below(xs) {
+    height: 70px;
+  }
+
+  &.responsive {
+    @include respond-below(md) {
+      width: unset;
+      height: 136px;
+    }
+
+    @include respond-below(xs) {
+      width: 110px !important;
+      height: 100%;
+    }
+
+    @include respond-below(xxs) {
+      width: 90px !important;
+      height: 100%;
+    }
+  }
+
+  &.small {
+    height: 60px;
+    font-size: 1rem;
+
+    @include respond-below(md) {
+      height: 55px;
+    }
+
+    @include respond-below(xs) {
+      height: 50px;
+    }
+  }
+
+  &.xsmall {
+    height: 40px;
+    font-size: 1rem;
+
+    @include respond-below(md) {
+      height: 40px;
+    }
+
+    @include respond-below(xs) {
+      height: 40px;
+    }
+  }
+}
+
+.list-thumbnail-mid {
+  border-radius: 1.25rem;
+  padding-left: 50px;
+  padding: 10px 10px 10px 10px;
+  border: initial;
+  height: auto;
+  max-width: unset;
+  height: 275px;
   object-fit: cover;
   width: unset !important;
 
@@ -6928,6 +6993,13 @@ input:-webkit-autofill {
   transform: translateX(-50%);
   top: -75px;
 }
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border: 3px solid $foreground-color;
+  position: center center;;  
+}
+
 
 .social-icons {
   ul {

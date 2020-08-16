@@ -65,7 +65,7 @@ class ListPageHeadingPengadaan extends Component {
             <Link 
               to="/app/menu-pengadaan/form-pengadaan" 
               className="btn btn-lg btn-primary">
-              Tambah Barang
+              Ajukan Pengadaan
             </Link>
             </div>
             <Breadcrumb match={match} />

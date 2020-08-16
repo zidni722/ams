@@ -66,7 +66,7 @@ class ListPageHeadingUser extends Component {
                 size="lg"
                 className="top-right-button"
                 onClick={ () =>  window.location.href='/app/menu-karyawan/tambah-karyawan'}>
-                <IntlMessages id="Tambah Pegawai" />
+                <IntlMessages id="Tambah Karyawan" />
               </Button>
               {" "}
             </div>

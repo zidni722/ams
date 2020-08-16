@@ -117,8 +117,7 @@ class FormikPengadaan extends Component {
       <Row className="mb-4">
         <Colxx xxs="12" lg="12" xl="12" className="mb-3">
           <Card className="d-flex flex-row mb-3">
-            <CardBody> 
-              
+            <CardBody>  
               <Formik>
                 {({
                   setFieldValue,
@@ -152,29 +151,20 @@ class FormikPengadaan extends Component {
                       <Colxx sm={6}>
                         <FormGroup className="error-l-100">
                           <Label>Nama Barang</Label>
-                          <FormikReactSelect
-                            name="NamaBarang"
-                            id="namabarang"
-                            value={values.dataAssets}
-                            isMulti={false}
-                            options={this.state.dataAssets}
-                            onChange={setFieldValue}
-                            onBlur={setFieldTouched}
-                          />
-                          {errors.assets && touched.assets ? (
+                          <Field className="form-control" name="name" />
+                          {errors.firstName && touched.firstName ? (
                             <div className="invalid-feedback d-block">
-                              {errors.assets}
+                              {errors.firstName}
                             </div>
                           ) : null}
                         </FormGroup>
                       </Colxx>
-                    </FormGroup>
-
-                      <div className="d-flex justify-content-between align-items-center"><p/>
-                        <Button color="primary" type="submit">
-                          Submit
-                        </Button>
-                      </div>
+                    </FormGroup>                
+                    {/* <div className="d-flex justify-content-between align-items-center"><p/>
+                      <Button color="primary" size="lg" type="submit">
+                        Submit
+                      </Button>
+                    </div> */}
 
                   </Form>
                 )}

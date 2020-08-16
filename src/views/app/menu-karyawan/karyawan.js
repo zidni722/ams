@@ -3,18 +3,22 @@ import { Row } from "reactstrap";
 
 import axios from "axios";
 
-import { servicePath } from "../../../constants/defaultValues";
+import { servicePath, token } from "../../../constants/defaultValues";
 
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
 import ListPageHeadingUser from "../../../containers/pages/ListPageHeadingUser";
-import { Colxx } from "../../../components/common/CustomBootstrap";
 import AddNewModalUser from "../../../containers/pages/AddNewModalUser";
-import ListPegawai from "../../../containers/pages/ListPegawai";
+import TitleKaryawan from "../../../containers/pages/TitleKaryawan";
+import DataListViewKaryawan from "../../../containers/pages/DataListViewKaryawan";
 
-const apiUrl = servicePath + "/cakes/paging";
+function collect(props) {
+  return { data: props.data };
+}
 
-class Pengadaan extends Component {
+const apiUrl = servicePath;
+
+class Karyawan extends Component {
   constructor(props) {
     super(props);
     this.mouseTrap = require("mousetrap");
@@ -22,7 +26,7 @@ class Pengadaan extends Component {
     this.state = {
       displayMode: "list",
 
-      selectedPageSize: 10, 
+      selectedPageSize: 10,
       orderOptions: [
         { column: "npk", label: "NPK" },
         { column: "nama", label: "Nama Pegawai" },
@@ -184,6 +188,22 @@ class Pengadaan extends Component {
     return false;
   };
 
+  categoryList() {
+    axios
+      .get(
+        `${apiUrl}/users`,
+        {
+          headers : {
+            Authorization: 'Bearer ' + token
+          }
+        }
+      )
+      .then(response => {
+        let res = response.data
+        console.log(res);
+      });
+  };
+
   dataListRender() {
     const {
       selectedPageSize,
@@ -193,21 +213,30 @@ class Pengadaan extends Component {
     } = this.state;
     axios
       .get(
-        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${
+        `${apiUrl}/users?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
           selectedOrderOption.column
-        }&search=${search}`
+        }&search=${search}`, {
+          headers : {
+            Authorization: 'Bearer ' + token
+          }
+        }
       )
-      .then(res => {
-        return res.data;
+      .then(response => {
+        let res = response.data
+        return {
+                data: res.data,
+                meta: res.meta
+              };
       })
-      .then(data => {
+      .then(res => {
         this.setState({
-          totalPage: data.totalPage,
-          items: data.data,
+          employee: res.data,
           selectedItems: [],
-          totalItemCount: data.totalItem,
+          totalPage: res.meta.page,
+          totalItemCount: res.meta.per_page,
           isLoading: true
         });
+        console.log(this.state.employee)
       });
   }
 
@@ -233,7 +262,7 @@ class Pengadaan extends Component {
   render() {
     const {
       currentPage,
-      items,
+      employee,
       displayMode,
       selectedPageSize,
       totalItemCount,
@@ -254,7 +283,7 @@ class Pengadaan extends Component {
       <Fragment>
         <div className="disable-text-selection">
           <ListPageHeadingUser
-            heading="Pegawai"
+            heading="Karyawan"
             displayMode={displayMode}
             changeDisplayMode={this.changeDisplayMode}
             handleChangeSelectAll={this.handleChangeSelectAll}
@@ -267,25 +296,30 @@ class Pengadaan extends Component {
             startIndex={startIndex}
             endIndex={endIndex}
             selectedItemsLength={selectedItems ? selectedItems.length : 0}
-            itemsLength={items ? items.length : 0}
+            itemsLength={employee ? employee.length : 0}
             onSearchKey={this.onSearchKey}
             orderOptions={orderOptions}
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
           />
-          
           <AddNewModalUser
             modalOpen={modalOpen}
             toggleModal={this.toggleModal}
             categories={categories}
           />
+          <TitleKaryawan/>
           <Row>
-            <Colxx xxs="12" className="mb-4">
-                <ListPegawai
-               
-                defaultPageSize={10}
-                />              
-            </Colxx>
+            {this.state.employee.map(karyawan => {
+            return (
+                <DataListViewKaryawan
+                  key={karyawan.id}
+                  karyawan={karyawan}
+                  isSelect={this.state.selectedItems.includes(karyawan.name)}
+                  collect={collect}
+                  defaultPageSize={10}
+                />
+            );
+            })}{" "}
             <Pagination
               currentPage={this.state.currentPage}
               totalPage={this.state.totalPage}
@@ -301,4 +335,4 @@ class Pengadaan extends Component {
     );
   }
 }
-export default Pengadaan;
+export default Karyawan;

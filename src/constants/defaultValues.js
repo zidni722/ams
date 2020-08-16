@@ -1,7 +1,5 @@
-/* 
-Menu Types:
-"menu-default", "menu-sub-hidden", "menu-hidden"
-*/
+import {reactLocalStorage} from 'reactjs-localstorage';
+
 export const defaultMenuType = "menu-default";
 
 export const subHiddenBreakpoint = 1440;
@@ -22,16 +20,11 @@ export const firebaseConfig = {
   messagingSenderId: "216495999563"
 };
 
-
 export const searchPath = "/app/pages/search";
 export const servicePath = "http://ams-aaz-backend.herokuapp.com";
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXVpZCI6IjU2NzkyZTFjLTc3MDEtNDdjZC1iMzdkLTg1Y2VjMzI3MjkyZCIsIm5hbWUiOiJCaXlhbiIsImVtYWlsIjoiYml5YW4uYmVsaW5kYUBwYXdvb24uY29tIiwicm9sZV9pZCI6MSwiZGl2aXNpb25faWQiOjQsInN0YXR1cyI6MCwiaWF0IjoxNTk2NjM2NTk2fQ.kGWMHFGjkQ-J7qxWwtA-HzyMe4EhEvv_aSBkMJHrN6w';
+export const me = reactLocalStorage.getObject('me') || null;
+export const token = me ? me.token : null;
 
-
-/* 
-Color Options:
-"light.purple", "light.blue", "light.green", "light.orange", "light.red", "dark.purple", "dark.blue", "dark.green", "dark.orange", "dark.red"
-*/
 export const themeColorStorageKey="__theme_color"
 export const isMultiColorActive = false;
 export const isDarkSwitchActive = false;

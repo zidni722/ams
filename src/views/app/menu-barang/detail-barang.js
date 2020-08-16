@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Card, Progress, Button } from "reactstrap";
+import { Row, Card, Progress, Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import Breadcrumb from "../../../containers/navs/Breadcrumb";
 import { Separator, Colxx } from "../../../components/common/CustomBootstrap";
 import { injectIntl } from "react-intl";
@@ -7,31 +7,24 @@ import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
 import { dataProducts } from "../../../data/products";
 import { DataPeminjam } from "../../../containers/ui/TablePeminjam";
-import Axios from "axios";
-import { servicePath, token } from "../../../constants/defaultValues";
 
-
-const apiUrl = servicePath;
 
 class DetailPages extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          detailAsset:props.detailAsset,
+          modal: false
         };
     }
-    categoryList() {
-      Axios.get(
-        `${apiUrl}/assets`,
-      {
-        headers : {
-          Authorization: 'Bearer ' + token
-        }
-      })
-        .then(res => {
-          const asset = res.data.data;
-          this.setState( {asset} );
-        })
+    detailAsset() {
+      console.log(this.state.detailAsset)
     }
+    toggle = () => {
+      this.setState(prevState => ({
+        modal: !prevState.modal
+      }));
+    };
     render() {
       const barang = dataProducts.slice(0,1);
         return (
@@ -39,6 +32,31 @@ class DetailPages extends Component {
                 <Row>
                     <Colxx xxs="12">
                         <Breadcrumb heading="menu.detail-barang" match={this.props.match} />
+                        <div className="text-zero top-right-button-container">
+                          <Button 
+                            onClick={this.toggle} 
+                            className="btn btn-lg btn-primary">
+                            Hapus Barang
+                          </Button>
+                        </div>
+                        <div>
+                          <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                            <ModalHeader toggle={this.toggle}>
+                              <IntlMessages id="Apakah anda yakin?" />
+                            </ModalHeader>
+                            <ModalBody>
+                              Apakah anda yakin akan menghapus barang ini?
+                            </ModalBody>
+                            <ModalFooter>
+                              <Button color="primary" onClick={this.toggle}>
+                                Yakin
+                              </Button>{" "}
+                              <Button color="secondary" onClick={this.toggle}>
+                                Batal
+                              </Button>
+                            </ModalFooter>
+                          </Modal>
+                        </div>
                         <Separator className="mb-5" />
                     </Colxx>
                 </Row>

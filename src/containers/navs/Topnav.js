@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {reactLocalStorage} from 'reactjs-localstorage';
 import { injectIntl } from "react-intl";
 import {
   UncontrolledDropdown,
@@ -60,6 +61,7 @@ class TopNav extends Component {
       (document.msFullscreenElement && document.msFullscreenElement !== null)
     );
   };
+
   handleSearchIconClick = e => {
     if (window.innerWidth < menuHiddenBreakpoint) {
       let elem = e.target;
@@ -199,7 +201,8 @@ class TopNav extends Component {
 
   render() {
     const { containerClassnames, menuClickCount } = this.props;
-    //const { messages } = this.props.intl;
+    const me = reactLocalStorage.getObject('me')
+
     return (
       <nav className="navbar fixed-top">
         <div className="d-flex align-items-center navbar-left">
@@ -231,22 +234,27 @@ class TopNav extends Component {
           <div className="header-icons d-inline-block align-middle">
 
             <TopnavNotifications />
-          
+
           </div>
           <div className="user d-inline-block">
             <UncontrolledDropdown className="dropdown-menu-right">
               <DropdownToggle className="p-0" color="empty">
-                <span className="name mr-1">Asep Syaepul Rohman</span>
+                <span className="name mr-1">{me.name}</span>
                 <span>
-                  <img alt="Profile" src="/assets/img/profile-pic-l-8.jpg" />
+                  <img alt="Profile" src={me.photo} />
                 </span>
               </DropdownToggle>
               <DropdownMenu className="mt-3" right>
-                <DropdownItem onClick={() => window.location.href="/app/profil"}>
+                <DropdownItem onClick={() => window.location.href="/app/menu-profil"}>
                   Profil
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem onClick={() => window.location.href="/user/login"}>
+                <DropdownItem onClick={
+                  () => {
+                    reactLocalStorage.clear()
+                    window.location.href="/user/login"
+                  }
+                }>
                   Sign Out
                 </DropdownItem>
               </DropdownMenu>

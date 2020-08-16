@@ -7,6 +7,9 @@ const Peminjaman = React.lazy(() =>
 const FormPeminjaman = React.lazy(() =>
   import(/* webpackChunkName: "form-peminjaman" */ './form-peminjaman')
 );
+const DetailPeminjaman = React.lazy(() => 
+  import(/* webpackChunkName: "detail-peminjaman" */ './detail-peminjaman')
+);
 const MenuPeminjaman = ({ match }) => (
   <Suspense fallback={<div className="loading" />}>
     <Switch>
@@ -18,6 +21,10 @@ const MenuPeminjaman = ({ match }) => (
       <Route
         path={`${match.url}/form-peminjaman`}
         render={props => <FormPeminjaman {...props} />}
+      />
+      <Route
+        path={`${match.url}/detail-peminjaman`}
+        render={props => <DetailPeminjaman {...props} />}
       />
       <Redirect to="/error" />
     </Switch>

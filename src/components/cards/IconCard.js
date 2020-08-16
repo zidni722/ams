@@ -5,7 +5,7 @@ import IntlMessages from "../../helpers/IntlMessages";
 const IconCard = ({className="mb-4", icon1, icon2, icon3, title, valueMenunggu, valueTolak, valueSelesai }) => {
   return (
     <div className={`icon-row-item ${className}`}>
-      <Card >
+      <Card>
         <CardBody className="lead text-center">
           <i className={`icon-color3 ${icon1}`}/>
           <i className={`icon-color1 ${icon2}`}/>
