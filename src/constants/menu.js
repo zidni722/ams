@@ -1,42 +1,50 @@
 const data = [
   {
-    id: "gogo",
-    icon: "iconsminds-air-balloon-1",
-    label: "menu.gogo",
-    to: "/app/gogo",
-    subs: [
-      {
-        icon: "simple-icon-paper-plane",
-        label: "menu.start",
-        to: "/app/gogo/start"
-      }     
-    ]
+    id: "dashboard",
+    icon: "iconsminds-digital-drawing",
+    label: "Dashboards",
+    to: "/app/dashboards-menu",
   },
   {
-    id: "secondmenu",
-    icon: "iconsminds-three-arrow-fork",
-    label: "menu.second-menu",
-    to: "/app/second-menu",
-    subs: [
-      {
-        icon: "simple-icon-paper-plane",
-        label: "menu.second",
-        to: "/app/second-menu/second"
-      }
-    ]
+    id: "barang",
+    icon: "iconsminds-box-full",
+    label: "Barang",
+    to: "/app/menu-barang",
   },
   {
-    id: "blankpage",
-    icon: "iconsminds-bucket",
-    label: "menu.blank-page",
-    to: "/app/blank-page"
+    id: "peminjaman",
+    icon: "iconsminds-inbox-into",
+    label: "Peminjaman",
+    to: "/app/menu-peminjaman"
   },
   {
-    id: "docs",
-    icon: "iconsminds-library",
-    label: "menu.docs",
-    to: "https://gogo-react-docs.coloredstrategies.com/",
-    newWindow:true
+    id: "pengembalian",
+    icon: "iconsminds-inbox-out",
+    label: "Pengembalian",
+    to: "/app/menu-pengembalian",
+    newWindow:false
+  },
+  {
+    id: "perbaikan",
+    icon: "iconsminds-gears",
+    label: "Perbaikan",
+    to: "/app/menu-perbaikan",
+    newWindow:false
+  },
+  {
+    id: "pengadaan",
+    icon: "iconsminds-add-cart",
+    label: "Pengadaan",
+    to: "/app/menu-pengadaan",
+    newWindow:false
+  },
+  {
+    id: "karyawan",
+    icon: "iconsminds-business-man-woman",
+    label: "Karyawan",
+    to: "/app/menu-karyawan",
+    newWindow:false
   }
+
 ];
 export default data;

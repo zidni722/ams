@@ -95,6 +95,9 @@ $info-color: #3195a5;
 $success-color: #3e884f;
 $warning-color: #b69329;
 $error-color: #c43d4b;
+$selesai-color: #1CA011;
+$tolak-color: #D50000;
+$menunggu-color: #F4911E;
 
 /* 01.Base */
 html {
@@ -110,12 +113,21 @@ html {
   --theme-color-4: #{$theme-color-4};
   --theme-color-5: #{$theme-color-5};
   --theme-color-6: #{$theme-color-6};
+  --theme-color-7: #{$theme-color-7};
+  --theme-color-8: #{$theme-color-8};
+  --theme-color-9: #{$theme-color-9};
+
+
   --theme-color-1-10: #{rgba($theme-color-1, 0.1)};
   --theme-color-2-10: #{rgba($theme-color-2, 0.1)};
   --theme-color-3-10: #{rgba($theme-color-3, 0.1)};
   --theme-color-4-10: #{rgba($theme-color-4, 0.1)};
   --theme-color-5-10: #{rgba($theme-color-5, 0.1)};
   --theme-color-6-10: #{rgba($theme-color-6, 0.1)};
+  --theme-color-7-10: #{rgba($theme-color-7, 0.1)};
+  --theme-color-8-10: #{rgba($theme-color-8, 0.1)};
+  --theme-color-9-10: #{rgba($theme-color-9, 0.1)};
+
 
   --primary-color: #{$primary-color};
   --foreground-color: #{$foreground-color};
@@ -153,6 +165,17 @@ body {
 
 .fixed-background {
   background: url("/assets/img/balloon.jpg") no-repeat center center fixed;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.fixed-background-p {
+  background: #04AAB7;
   background-size: cover;
   width: 100%;
   height: 100%;
@@ -399,6 +422,10 @@ p {
   font-size: 1rem !important;
 }
 
+.text-medium {
+  font-size: 1.5rem !important;
+}
+
 .text-xlarge {
   font-size: 2.7rem !important;
 }
@@ -428,6 +455,10 @@ p {
   color: $secondary-color !important;
 }
 
+.text-p{
+  text-align: center;
+}
+
 .font-weight-medium {
   font-weight: 500;
 }
@@ -442,6 +473,18 @@ p {
 
 .color-theme-2 {
   color: $theme-color-2;
+}
+
+.icon-color1 {
+  color: $theme-color-7;
+}
+
+.icon-color2 {
+  color: $theme-color-8;
+}
+
+.icon-color3 {
+  color: $theme-color-9;
 }
 
 .view-icon {
@@ -599,6 +642,21 @@ button {
   font-size: 0.8rem;
   padding: 0.75rem 1.3rem 0.6rem 1.3rem;
   transition: background-color box-shadow 0.1s linear;
+}
+
+.btn-cr {
+  border-radius: 50px;
+  outline: initial !important;
+  box-shadow: none !important;
+  box-shadow: initial !important;
+  font-size: 0.8rem;
+  padding: 0.1rem 1.3rem 0.1rem 1.3rem;
+  transition: background-color box-shadow 0.1s linear;
+}
+
+.btn-right{
+  float: right;
+  position: relative;
 }
 
 .btn-shadow {
@@ -1311,10 +1369,25 @@ button {
   background-color: $error-color;
 }
 
+.badge-selesai {
+  background-color: $selesai-color;
+}
+
+.badge-tolak {
+  background-color: $tolak-color;
+}
+
+.badge-menunggu {
+  background-color: $menunggu-color;
+}
+
 .badge-success,
 .badge-danger,
 .badge-warning,
-.badge-info {
+.badge-info,
+.badge-selesai,
+.badge-tolak,
+.badge-menunggu {
   color: $button-text-color;
 }
 
@@ -1404,6 +1477,24 @@ button {
   background: unset;
   border: 1px solid $info-color;
   color: $info-color;
+}
+
+.badge-outline-selesai {
+  background: unset;
+  border: 1px solid $selesai-color;
+  color: $selesai-color;
+}
+
+.badge-outline-menunggu {
+  background: unset;
+  border: 1px solid $menunggu-color;
+  color: $menunggu-color;
+}
+
+.badge-outline-tolak {
+  background: unset;
+  border: 1px solid $tolak-color;
+  color: $tolak-color;
 }
 
 .badge-outline-light {
@@ -1607,6 +1698,10 @@ button {
     i {
       font-size: 28px;
       line-height: 42px;
+    }
+
+    .text-p{
+      text-align: center;
     }
 
     span {
@@ -1894,8 +1989,10 @@ button {
     img {
       margin-left: 10px;
       border-radius: 30px;
-      width: 40px;
+      width: 30px;
     }
+    
+
 
     @include respond-below(md) {
       .name {
@@ -2784,6 +2881,10 @@ main {
       color: $separator-color;
     }
   }
+  
+  .card-banner {
+    background: #D7F4F0;
+  }
 
   .card-subtitle {
     margin: 0;
@@ -2794,11 +2895,11 @@ main {
     cursor: default;
   }
 
-  border-radius: calc(0.15rem - 1px);
+  border-radius: calc(0.75rem - 1px);
   @include depth(1);
 
   .card-body {
-    padding: 1.75rem;
+    padding: 2rem;
 
     @include respond-below(xs) {
       padding: 1.25rem;
@@ -2810,7 +2911,7 @@ main {
   }
 
   .card-title {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     @include respond-below(sm) {
       margin-bottom: 1.25rem;
     }
@@ -2825,11 +2926,11 @@ main {
 }
 
 .card-img {
-  border-radius: calc(0.25rem - 1px);
+  border-radius: calc(0.75rem - 1px);
   height: 100%;
   object-fit: cover;
   max-height: 200px;
-  width: unset;
+  width: 100%;
 }
 
 .card-img-fluid {
@@ -2837,16 +2938,23 @@ main {
   object-fit: cover;
 }
 
+.card-img-fit {
+  width: 100%;
+  object-fit: cover;
+  border-radius: calc(0.75rem - 1px);
+}
+
 .card-img-bottom {
   width: 100%;
+  padding: 2rem;
   border-bottom-left-radius: calc(0.15rem - 1px);
   border-bottom-right-radius: calc(0.15rem - 1px);
 }
 
 .card-img-top {
   width: 100%;
-  border-top-left-radius: calc(0.15rem - 1px);
-  border-top-right-radius: calc(0.15rem - 1px);
+  border-top-left-radius: calc(0.75rem - 1px);
+  border-top-right-radius: calc(0.75rem - 1px);
 }
 
 .card-img-left {
@@ -2859,8 +2967,8 @@ main {
 
 .card-img-right {
   width: 100%;
-  border-top-right-radius: calc(0.15rem - 1px);
-  border-bottom-right-radius: calc(0.15rem - 1px);
+  border-top-right-radius: calc(0.75rem - 1px);
+  border-bottom-right-radius: calc(0.75rem - 1px);
   height: 100%;
   object-fit: cover;
 }
@@ -2895,12 +3003,75 @@ main {
 
 
 .list-thumbnail {
-  border-radius: $border-radius;
+  border-radius: 0.25rem;
   padding: 0;
   border: initial;
   height: auto;
   max-width: unset;
   height: 85px;
+  object-fit: cover;
+  width: unset !important;
+
+  @include respond-below(md) {
+    height: 80px;
+  }
+
+  @include respond-below(xs) {
+    height: 70px;
+  }
+
+  &.responsive {
+    @include respond-below(md) {
+      width: unset;
+      height: 136px;
+    }
+
+    @include respond-below(xs) {
+      width: 110px !important;
+      height: 100%;
+    }
+
+    @include respond-below(xxs) {
+      width: 90px !important;
+      height: 100%;
+    }
+  }
+
+  &.small {
+    height: 60px;
+    font-size: 1rem;
+
+    @include respond-below(md) {
+      height: 55px;
+    }
+
+    @include respond-below(xs) {
+      height: 50px;
+    }
+  }
+
+  &.xsmall {
+    height: 40px;
+    font-size: 1rem;
+
+    @include respond-below(md) {
+      height: 40px;
+    }
+
+    @include respond-below(xs) {
+      height: 40px;
+    }
+  }
+}
+
+.list-thumbnail-mid {
+  border-radius: 1.25rem;
+  padding-left: 50px;
+  padding: 10px 10px 10px 10px;
+  border: initial;
+  height: auto;
+  max-width: unset;
+  height: 275px;
   object-fit: cover;
   width: unset !important;
 
@@ -3158,14 +3329,14 @@ main {
   }
 
   .lead {
-    color: $theme-color-1;
+    //color: $theme-color-1;
     margin-bottom: 0;
   }
 
   i {
     font-size: 46px;
     line-height: 66px;
-    color: $theme-color-1;
+    //color: $theme-color-1;
   }
 
   .card {
@@ -3176,6 +3347,11 @@ main {
   @include respond-below(xl) {
     .card-text {
       height: 48px;
+      line-height: 18px;
+    }
+
+    .card-size {
+      height: 1rem;
       line-height: 18px;
     }
 
@@ -3635,7 +3811,7 @@ div[data-notify="container"] {
   font-size: 0.76rem;
   color: $primary-color;
   background: $foreground-color;
-  border: 1px solid $theme-color-1;
+  border: 1px solid $tolak-color;
   text-align: center;
   width: unset !important;
   position: absolute;
@@ -3800,7 +3976,7 @@ div[data-notify="container"] {
     border: initial;
     border-top: solid 5px transparent;
     border-bottom: solid 5px transparent;
-    border-right: solid 5px $theme-color-1;
+    border-right: solid 5px $tolak-color;
     bottom: initial;
     top: 12px;
     width: 5px;
@@ -5891,6 +6067,17 @@ input:-webkit-autofill {
     }
   }
 
+  .image-side-p {
+    width: 40%;
+    background: url("/assets/img/Img-Login.png") no-repeat center;
+    background-size: 100%;
+    padding: 80px 40px;
+
+    .h3 {
+      line-height: 0.8rem;
+    }
+  }
+
   .form-side {
     width: 60%;
     padding: 80px;
@@ -6045,7 +6232,7 @@ input:-webkit-autofill {
 }
 
 .ck.ck-toolbar {
-  background: !important;
+  background: initial !important;
 }
 
 .RichEditor-root {
@@ -6801,6 +6988,7 @@ input:-webkit-autofill {
 }
 
 .social-profile-img {
+  width: 120px;
   height: 120px;
   border: 3px solid $foreground-color;
   position: absolute;
@@ -6809,6 +6997,13 @@ input:-webkit-autofill {
   transform: translateX(-50%);
   top: -75px;
 }
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border: 3px solid $foreground-color;
+  position: center center;;  
+}
+
 
 .social-icons {
   ul {
@@ -6887,6 +7082,13 @@ input:-webkit-autofill {
 }
 
 .col-left {
+  padding-right: 20px;
+  @include respond-below(md) {
+    padding-right: 15px;
+  }
+}
+
+.col-center {
   padding-right: 20px;
   @include respond-below(md) {
     padding-right: 15px;

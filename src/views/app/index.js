@@ -4,14 +4,29 @@ import { connect } from 'react-redux';
 
 import AppLayout from '../../layout/AppLayout';
 
-const Gogo = React.lazy(() =>
-  import(/* webpackChunkName: "viwes-gogo" */ './gogo')
+const DashboardMenu = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-dashboard-menu" */ './dashboards-menu')
 );
-const SecondMenu = React.lazy(() =>
-  import(/* webpackChunkName: "viwes-second-menu" */ './second-menu')
+const MenuBarang = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-barang" */ './menu-barang')
 );
-const BlankPage = React.lazy(() =>
-  import(/* webpackChunkName: "viwes-blank-page" */ './blank-page')
+const MenuPeminjaman = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-peminjaman" */ './menu-peminjaman')
+);
+const MenuPengembalian = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-pengembalian" */ './menu-pengembalian')
+);
+const MenuPerbaikan = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-perbaikan" */ './menu-perbaikan')
+);
+const MenuPengadaan = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-pengadaan" */ './menu-pengadaan')
+);
+const MenuKaryawan = React.lazy(() =>
+  import(/* webpackChunkName: "viwes-menu-pegawai" */ './menu-karyawan')
+);
+const MenuProfil = React.lazy(() =>
+  import(/* webpackChunkName: "views-menu-profil" */ './menu-profil')
 );
 
 class App extends Component {
@@ -23,18 +38,39 @@ class App extends Component {
         <div className="dashboard-wrapper">
           <Suspense fallback={<div className="loading" />}>
             <Switch>
-              <Redirect exact from={`${match.url}/`} to={`${match.url}/gogo`} />
+              <Redirect exact from={`${match.url}/`} 
+                to={`${match.url}/dashboards-menu`} />
               <Route
-                path={`${match.url}/gogo`}
-                render={props => <Gogo {...props} />}
+                path={`${match.url}/dashboards-menu`}
+                render={props => <DashboardMenu {...props} />}
               />
               <Route
-                path={`${match.url}/second-menu`}
-                render={props => <SecondMenu {...props} />}
+                path={`${match.url}/menu-barang`}
+                render={props => <MenuBarang {...props} />}
               />
               <Route
-                path={`${match.url}/blank-page`}
-                render={props => <BlankPage {...props} />}
+                path={`${match.url}/menu-peminjaman`}
+                render={props => <MenuPeminjaman {...props} />}
+              />
+              <Route
+                path={`${match.url}/menu-pengembalian`}
+                render={props => <MenuPengembalian {...props} />}
+              />
+              <Route
+                path={`${match.url}/menu-perbaikan`}
+                render={props => <MenuPerbaikan {...props} />}
+              />
+              <Route
+                path={`${match.url}/menu-pengadaan`}
+                render={props => <MenuPengadaan {...props} />}
+              />
+              <Route
+                path={`${match.url}/menu-karyawan`}
+                render={props => <MenuKaryawan {...props} />}
+              />
+              <Route
+                path={`${match.url}/menu-profil`}
+                render={props => <MenuProfil {...props} />}
               />
               <Redirect to="/error" />
             </Switch>

@@ -11,7 +11,7 @@ Table of Contents
 
 module.exports = {
   /* 01.General */
-  "general.copyright": "Gogo React © 2018 All Rights Reserved.",
+  "general.copyright": "Team4 Skripsi Binus © 2020 All Rights Reserved.",
 
   /* 02.User Login, Logout, Register */
   "user.login-title": "Login",
@@ -30,8 +30,49 @@ module.exports = {
   /* 03.Menu */
   "menu.app": "Home",
   "menu.dashboards": "Dashboards",
-  "menu.gogo": "Gogo",
+  
+  "menu.barang": "Barang",
+  "menu.detail-barang": "Detail Barang",
+  "menu.form-tambah-barang": "Form Tambah Barang",
+  "menu.edit-barang": "Edit Barang",
+
+  "menu.peminjaman": "Peminjaman",
+  "menu.form-peminjaman": "Form Peminjaman",
+  "menu.detail-peminjaman": "Detail Peminjaman",
+
+  "menu.pengembalian": "Pengembalian",
+  "menu.form-pengembalian": "Pengembalian Barang",
+  "menu.detail-pengembalian": "Detail Pengembalian",
+
+  "menu.perbaikan": "Perbaikan",
+  "menu.form-perbaikan": "Perbaikan",
+  "menu.detail-perbaikan": "Detail Perbaikan",
+
+  "menu.pengadaan": "Pengadaan",
+  "menu.detail-pengadaan": "Detail Pengadaan",
+  "menu.form-pengadaan": "Form Pengadaan",
+
+  "menu.karyawan": "Karyawan",
+  "menu.menu-karyawan": "Menu Karyawan",
+  "menu.detail-karyawan": "Detail Karyawan",
+  "menu.tambah-karyawan": "Tambah Karyawan",
+  "menu.edit-karyawan": "Edit Karyawan",
+
+  "menu.profil": "Profil",
+  "menu.menu-profil": "Menu Profil",
+  "menu.edit-profil": "Edit Profil",
+
+  "menu.dashboards-menu": "Dashboards Menu",
+  "menu.menu-barang": "Menu Barang",
+  "menu.menu-peminjaman": "Menu Peminjaman",
+  "menu.menu-pengembalian": "Menu Pengembalian",
+  "menu.menu-perbaikan": "Menu Perbaikan",
+  "menu.menu-pengadaan": "Menu Pengadaan",
+  "menu.menu-pegawai": "Menu Pegawai",
+  
+
   "menu.start": "Start",
+  "menu.details":" Detail",
   "menu.second-menu": "Second Menu",
   "menu.second": "Second",
   "menu.ui": "UI",
@@ -44,7 +85,7 @@ module.exports = {
   "menu.blank-page": "Blank Page",
 
  /* 04.Error Page */
- "pages.error-title": "Ooops... looks like an error occurred!",
+ "pages.error-title": "Ooops... Halaman yang anda tuju tidak tersedia!",
  "pages.error-code": "Error code",
  "pages.go-back-home": "GO BACK HOME",
 };
