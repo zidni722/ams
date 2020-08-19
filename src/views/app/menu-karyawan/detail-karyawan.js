@@ -18,7 +18,7 @@ import IntlMessages from "../../../helpers/IntlMessages";
 import {apiClient} from "../../../helpers/ApiService";
 
 
-class DetailPages extends Component {
+class DetailKaryawan extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -73,8 +73,7 @@ class DetailPages extends Component {
                     <Colxx xxs="12" lg="5" xl="4" className="mb-5">
                     </Colxx>
                     <Colxx xxs="12" lg="7" xl="4" className="mb-3">
-                        <SingleLightbox thumb={this.state.detailUser.photo} large={this.state.detailUser.photo}
-                                        className="img-thumbnail card-img social-profile-img"/>
+                        <SingleLightbox thumb={this.state.detailUser.photo} large={this.state.detailUser.photo} className="img-thumbnail card-img social-profile-img"/>
                         <Card className="mb-4">
                             <CardBody>
                                 <div className="position-absolute card-top-buttons">
@@ -118,4 +117,4 @@ class DetailPages extends Component {
     }
 }
 
-export default injectIntl(DetailPages);
+export default injectIntl(DetailKaryawan);

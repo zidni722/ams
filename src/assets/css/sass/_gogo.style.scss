@@ -1989,7 +1989,7 @@ button {
     img {
       margin-left: 10px;
       border-radius: 30px;
-      width: 40px;
+      width: 30px;
     }
     
 
@@ -2880,6 +2880,10 @@ main {
       font-size: 12px;
       color: $separator-color;
     }
+  }
+  
+  .card-banner {
+    background: #D7F4F0;
   }
 
   .card-subtitle {

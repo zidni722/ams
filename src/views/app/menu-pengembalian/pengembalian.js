@@ -10,8 +10,11 @@ import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer
 import ListPageHeadingNull from "../../../containers/pages/ListPageHeadingNull";
 import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPengembalian from "../../../containers/pages/ListPengembalian";
+import ListPengembalian from "../../../containers/pages/ListPengembalian";
+import TitlePengembalian from "../../../containers/pages/TitlePengembalian";
+import { apiClient } from "../../../helpers/ApiService";
 
-const apiUrl = servicePath + "/cakes/paging";
+const apiUrl = "/returns";
 
 class Pengembalian extends Component {
   constructor(props) {
@@ -190,9 +193,10 @@ class Pengembalian extends Component {
       selectedOrderOption,
       search
     } = this.state;
-    axios
+
+    apiClient
       .get(
-        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${
+        `${apiUrl}?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
           selectedOrderOption.column
         }&search=${search}`
       )
@@ -202,13 +206,13 @@ class Pengembalian extends Component {
       .then(data => {
         this.setState({
           totalPage: data.totalPage,
-          items: data.data,
+          returns: data.data,
           selectedItems: [],
           totalItemCount: data.totalItem,
           isLoading: true
         });
       });
-  }
+    }
 
   onContextMenuClick = (e, data, target) => {
     console.log(
@@ -232,7 +236,7 @@ class Pengembalian extends Component {
   render() {
     const {
       currentPage,
-      items,
+      returns,
       displayMode,
       selectedPageSize,
       totalItemCount,
@@ -264,18 +268,23 @@ class Pengembalian extends Component {
             startIndex={startIndex}
             endIndex={endIndex}
             selectedItemsLength={selectedItems ? selectedItems.length : 0}
-            itemsLength={items ? items.length : 0}
+            itemsLength={returns ? returns.length : 0}
             onSearchKey={this.onSearchKey}
             orderOptions={orderOptions}
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
           />
+          <TitlePengembalian/>
           <Row>
-            <Colxx xxs="12" className="mb-4">
-                <ListItemPengembalian 
-                defaultPageSize={10}
-                />              
-            </Colxx>
+          {returns.map(return_ => {
+              return (
+                  <ListPengembalian
+                      key={return_.id}
+                      return_={return_}
+                      defaultPageSize={10}
+                  />
+              );
+            })}
             <Pagination
               currentPage={this.state.currentPage}
               totalPage={this.state.totalPage}

@@ -11,12 +11,10 @@ import ListPageHeadingUser from "../../../containers/pages/ListPageHeadingUser";
 import AddNewModalUser from "../../../containers/pages/AddNewModalUser";
 import TitleKaryawan from "../../../containers/pages/TitleKaryawan";
 import DataListViewKaryawan from "../../../containers/pages/DataListViewKaryawan";
+import { apiClient } from "../../../helpers/ApiService";
 
-function collect(props) {
-  return { data: props.data };
-}
 
-const apiUrl = servicePath;
+const apiUrl = "/users";
 
 class Karyawan extends Component {
   constructor(props) {
@@ -201,6 +199,9 @@ class Karyawan extends Component {
       .then(response => {
         let res = response.data
         console.log(res);
+        console.log(token);
+      }).catch((e)=>{
+        console.log(e );
       });
   };
 
@@ -211,7 +212,8 @@ class Karyawan extends Component {
       selectedOrderOption,
       search
     } = this.state;
-    axios
+
+    apiClient
       .get(
         `${apiUrl}/users?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
           selectedOrderOption.column
@@ -315,7 +317,6 @@ class Karyawan extends Component {
                   key={karyawan.id}
                   karyawan={karyawan}
                   isSelect={this.state.selectedItems.includes(karyawan.name)}
-                  collect={collect}
                   defaultPageSize={10}
                 />
             );

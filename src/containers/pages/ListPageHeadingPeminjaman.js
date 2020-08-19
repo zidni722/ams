@@ -61,7 +61,7 @@ class ListPageHeadingPeminjaman extends Component {
             <h1>
               <IntlMessages id={heading} />
             </h1>
-            return ({
+            {
               me.role_name.toLowerCase() !== 'super admin' &&
               <div className="text-zero top-right-button-container">
                 <Link
@@ -70,7 +70,7 @@ class ListPageHeadingPeminjaman extends Component {
                 Ajukan Peminjaman
                 </Link>
               </div>
-            })
+            }
             <Breadcrumb match={match} />
           </div>
 

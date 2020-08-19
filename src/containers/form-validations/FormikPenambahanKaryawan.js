@@ -10,7 +10,6 @@ import {FormikReactSelect} from "./FormikFields";
 import PhoneInput from 'react-phone-input-2'
 import {NotificationManager} from "../../components/common/react-notifications";
 import {apiClient} from "../../helpers/ApiService";
-import IntlMessages from "../../helpers/IntlMessages";
 
 const SignupSchema = Yup.object().shape({
     code: Yup.string()
@@ -89,7 +88,7 @@ class FormikPenambahanKaryawan extends Component {
                 const divisions = res.data.data;
                 for (const division of divisions) {
                     dataDivisions.push({value: division.id, label: division.name})
-                }
+                }   
                 this.setState({dataDivisions});
             }).catch((e) => {
             console.log(e.message)
@@ -330,7 +329,7 @@ class FormikPenambahanKaryawan extends Component {
                                                   <span className="bounce2"/>
                                                   <span className="bounce3"/>
                                                 </span>
-                                                <span className="label"><IntlMessages id="user.login-button"/></span>
+                                                <span className="label">Submit</span>
                                             </Button>
                                         </div>
                                     </Form>

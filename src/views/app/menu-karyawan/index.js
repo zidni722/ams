@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const Karyawan = React.lazy(() =>
   import('./karyawan')
 );
-const DetailsPages = React.lazy(() =>
+const DetailKaryawan = React.lazy(() =>
   import('./detail-karyawan')
 );
 const PenambahanKaryawan = React.lazy(() =>
@@ -24,7 +24,7 @@ const MenuPegawai = ({ match }) => (
       />
       <Route
         path={`${match.url}/detail-karyawan/:id`}
-        render={props => <DetailsPages {...props} />}
+        render={props => <DetailKaryawan {...props} />}
       />
       <Route
         path={`${match.url}/tambah-karyawan`}
