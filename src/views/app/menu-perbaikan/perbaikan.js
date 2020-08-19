@@ -1,17 +1,15 @@
 import React, { Component, Fragment } from "react";
 import { Row } from "reactstrap";
 
-import axios from "axios";
-
-import { servicePath } from "../../../constants/defaultValues";
-
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
 import ListPageHeadingNull from "../../../containers/pages/ListPageHeadingNull";
-import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPerbaikan from "../../../containers/pages/ListPerbaikan";
+import { apiClient } from "../../../helpers/ApiService";
+import TitlePerbaikan from "../../../containers/pages/TitlePerbaikan";
+import ListPageHeadingPerbaikan from "../../../containers/pages/ListPageHeadingPerbaikan";
 
-const apiUrl = servicePath + "/cakes/paging";
+const apiUrl = "/services";
 
 class Perbaikan extends Component {
   constructor(props) {
@@ -190,9 +188,10 @@ class Perbaikan extends Component {
       selectedOrderOption,
       search
     } = this.state;
-    axios
+
+    apiClient
       .get(
-        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${
+        `${apiUrl}?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
           selectedOrderOption.column
         }&search=${search}`
       )
@@ -202,13 +201,13 @@ class Perbaikan extends Component {
       .then(data => {
         this.setState({
           totalPage: data.totalPage,
-          items: data.data,
+          services: data.data,
           selectedItems: [],
           totalItemCount: data.totalItem,
           isLoading: true
         });
       });
-  }
+    }
 
   onContextMenuClick = (e, data, target) => {
     console.log(
@@ -232,7 +231,7 @@ class Perbaikan extends Component {
   render() {
     const {
       currentPage,
-      items,
+      services,
       displayMode,
       selectedPageSize,
       totalItemCount,
@@ -250,7 +249,7 @@ class Perbaikan extends Component {
     ) : (
       <Fragment>
         <div className="disable-text-selection">
-          <ListPageHeadingNull
+          <ListPageHeadingPerbaikan
             heading="Perbaikan"
             displayMode={displayMode}
             changeDisplayMode={this.changeDisplayMode}
@@ -264,18 +263,23 @@ class Perbaikan extends Component {
             startIndex={startIndex}
             endIndex={endIndex}
             selectedItemsLength={selectedItems ? selectedItems.length : 0}
-            itemsLength={items ? items.length : 0}
+            itemsLength={services ? services.length : 0}
             onSearchKey={this.onSearchKey}
             orderOptions={orderOptions}
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
           />
+          <TitlePerbaikan />
           <Row>
-            <Colxx xxs="12" className="mb-4">
-                <ListItemPerbaikan 
-                defaultPageSize={10}
-                />              
-            </Colxx>
+            {services.map(service => {
+                return (
+                    <ListItemPerbaikan
+                        key={service.id}
+                        service={service}
+                        defaultPageSize={10}
+                    />
+                );
+              })}
             <Pagination
               currentPage={this.state.currentPage}
               totalPage={this.state.totalPage}

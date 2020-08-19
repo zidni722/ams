@@ -7,11 +7,9 @@ import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { FormikReactSelect } from "./FormikFields";
 import { NotificationManager } from "../../components/common/react-notifications";
-import { servicePath, token } from "../../constants/defaultValues";
 
-import Axios from "axios";
-
-const apiUrl = servicePath;
+import { apiClient } from "../../helpers/ApiService";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 const SignupSchema = Yup.object().shape({
   categories: Yup.object()
@@ -34,42 +32,28 @@ class FormikTambahBarang extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      'categories': '',
-      'assets': ''
+      code: "",
+      name: "",
+      category: "",
+      brand: "",
+      year: "",
+      qty: "",
+      price: "",
+      image:""
     };
   }
   componentDidMount() {
-    Axios.get(
-      `${apiUrl}/categories`,
-    {
-      headers : {
-        Authorization: 'Bearer ' + token
-      }
-    })
-      .then(res => {
-        let dataCategories = []
-        const categories = res.data.data;
-        for(const category of categories) {
-          dataCategories.push({value:category.id, label:category.name})
-        }
-        this.setState( {dataCategories} );
-      })
-
-      Axios.get(
-        `${apiUrl}/assets`,
-      {
-        headers : {
-          Authorization: 'Bearer ' + token
-        }
-      })
+    apiClient.get('/categories')
         .then(res => {
-          let dataAssets = []
-          const assets = res.data.data;
-          for(const asset of assets) {
-            dataAssets.push({value:asset.id, label:asset.name})
-          }
-          this.setState( {dataAssets} );
-        })
+            let dataCategory = [];
+            const categories = res.data.data;
+            for (const category of categories) {
+              dataCategory.push({value: category.id, label: category.name})
+            }
+            this.setState({dataCategory});
+        }).catch((e) => {
+        console.log(e.message)
+    });
   }
 
   componentDidUpdate() {
@@ -85,16 +69,38 @@ class FormikTambahBarang extends Component {
     }
   }
 
-  handlerChange = (e) =>{
+  handleChange = (e) =>{
     this.setState({[e.target.name] : e.target.value})
   }
 
-  handlerSubmit = async (event) => {
+  handlerSubmit = async (event, values) => {
     event.preventDefault();
 
-    await Axios.post(`${apiUrl}/users`, this.state)
-    this.props.history.push('/karyawan')
-  }
+    apiClient.defaults.headers.common['Content-Type'] = 'application/json';
+
+    const data = {
+        "code": this.state.code + ' ',
+        "name": this.state.name,
+        "category_id": reactLocalStorage.get('category'),
+        "brand": this.state.brand,
+        "year": this.state.year,
+        "qty": this.state.qty,
+        "price": this.state.price,
+        "image": "default.jpg",
+        "description": "default.jpg"
+    };
+
+    apiClient.post('/assets', data)
+        .then(res => {
+            if (res.status === 200) {
+                window.location.href = "./barang" // similar behavior as clicking on a link
+            }
+
+        }).catch((e) => {
+            console.log(e.message)
+    });
+  };
+
 
   render() {
     return (
@@ -103,11 +109,25 @@ class FormikTambahBarang extends Component {
           <Card className="d-flex flex-row mb-3">
             <CardBody> 
               
-              <Formik>
+              <Formik 
+                initialValues={this.state}
+                validationSchema={SignupSchema}
+                onSubmit={fields => {
+                    NotificationManager.success(
+                        "Karyawan berhasil ditambahkan",
+                        "Registrasi Berhasil",
+                        3000,
+                        null,
+                        null,
+                        +JSON.stringify(fields, null, 4)
+                    );
+                    this.handlerSubmit.bind(this, fields)
+                }}>
                 {({
                   setFieldValue,
                   handleChange,
-                  handleSubmit,
+                  handlerChange,
+                  handlerSubmit,
                   setFieldTouched,
                   values,
                   errors,
@@ -117,7 +137,10 @@ class FormikTambahBarang extends Component {
                   <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
                     <FormGroup className="error-l-100">
                       <Label>Kode Barang</Label>
-                      <Field className="form-control" name="code" />
+                      <input className="form-control"
+                        onChange={this.handleChange} 
+                        name="code" 
+                      />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
                           {errors.firstName}
@@ -127,7 +150,10 @@ class FormikTambahBarang extends Component {
 
                     <FormGroup className="error-l-100">
                       <Label>Nama Barang</Label>
-                      <Field className="form-control" name="name" />
+                      <input className="form-control"
+                        onChange={this.handleChange} 
+                        name="name" 
+                      />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
                           {errors.firstName}
@@ -140,22 +166,25 @@ class FormikTambahBarang extends Component {
                       <FormikReactSelect
                         name="category"
                         id="category"
-                        value={values.dataCategories}
+                        value={values.dataCategory}
                         isMulti={false}
-                        options={this.state.dataCategories}
-                        onChange={handleChange}
+                        options={this.state.dataCategory}
+                        onChange={setFieldValue}
                         onBlur={setFieldTouched}
                       />
-                      {errors.categories && touched.categories ? (
+                      {errors.category && touched.category ? (
                         <div className="invalid-feedback d-block">
-                          {errors.categories}
+                          {errors.category}
                         </div>
                       ) : null}
                     </FormGroup>
 
                     <FormGroup className="error-l-100">
                       <Label>Merek</Label>
-                      <Field className="form-control" name="brand" />
+                      <input className="form-control"
+                        onChange={this.handleChange}                        
+                        name="brand" 
+                      />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
                           {errors.firstName}
@@ -165,8 +194,9 @@ class FormikTambahBarang extends Component {
 
                     <FormGroup className="error-l-50">
                       <Label>Tahun</Label>
-                      <Field 
-                        className="form-control" 
+                      <input 
+                        className="form-control"
+                        onChange={this.handleChange} 
                         name="year"
                         type="number" 
                       />
@@ -179,9 +209,10 @@ class FormikTambahBarang extends Component {
 
                     <FormGroup className="error-l-50">
                       <Label>Jumlah Barang</Label>
-                      <Field 
-                        className="form-control" 
-                        name="jumlah"
+                      <input 
+                        className="form-control"
+                        onChange={this.handleChange} 
+                        name="qty"
                         type="number" 
                       />
                       {errors.npk && touched.npk ? (
@@ -193,9 +224,10 @@ class FormikTambahBarang extends Component {
 
                     <FormGroup className="error-l-50">
                       <Label>Harga Barang</Label>
-                      <Field 
-                        className="form-control" 
-                        name="jumlah"
+                      <input 
+                        className="form-control"
+                        onChange={this.handleChange} 
+                        name="price"
                         type="number" 
                       />
                       {errors.npk && touched.npk ? (
@@ -203,7 +235,22 @@ class FormikTambahBarang extends Component {
                           {errors.npk}
                         </div>
                       ) : null}
-                    </FormGroup>  
+                    </FormGroup> 
+
+                    <FormGroup className="error-l-50">
+                      <Label>Deskripsi</Label>
+                      <input 
+                        className="form-control"
+                        onChange={this.handleChange} 
+                        name="description"
+                        type="text" 
+                      />
+                      {errors.npk && touched.npk ? (
+                        <div className="invalid-feedback d-block">
+                          {errors.npk}
+                        </div>
+                      ) : null}
+                    </FormGroup> 
 
                     <FormGroup className="error-l-50">
                       <Label>Upload Gambar</Label>

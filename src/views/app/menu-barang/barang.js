@@ -8,15 +8,13 @@ import { servicePath, token } from "../../../constants/defaultValues";
 import DataListView from "../../../containers/pages/DataListView";
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
-import ListPageHeading from "../../../containers/pages/ListPageHeadingPengadaan";
-import Title from "../../../containers/pages/ListBarang";
+import Title from "../../../containers/pages/TitleBarang";
 import ListPageHeadingBarang from "../../../containers/pages/ListPageHeadingBarang";
+import { apiClient } from "../../../helpers/ApiService";
+import TitleBarang from "../../../containers/pages/TitleBarang";
 
-function collect(props) {
-  return { data: props.data };
-}
 
-const apiUrl = servicePath;
+const apiUrl = "/assets";
 
 class DataListPages extends Component {
   constructor(props) {
@@ -49,7 +47,6 @@ class DataListPages extends Component {
   }
   componentDidMount() {
     this.dataListRender();
-    this.categoryList();
     this.mouseTrap.bind(["ctrl+a", "command+a"], () =>
       this.handleChangeSelectAll(false)
     );
@@ -184,22 +181,7 @@ class DataListPages extends Component {
     document.activeElement.blur();
     return false;
   };
-  // {{baseURL}}/categories
-  categoryList() {
-    axios
-      .get(
-        `${apiUrl}/assets`,
-        {
-          headers : {
-            Authorization: 'Bearer ' + token
-          }
-        }
-      )
-      .then(response => {
-        let res = response.data
-        console.log(res);
-      });
-  };
+
 
   dataListRender() {
     const {
@@ -208,33 +190,27 @@ class DataListPages extends Component {
       selectedOrderOption,
       search
     } = this.state;
-    axios
+
+    apiClient
       .get(
-        `${apiUrl}/assets?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
+        `${apiUrl}?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
           selectedOrderOption.column
-        }&search=${search}`, {
-          headers : {
-            Authorization: 'Bearer ' + token
-          }
-        }
+        }&search=${search}`
       )
-      .then(response => {
-        let res = response.data
-        return {
-                data: res.data,
-                meta: res.meta
-              };
-      })
       .then(res => {
+        return res.data;
+      })
+      .then(data => {
         this.setState({
-          items: res.data,
+          totalPage: data.totalPage,
+          items: data.data,
           selectedItems: [],
-          totalPage: res.meta.page,
-          totalItemCount: res.meta.per_page,
+          totalItemCount: data.totalItem,
           isLoading: true
         });
+        console.log(this.state.items);
       });
-  }
+    }
 
   onContextMenuClick = (e, data, target) => {
     console.log(
@@ -296,17 +272,16 @@ class DataListPages extends Component {
             pageSizes={pageSizes}
             toggleModal={this.toggleModal}
           /> 
-          <Title/>
+          <TitleBarang/>
           <Row>
             {this.state.items.map(product => {
-            return (
-              <DataListView
-                key={product.name}
-                product={product}
-                isSelect={this.state.selectedItems.includes(product.name)}
-                collect={collect}
-              />
-            );
+              return (
+                <DataListView
+                  key={product.name}
+                  product={product}
+                  isSelect={this.state.selectedItems.includes(product.name)}
+                />
+              );
             })}{" "}
               <Pagination
                 currentPage={this.state.currentPage}

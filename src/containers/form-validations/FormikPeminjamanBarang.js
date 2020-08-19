@@ -7,11 +7,9 @@ import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { FormikReactSelect } from "./FormikFields";
 import { NotificationManager } from "../../components/common/react-notifications";
-import { servicePath, token } from "../../constants/defaultValues";
 
-import Axios from "axios";
-
-const apiUrl = servicePath;
+import { apiClient } from "../../helpers/ApiService";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 const SignupSchema = Yup.object().shape({
   categories: Yup.object()
@@ -33,20 +31,14 @@ const SignupSchema = Yup.object().shape({
 class FormikPeminjamanBarang extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      categories: [],
-      assets: []
+      // categories_id: "",
+      asset_id: ""
     };
+
   }
   componentDidMount() {
-    Axios.get(
-      `${apiUrl}/categories`,
-    {
-      headers : {
-        Authorization: 'Bearer ' + token
-      }
-    })
+    apiClient.get('/categories')
       .then(res => {
         let dataCategories = []
         const categories = res.data.data;
@@ -54,16 +46,12 @@ class FormikPeminjamanBarang extends Component {
           dataCategories.push({value:category.id, label:category.name})
         }
         this.setState( {dataCategories} );
-      })
+        }).catch((e) => {
+          console.log(e.message)
+      });
       
 
-      Axios.get(
-        `${apiUrl}/assets`,
-      {
-        headers : {
-          Authorization: 'Bearer ' + token
-        }
-      })
+      apiClient.get(`/assets`)
         .then(res => {
           let dataAssets = []
           const assets = res.data.data;
@@ -71,49 +59,31 @@ class FormikPeminjamanBarang extends Component {
             dataAssets.push({value:asset.id, label:asset.name})
           }
           this.setState( {dataAssets} );
-        })
+          }).catch((e) => {
+          console.log(e.message)
+      });
   }
 
-  componentDidUpdate() {
-    if (this.props.error) {
-      NotificationManager.warning(
-        this.props.error,
-        "Login Error",
-        3000,
-        null,
-        null,
-        ''
-      );
-    }
-  }
-
-  handleSubmit = event => {
+  handleSubmit   = async (event, values) => {
     event.preventDefault();
-    
-    const apiClient = Axios.create({
-      baseURL: apiUrl
-    })
 
-    apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsInV1aWQiOiJlOGViN2QxZS03MDU1LTQxYzUtOWM3OC1hNDIyYWJjYzBkMWYiLCJuYW1lIjoiQXNyaSIsImVtYWlsIjoiYXNyaUBwYXdvb24uY29tIiwicm9sZV9pZCI6MjEsImRpdmlzaW9uX2lkIjoxLCJzdGF0dXMiOjAsImlhdCI6MTU5NjcyNjU3N30.bzIoNbnxSqxuzuV1d49S7JypGP9kC-wneFVZ6dMecPk';
-    apiClient.defaults.headers.common['Accept'] = 'application/json';
+    apiClient.defaults.headers.common['Content-Type'] = 'application/json';
 
-    const url = '/borrows'
-    console.log("---")
-    console.log(this.state.assetID)
-    let data = {
-      //"asset_id" : "7caaa334-8f6e-42b0-96eb-dde2a483804e"
-      "asset_id" : this.state.categoryID
-    }
-    console.log(this.state)
-    console.log(data)
+    const data = {
+        // "categories_id": reactLocalStorage.get('categories'),
+        "asset_id": reactLocalStorage.get('assets')
+    };
 
-    apiClient.post(url, data)
-      .then((res) => {
-        const category = res.data.data;
-        console.log(res)
-        this.setState( {category} );
-      })
-  }
+    apiClient.post('/borrows', data)
+        .then(res => {
+            if (res.status === 200) {
+                window.location.href = "./peminjaman" // similar behavior as clicking on a link
+            }
+
+        }).catch((e) => {
+            console.log(e.message)
+    });
+};
 
   render() {
     return (
@@ -121,7 +91,20 @@ class FormikPeminjamanBarang extends Component {
         <Colxx xxs="12" lg="12" xl="12" className="mb-3">
           <Card className="d-flex flex-row mb-3">
             <CardBody>              
-              <Formik>
+              <Formik
+              initialValues={this.state}
+              validationSchema={SignupSchema}
+              onSubmit={fields => {
+                  NotificationManager.success(
+                      "Peminjaman berhasil ditambahkan",
+                      "Registrasi Berhasil",
+                      3000,
+                      null,
+                      null,
+                      +JSON.stringify(fields, null, 4)
+                  );
+                  this.handleSubmit.bind(this, fields)
+              }}>
                 {({
                   setFieldValue,
                   setFieldTouched,
@@ -136,8 +119,8 @@ class FormikPeminjamanBarang extends Component {
                         <FormGroup className="error-l-100">
                           <Label>Jenis Barang</Label>
                           <FormikReactSelect
-                            name="JenisBarang"
-                            id="jenisbarang"
+                            name="categories"
+                            id="categories"
                             value={values.dataCategories}
                             isMulti={false}
                             options={this.state.dataCategories}
@@ -155,8 +138,8 @@ class FormikPeminjamanBarang extends Component {
                         <FormGroup className="error-l-100">
                           <Label>Nama Barang</Label>
                           <FormikReactSelect
-                            name="NamaBarang"
-                            id="namabarang"
+                            name="assets"
+                            id="assets"
                             value={values.dataAssets}
                             isMulti={false}
                             options={this.state.dataAssets}

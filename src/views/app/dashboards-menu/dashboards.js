@@ -6,6 +6,7 @@ import IconCardsCarousel from '../../../containers/dashboards/IconCardsCarousel'
 import ProductCategoriesDoughnut from '../../../containers/dashboards/ProductCategoriesDoughnut'
 import BestSellers from '../../../containers/dashboards/BestSellers'
 import IntlMessages from "../../../helpers/IntlMessages";
+import Banner from "../../../containers/dashboards/banner";
 
 export default class Dashboards extends Component {
     render() {
@@ -19,7 +20,7 @@ export default class Dashboards extends Component {
             </Row>
             <Row>
               <Colxx xxs="12" className="mb-4">
-                <img alt="Banner" src="/assets/img/banner-dashboard.png" />
+                <Banner/>
               </Colxx>
             </Row>
 

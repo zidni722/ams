@@ -7,19 +7,27 @@ import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
 import { dataProducts } from "../../../data/products";
 import { DataPeminjam } from "../../../containers/ui/TablePeminjam";
+import { apiClient } from "../../../helpers/ApiService";
 
 
 class DetailPages extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          detailAsset:props.detailAsset,
-          modal: false
+          detailAsset:''
         };
     }
-    detailAsset() {
-      console.log(this.state.detailAsset)
+    componentDidMount() {
+      const assetID = uri => uri.substring(uri.lastIndexOf('/') + 1);
+
+      apiClient.get('/assets/' + assetID(window.location.href))
+          .then(res => {
+              this.setState({detailAsset: res.data.data})
+          }).catch((e) => {
+          console.log(e.message)
+      })
     }
+
     toggle = () => {
       this.setState(prevState => ({
         modal: !prevState.modal

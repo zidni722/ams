@@ -1,76 +1,34 @@
 import React from "react";
-import { Row, Card, CardBody, Badge } from "reactstrap";
+import { Card, Badge } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { NavLink } from "react-router-dom";
 import products from "../../data/products";
-import IntlMessages from "../../helpers/IntlMessages";
 
-const Title = () => {
-  
+const ListPengadaan = ({ procurment, statusColor }) => {
   return (
-    <Card className="d-flex flex-row mb-3">   
-      <div className="d-flex flex-grow-1 min-width-zero">
-        <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center sm">
-          <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Nama Barang" />
-          </p>
-          <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Jenis Barang" />
-          </p>
-          <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Tanggal Pengajuan" />
-          </p>
-          <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Tanggal Selesai" />
-          </p>
-          <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Status" />
-          </p>
-        </CardBody>
-      </div>
-    </Card>
-  );
-};
+      <Colxx xxs="12" className="mb-3" key={procurment.id}>
 
-const Listpengadaan = ({ id, code, title, category, tenant, createDate, verificationDate, status, statusColor }) => {
-  
-  return (
-    
-    <Card className="d-flex flex-row mb-3">
-      <div className="d-flex flex-grow-1 min-width-zero">
-        
-        <CardBody className="align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
-          <NavLink
-            to="#"
-            className="mb-1 text-p text-small w-50"
-          >{title}
-          </NavLink>
-          <p className="mb-1 text-p text-small w-50">{category}</p>
-          <p className="mb-1 text-p text-small w-50">{createDate}</p>
-          <p className="mb-1 text-p text-small w-50">{verificationDate}</p>
-          
-          <div className="mb-1 text-p text-small w-50 text-relative">
-            <Badge color={statusColor} pill>
-              {status}
-            </Badge>
+        <Card onClick = {() => window.location.href="/app/menu-peminjaman/detail-peminjaman"} >
+          <div className="d-flex flex-grow-1 min-width-zero">
+
+            <div className="d-flex flex-grow-1 min-width-zero">
+              <div className="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">          
+                <p className="mb-1 text-p text-small w-50">{procurment.asset_name}</p>
+                <p className="mb-1 text-p text-small w-50">{procurment.asset_category_name}</p>
+                <p className="mb-1 text-p text-small w-50">{procurment.created_at}</p>
+                <p className="mb-1 text-p text-small w-50">{procurment.updated_at}</p>
+
+                <div className="mb-1 text-p text-small w-50 text-relative">
+                  <Badge color={statusColor} pill>
+                    {procurment.status}
+                  </Badge>
+                </div>
+              </div>
+            </div>
           </div>
-        </CardBody>
-      </div>
-    </Card>
-  );
-};
-
-const ListItemPengadaan = () => {
-  return (
-    <Row>
-      <Colxx>
-      <Title/>
-        {products.map((products, index) => {
-          return <Listpengadaan key={`products_${index}`} {...products} />;
-        })}
+        </Card>
       </Colxx>
-    </Row>
   );
 };
 
-export default ListItemPengadaan;
+export default ListPengadaan;

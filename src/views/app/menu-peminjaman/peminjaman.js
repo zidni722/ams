@@ -3,12 +3,11 @@ import { Row } from "reactstrap";
 
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
-import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPeminjaman from "../../../containers/pages/ListPeminjaman";
 import ListPageHeadingPeminjaman from "../../../containers/pages/ListPageHeadingPeminjaman";
 import {apiClient} from "../../../helpers/ApiService";
 import TitlePeminjaman from "../../../containers/pages/TitlePeminjaman";
-import DataListViewKaryawan from "../../../containers/pages/DataListViewKaryawan";
+
 const apiUrl = "/borrows";
 
 class Peminjaman extends Component {
@@ -211,7 +210,7 @@ class Peminjaman extends Component {
           isLoading: true
         });
       });
-  }
+    }
 
   onContextMenuClick = (e, data, target) => {
     console.log(

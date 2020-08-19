@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardBody} from "reactstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 
-const Title = () => {
+const TitleBarang = () => {
   
   return (
     <Card className="d-flex flex-row mb-3">   
@@ -32,4 +32,4 @@ const Title = () => {
   );
 };
 
-export default Title;
+export default TitleBarang;

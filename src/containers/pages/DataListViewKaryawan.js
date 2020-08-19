@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { Card, Badge } from "reactstrap";

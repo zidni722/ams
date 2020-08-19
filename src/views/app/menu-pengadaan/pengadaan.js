@@ -10,8 +10,10 @@ import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer
 import ListPageHeading from "../../../containers/pages/ListPageHeadingPengadaan";
 import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPengadaan from "../../../containers/pages/ListPengadaan";
+import { apiClient } from "../../../helpers/ApiService";
+import TitlePengadaan from "../../../containers/pages/TitlePengadaan";
 
-const apiUrl = servicePath;
+const apiUrl = "/procurements";
 
 class Pengadaan extends Component {
   constructor(props) {
@@ -178,9 +180,10 @@ class Pengadaan extends Component {
       selectedOrderOption,
       search
     } = this.state;
-    axios
+    
+    apiClient
       .get(
-        `${apiUrl}?pageSize=${selectedPageSize}&currentPage=${currentPage}&orderBy=${
+        `${apiUrl}?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
           selectedOrderOption.column
         }&search=${search}`
       )
@@ -190,13 +193,13 @@ class Pengadaan extends Component {
       .then(data => {
         this.setState({
           totalPage: data.totalPage,
-          items: data.data,
+          procurments: data.data,
           selectedItems: [],
           totalItemCount: data.totalItem,
           isLoading: true
         });
       });
-  }
+    }
 
   onContextMenuClick = (e, data, target) => {
     console.log(
@@ -220,7 +223,7 @@ class Pengadaan extends Component {
   render() {
     const {
       currentPage,
-      items,
+      procurments,
       displayMode,
       selectedPageSize,
       totalItemCount,
@@ -252,18 +255,22 @@ class Pengadaan extends Component {
             startIndex={startIndex}
             endIndex={endIndex}
             selectedItemsLength={selectedItems ? selectedItems.length : 0}
-            itemsLength={items ? items.length : 0}
+            itemsLength={procurments ? procurments.length : 0}
             onSearchKey={this.onSearchKey}
             orderOptions={orderOptions}
             pageSizes={pageSizes}
           />
-          
+          <TitlePengadaan />
           <Row>
-            <Colxx xxs="12" className="mb-4">
-                <ListItemPengadaan
-                defaultPageSize={10}
-                />              
-            </Colxx>
+            {procurments.map(procurment => {
+              return (
+                  <ListItemPengadaan
+                      key={procurment.id}
+                      procurment={procurment}
+                      defaultPageSize={10}
+                  />
+              );
+            })}
             <Pagination
               currentPage={this.state.currentPage}
               totalPage={this.state.totalPage}
