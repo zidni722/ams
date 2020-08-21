@@ -5,10 +5,10 @@ import { Card } from "reactstrap";
 
 const DataListView = ({ product, collect }) => {
   return (
-    <Colxx xxs="12" className="mb-3" key  ={product.code}>
+    <Colxx xxs="12" className="mb-3" key ={product.code}>
       <ContextMenuTrigger id="menu_id" data={product.id} collect={collect}>
         <Card className="btn-shadow" onClick={() => {
-          window.location.href="./detail-barang" + product.id
+          window.location.href="./detail-barang/" + product.id
           }}>
 
           <div className="d-flex flex-grow-1 min-width-zero">

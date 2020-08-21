@@ -6,8 +6,9 @@ import { injectIntl } from "react-intl";
 import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
 import { apiClient } from "../../../helpers/ApiService";
-
-
+import { me } from "../../../constants/defaultValues";
+import SweetAlertCallback from "../../../containers/ui/SweetAlertCallback";
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 class DetailPeminjaman extends Component {
     constructor(props) {
@@ -16,7 +17,9 @@ class DetailPeminjaman extends Component {
           detailBorrow:'',
           detailUser:''
         };
+        reactLocalStorage.set('sweetAlertTitle','peminjaman')
     }
+    
     componentDidMount() {
       const borrowID = uri => uri.substring(uri.lastIndexOf('/') + 1);
 
@@ -36,63 +39,24 @@ class DetailPeminjaman extends Component {
       });
     }
     
-    toggle = () => {
-      this.setState(prevState => ({
-        modal: !prevState.modal
-      }));
-    };
     render() {
       return (
           <Fragment>
               <Row>
               <Colxx xxs="12">
                     <Breadcrumb heading="menu.detail-peminjaman" match={this.props.match} />
-                    <div className="text-zero top-right-button-container">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                          caret
-                          color="primary"
-                          size="lg"
-                          outline
-                          className="top-right-button top-right-button-single">
-                          <IntlMessages id="ACTIONS" />
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem onClick={this.toggle}>
-                            <IntlMessages id="Terima" />
-                          </DropdownItem>
-                          <DropdownItem >
-                            <IntlMessages id="Tolak" />
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                      <div>
-                        <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                          <ModalHeader toggle={this.toggle}>
-                            <IntlMessages id="Apakah anda yakin?" />
-                          </ModalHeader>
-                          <ModalBody>
-                            Apakah anda yakin akan menyetujui pengajuan peminjaman ini?
-                          </ModalBody>
-                          <ModalFooter>
-                            <Button color="primary" onClick={this.toggle}>
-                              Yakin
-                            </Button>{" "}
-                            <Button color="secondary" onClick={this.toggle}>
-                              Batal
-                            </Button>
-                          </ModalFooter>
-                        </Modal>
-                      </div>
-                    </div>
+                    { 
+                      me.role_name.toLowerCase() == 'super admin' &&
+                      <SweetAlertCallback/>
+                    }
                     <Separator className="mb-5" />
                 </Colxx>
               </Row>
               <Row>
                   <Colxx xxs="12" lg="8" xl="8" className="col-left">
                     <Card className="mb-3">
+                      <CardBody>
                       <SingleLightbox thumb={this.state.detailBorrow.asset_photo} large={this.state.detailBorrow.asset_photo} className="responsive card-img-top" />
-
                       <p className="text-muted text-small pl-3 pt-5"><IntlMessages id="Kode Barang" /></p>
                       <p className="pl-3">{this.state.detailBorrow.asset_code}</p>
                       <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Nama Barang" /></p>
@@ -115,10 +79,12 @@ class DetailPeminjaman extends Component {
                         </p>
                         <Progress value={(this.state.detailBorrow.qty / 20) * 100} className="mb-3" />
                       </div> */}
+                      </CardBody>
                     </Card>
                   </Colxx>
+
+                  {me.role_name.toLowerCase() == 'super admin' && 
                   <Colxx xxs="12" lg="4" xl="4" className="col-right">
-                        
                   <Card className="mb-4">
                     <CardBody>
                       <CardTitle> Data Peminjam</CardTitle>
@@ -154,6 +120,7 @@ class DetailPeminjaman extends Component {
                     </CardBody>
                   </Card>
                 </Colxx>
+                }
               </Row>
           </Fragment>
       );

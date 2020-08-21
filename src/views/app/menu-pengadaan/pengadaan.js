@@ -12,6 +12,7 @@ import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPengadaan from "../../../containers/pages/ListPengadaan";
 import { apiClient } from "../../../helpers/ApiService";
 import TitlePengadaan from "../../../containers/pages/TitlePengadaan";
+import ListPageHeadingPengadaan from "../../../containers/pages/ListPageHeadingPengadaan";
 
 const apiUrl = "/procurements";
 
@@ -241,7 +242,7 @@ class Pengadaan extends Component {
     ) : (
       <Fragment>
         <div className="disable-text-selection">
-          <ListPageHeading
+          <ListPageHeadingPengadaan
             heading="Pengadaan"
             displayMode={displayMode}
             changeDisplayMode={this.changeDisplayMode}

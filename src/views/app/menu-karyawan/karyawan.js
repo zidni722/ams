@@ -186,25 +186,6 @@ class Karyawan extends Component {
     return false;
   };
 
-  categoryList() {
-    axios
-      .get(
-        `${apiUrl}/users`,
-        {
-          headers : {
-            Authorization: 'Bearer ' + token
-          }
-        }
-      )
-      .then(response => {
-        let res = response.data
-        console.log(res);
-        console.log(token);
-      }).catch((e)=>{
-        console.log(e );
-      });
-  };
-
   dataListRender() {
     const {
       selectedPageSize,
@@ -215,30 +196,22 @@ class Karyawan extends Component {
 
     apiClient
       .get(
-        `${apiUrl}/users?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
+        `${apiUrl}?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
           selectedOrderOption.column
-        }&search=${search}`, {
-          headers : {
-            Authorization: 'Bearer ' + token
-          }
-        }
+        }&search=${search}`,
       )
-      .then(response => {
-        let res = response.data
-        return {
-                data: res.data,
-                meta: res.meta
-              };
-      })
       .then(res => {
+        return res.data;
+      })
+      .then(data => {
         this.setState({
-          employee: res.data,
+          totalPage: data.totalPage,
+          employee: data.data,
           selectedItems: [],
-          totalPage: res.meta.page,
-          totalItemCount: res.meta.per_page,
+          totalItemCount: data.totalItem,
           isLoading: true
         });
-        console.log(this.state.employee)
+        console.log(this.state.items);
       });
   }
 

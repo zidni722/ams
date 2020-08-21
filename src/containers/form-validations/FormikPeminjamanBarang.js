@@ -32,8 +32,7 @@ class FormikPeminjamanBarang extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // categories_id: "",
-      asset_id: ""
+      asset: ""
     };
 
   }
@@ -70,7 +69,6 @@ class FormikPeminjamanBarang extends Component {
     apiClient.defaults.headers.common['Content-Type'] = 'application/json';
 
     const data = {
-        // "categories_id": reactLocalStorage.get('categories'),
         "asset_id": reactLocalStorage.get('assets')
     };
 

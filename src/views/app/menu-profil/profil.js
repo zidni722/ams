@@ -5,17 +5,20 @@ import { Separator, Colxx } from "../../../components/common/CustomBootstrap";
 import { injectIntl } from "react-intl";
 import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
-import User from "../../../data/user";
+import { me } from "../../../constants/defaultValues";
+import { apiClient } from "../../../helpers/ApiService";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 class UserProfil extends Component {
     constructor(props) {
         super(props);
         this.state = {
+          detailUser: ''
         };
     }
 
     render() {
-      const pegawai = User.slice(0,1);
+      const me = reactLocalStorage.getObject('me')
         return (
             <Fragment>
                 <Row>
@@ -33,18 +36,10 @@ class UserProfil extends Component {
                   </Colxx>
                   <Colxx xxs="12" lg="7" xl="4" className="mb-3">
                       
-                    {
-                      pegawai.map((detailUser, index) => {
-                        return (
-                          <SingleLightbox thumb={detailUser.img} large={detailUser.img} className="img-thumbnail card-img social-profile-img" />
-                        )
-                      }
-                      )
-                    }
+                    <SingleLightbox thumb={me.photo} large={me.photo} className="img-thumbnail card-img social-profile-img" />
+                       
                     <Card className="mb-4">
-                    {
-                      pegawai.map((detailUser, index) => {
-                        return (
+
                       <CardBody>
                         <div className="position-absolute card-top-buttons">
                             <Button outline color={"black"} onClick = {() => window.location.href="./edit-profil"} className="btn-header-primary-light icon-button">
@@ -53,28 +48,24 @@ class UserProfil extends Component {
                           </div>
                           <div className="text-center pt-4">
                             <p className="list-item-heading pt-2 mb-2">
-                              {detailUser.name}
+                              {me.name}
                             </p>
                             <p className="mb-2">
-                              {detailUser.email}
+                              {me.email}
                             </p>
                             <p className="mb-3">
-                              <Badge color={detailUser.statusColor} className="mb-1 mr-1" pill>{detailUser.status}</Badge>
+                              <Badge color={me.statusColor} className="mb-1 mr-1" pill>{me.status}</Badge>
                             </p>
                           </div>
                           <p className="text-muted text-small mb-2"><IntlMessages id="NPK" /></p>
-                          <p className="mb-3">{detailUser.npk}</p>
+                          <p className="mb-3">{me.code}</p>
                           <p className="text-muted text-small mb-2"><IntlMessages id="Divisi" /></p>
-                          <p className="mb-3">{detailUser.divisi}</p>
+                          <p className="mb-3">{me.division_name}</p>
                           <p className="text-muted text-small mb-2"><IntlMessages id="No Tlpn" /></p>
-                          <p className="mb-3">{detailUser.noHP}</p>
+                          <p className="mb-3">{me.phone}</p>
                           <p className="text-muted text-small mb-2"><IntlMessages id="Alamat" /></p>
-                          <p className="mb-3">{detailUser.address}</p>                          
+                          <p className="mb-3">{me.address}</p>                          
                       </CardBody>
-                        )
-                      }
-                      )
-                    }
                     </Card>
                   </Colxx>
                 </Row>

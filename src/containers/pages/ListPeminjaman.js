@@ -6,7 +6,9 @@ const ListPeminjaman = ({ borrow, statusColor }) => {
   return (
       <Colxx xxs="12" className="mb-3" key={borrow.id}>
 
-        <Card onClick = {() => window.location.href="/app/menu-peminjaman/detail-peminjaman"} >
+        <Card onClick={() => {
+          window.location.href="./detail-peminjaman/" + borrow.id
+          }} >
           <div className="d-flex flex-grow-1 min-width-zero">
 
             <div className="d-flex flex-grow-1 min-width-zero">

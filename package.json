@@ -23,6 +23,7 @@
     "react-autosuggest": "^9.3.4",
     "react-avatar-edit": "^0.8.3",
     "react-big-calendar": "^0.22.0",
+    "react-bootstrap-sweetalert": "^5.2.0",
     "react-chartjs-2": "^2.7.4",
     "react-circular-progressbar": "^2.0.2",
     "react-contextmenu": "^2.9.4",

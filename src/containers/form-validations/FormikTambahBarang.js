@@ -42,6 +42,7 @@ class FormikTambahBarang extends Component {
       image:""
     };
   }
+  
   componentDidMount() {
     apiClient.get('/categories')
         .then(res => {

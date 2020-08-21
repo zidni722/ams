@@ -16,7 +16,7 @@ import IntlMessages from "../../helpers/IntlMessages";
 import { Link } from "react-router-dom";
 import { me } from "../../constants/defaultValues";
 
-class ListPageHeadingPengadaan extends Component {
+class ListPageHeadingPengembalian extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -66,9 +66,9 @@ class ListPageHeadingPengadaan extends Component {
               me.role_name.toLowerCase() !== 'super admin' &&
               <div className="text-zero top-right-button-container">
                 <Link
-                  to="/app/menu-pengadaan/form-pengadaan"
-                  className="btn btn-lg btn-primary">
-                  Ajukan Pengadaan
+                to="/app/menu-pengembalian/form-pengembalian"
+                className="btn btn-lg btn-primary">
+                Ajukan Pengembalian
                 </Link>
               </div>
             }
@@ -149,4 +149,4 @@ class ListPageHeadingPengadaan extends Component {
   }
 }
 
-export default injectIntl(ListPageHeadingPengadaan);
+export default injectIntl(ListPageHeadingPengembalian);

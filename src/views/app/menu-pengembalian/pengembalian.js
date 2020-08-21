@@ -13,6 +13,8 @@ import ListItemPengembalian from "../../../containers/pages/ListPengembalian";
 import ListPengembalian from "../../../containers/pages/ListPengembalian";
 import TitlePengembalian from "../../../containers/pages/TitlePengembalian";
 import { apiClient } from "../../../helpers/ApiService";
+import ListPageHeadingPeminjaman from "../../../containers/pages/ListPageHeadingPeminjaman";
+import ListPageHeadingPengembalian from "../../../containers/pages/ListPageHeadingPengembalian";
 
 const apiUrl = "/returns";
 
@@ -254,7 +256,7 @@ class Pengembalian extends Component {
     ) : (
       <Fragment>
         <div className="disable-text-selection">
-          <ListPageHeadingNull
+          <ListPageHeadingPengembalian
             heading="Pengembalian"
             displayMode={displayMode}
             changeDisplayMode={this.changeDisplayMode}

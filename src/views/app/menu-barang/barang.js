@@ -8,7 +8,6 @@ import { servicePath, token } from "../../../constants/defaultValues";
 import DataListView from "../../../containers/pages/DataListView";
 import Pagination from "../../../containers/pages/Pagination";
 import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
-import Title from "../../../containers/pages/TitleBarang";
 import ListPageHeadingBarang from "../../../containers/pages/ListPageHeadingBarang";
 import { apiClient } from "../../../helpers/ApiService";
 import TitleBarang from "../../../containers/pages/TitleBarang";

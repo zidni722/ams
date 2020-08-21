@@ -1,13 +1,14 @@
 import React from "react";
 import { Card, Badge } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
-import products from "../../data/products";
 
 const ListPerbaikan = ({ service, statusColor }) => {
   return (
       <Colxx xxs="12" className="mb-3" key={service.id}>
 
-        <Card onClick = {() => window.location.href="/app/menu-perbaikan/detail-perbaikan"} >
+        <Card onClick={() => {
+          window.location.href="./detail-perbaikan/" + service.id
+          }} >
           <div className="d-flex flex-grow-1 min-width-zero">
 
             <div className="d-flex flex-grow-1 min-width-zero">

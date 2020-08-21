@@ -28,7 +28,7 @@ const MenuBarang = ({ match }) => (
       {
         isAuthorize() &&
         <Route
-            path={`${match.url}/detail-barang`}
+            path={`${match.url}/detail-barang/:id`}
             render={props => <DetailsPages {...props} />}
         />
       }

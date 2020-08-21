@@ -95,7 +95,7 @@ class DetailKaryawan extends Component {
                                     </p>
                                     <p className="mb-3">
                                         <Badge color="outline-selesai" className="mb-1 mr-1"
-                                               pill>{this.state.detailUser.status}</Badge>
+                                                pill>{this.state.detailUser.status}</Badge>
                                     </p>
                                 </div>
                                 <p className="text-muted text-small mb-2"><IntlMessages id="NPK"/></p>
