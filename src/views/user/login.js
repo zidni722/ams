@@ -10,6 +10,7 @@ import {loginUser} from "../../redux/actions";
 import {Colxx} from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 import {apiClient} from "../../helpers/ApiService";
+import {Spinner} from "reactstrap"
 
 
 class Login extends Component {
@@ -137,11 +138,7 @@ class Login extends Component {
                         className={`btn-shadow btn-multiple-state ${this.props.loading ? "show-spinner" : ""}`}
                         size="lg"
                       >
-                        <span className="spinner d-inline-block">
-                          <span className="bounce1" />
-                          <span className="bounce2" />
-                          <span className="bounce3" />
-                        </span>
+                        <Spinner color="primary" />
                         <span className="label"><IntlMessages id="user.login-button" /></span>
                       </Button>
                     </div>

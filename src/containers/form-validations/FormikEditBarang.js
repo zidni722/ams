@@ -7,11 +7,7 @@ import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { FormikReactSelect } from "./FormikFields";
 import { NotificationManager } from "../../components/common/react-notifications";
-import { servicePath, token } from "../../constants/defaultValues";
-
-import Axios from "axios";
-
-const apiUrl = servicePath;
+import { apiClient } from "../../helpers/ApiService";
 
 const SignupSchema = Yup.object().shape({
   categories: Yup.object()
@@ -35,17 +31,13 @@ class FormikEditBarang extends Component {
     super(props);
     this.state = {
       'categories': '',
-      'assets': ''
+      'asset': ''
     };
   }
   componentDidMount() {
-    Axios.get(
-      `${apiUrl}/categories`,
-    {
-      headers : {
-        Authorization: 'Bearer ' + token
-      }
-    })
+    const assetID = uri => uri.substring(uri.lastIndexOf('/') + 1);
+
+    apiClient.get('/categories')
       .then(res => {
         let dataCategories = []
         const categories = res.data.data;
@@ -55,20 +47,11 @@ class FormikEditBarang extends Component {
         this.setState( {dataCategories} );
       })
 
-      Axios.get(
-        `${apiUrl}/assets`,
-      {
-        headers : {
-          Authorization: 'Bearer ' + token
-        }
-      })
+      apiClient.get('/assets/' + assetID(window.location.href))
         .then(res => {
-          let dataAssets = []
-          const assets = res.data.data;
-          for(const asset of assets) {
-            dataAssets.push({value:asset.id, label:asset.name})
-          }
-          this.setState( {dataAssets} );
+          this.setState({asset: res.data.data})
+        }).catch((e) => {
+          console.log(e.message)
         })
   }
 
@@ -91,9 +74,6 @@ class FormikEditBarang extends Component {
 
   handlerSubmit = async (event) => {
     event.preventDefault();
-
-    await Axios.post(`${apiUrl}/users`, this.state)
-    this.props.history.push('/karyawan')
   }
 
   render() {
@@ -105,14 +85,15 @@ class FormikEditBarang extends Component {
               
               <Formik
               initialValues={{
-                code:"Lap-1",
-                name: "Macbook Pro 13inch",
-                category: [{ value: "lap", label: "Laptop" }],
-                brand: "Apple",
-                year: "2020",
-                jumlah: "10",
-                harga: "21000000"
+                code: this.state.asset.code,
+                name: this.state.asset.name,
+                category: [{ value: this.state.asset.category, label: this.state.asset.category }],
+                brand: this.state.asset.brand,
+                year: this.state.asset.year,
+                jumlah: this.state.asset.qty,
+                harga: this.state.asset.price
               }}
+              enableReinitialize={true}
               >
                 {({
                   setFieldValue,
@@ -127,7 +108,10 @@ class FormikEditBarang extends Component {
                   <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
                     <FormGroup className="error-l-100">
                       <Label>Kode Barang</Label>
-                      <Field className="form-control" name="code" />
+                      <input className="form-control"
+                        name="code"
+                        value={this.state.asset.code}
+                      />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
                           {errors.firstName}
@@ -137,7 +121,11 @@ class FormikEditBarang extends Component {
 
                     <FormGroup className="error-l-100">
                       <Label>Nama Barang</Label>
-                      <Field className="form-control" name="name" />
+                      <input 
+                        className="form-control" 
+                        name="name" 
+                        value={this.state.asset.name}
+                      />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
                           {errors.firstName}
@@ -165,7 +153,11 @@ class FormikEditBarang extends Component {
 
                     <FormGroup className="error-l-100">
                       <Label>Merek</Label>
-                      <Field className="form-control" name="brand" />
+                      <input 
+                        className="form-control" 
+                        name="brand" 
+                        value={this.state.asset.brand}
+                      />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
                           {errors.firstName}
@@ -175,10 +167,11 @@ class FormikEditBarang extends Component {
 
                     <FormGroup className="error-l-50">
                       <Label>Tahun</Label>
-                      <Field 
+                      <input 
                         className="form-control" 
                         name="year"
                         type="number" 
+                        value={this.state.asset.year}
                       />
                       {errors.npk && touched.npk ? (
                         <div className="invalid-feedback d-block">
@@ -189,10 +182,11 @@ class FormikEditBarang extends Component {
 
                     <FormGroup className="error-l-50">
                       <Label>Jumlah Barang</Label>
-                      <Field 
+                      <input 
                         className="form-control" 
                         name="jumlah"
                         type="number" 
+                        value={this.state.asset.qty}
                       />
                       {errors.npk && touched.npk ? (
                         <div className="invalid-feedback d-block">
@@ -203,10 +197,11 @@ class FormikEditBarang extends Component {
 
                     <FormGroup className="error-l-50">
                       <Label>Harga Barang</Label>
-                      <Field 
+                      <input 
                         className="form-control" 
                         name="harga"
                         type="number" 
+                        value={this.state.asset.price}
                       />
                       {errors.npk && touched.npk ? (
                         <div className="invalid-feedback d-block">

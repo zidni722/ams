@@ -28,6 +28,10 @@ class DetailPages extends Component {
         })
     }
 
+    editBarang = () => {
+      window.location.href="../edit-barang/" + this.state.detailAsset.id
+    }
+
     toggle = () => {
       this.setState(prevState => ({
         modal: !prevState.modal
@@ -73,7 +77,7 @@ class DetailPages extends Component {
                       <Card className="mb-3">
                         <SingleLightbox thumb={this.state.detailAsset.image} large={this.state.detailAsset.image} className="responsive card-img-top" />
                         <div className="position-absolute card-top-buttons">
-                        <Button outline color={"white"} className="icon-button">
+                        <Button outline color={"white"} className="icon-button" onClick={this.editBarang}>
                           <i className="simple-icon-pencil" />
                         </Button>
                         </div>
