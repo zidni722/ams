@@ -88,7 +88,7 @@ class FormikTambahBarang extends Component {
         formData.append('name', this.state.name)
         formData.append('brand', this.state.brand)
         formData.append('year', this.state.year)
-        formData.append('image', this.state.image)
+        if (this.state.image) formData.append('image', this.state.image)
         formData.append('description', this.state.description)
         formData.append('category_id', reactLocalStorage.get('category'))
         formData.append('code', this.state.code)
