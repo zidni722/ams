@@ -5,9 +5,11 @@ import { Separator, Colxx } from "../../../components/common/CustomBootstrap";
 import { injectIntl } from "react-intl";
 import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
-import { dataProducts } from "../../../data/products";
 import { DataPeminjam } from "../../../containers/ui/TablePeminjam";
 import { apiClient } from "../../../helpers/ApiService";
+import SweetAlertDelete from "../../../containers/ui/SweetAlertDelete";
+import {reactLocalStorage} from 'reactjs-localstorage';
+import { me } from "../../../constants/defaultValues";
 
 
 class DetailPages extends Component {
@@ -44,31 +46,10 @@ class DetailPages extends Component {
                 <Row>
                     <Colxx xxs="12">
                         <Breadcrumb heading="menu.detail-barang" match={this.props.match} />
-                        <div className="text-zero top-right-button-container">
-                          <Button 
-                            onClick={this.toggle} 
-                            className="btn btn-lg btn-primary">
-                            Hapus Barang
-                          </Button>
-                        </div>
-                        <div>
-                          <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                            <ModalHeader toggle={this.toggle}>
-                              <IntlMessages id="Apakah anda yakin?" />
-                            </ModalHeader>
-                            <ModalBody>
-                              Apakah anda yakin akan menghapus barang ini?
-                            </ModalBody>
-                            <ModalFooter>
-                              <Button color="primary" onClick={this.toggle}>
-                                Yakin
-                              </Button>{" "}
-                              <Button color="secondary" onClick={this.toggle}>
-                                Batal
-                              </Button>
-                            </ModalFooter>
-                          </Modal>
-                        </div>
+                        { 
+                          me.role_name.toLowerCase() == 'super admin' &&
+                          <SweetAlertDelete/>
+                        }
                         <Separator className="mb-5" />
                     </Colxx>
                 </Row>

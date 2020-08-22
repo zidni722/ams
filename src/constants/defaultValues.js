@@ -31,4 +31,4 @@ export const isDarkSwitchActive = false;
 export const defaultColor = "light.blue";
 export const defaultDirection = "ltr";
 export const themeRadiusStorageKey = "__theme_radius";
-export const isDemo = true;
+export const isDemo = false;

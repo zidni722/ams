@@ -51,25 +51,9 @@ class FormikEditKaryawan extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            address: "",
-            code: "",
-            photo: "",
-            city_id: "",
-            city: "",
-            role_id: "",
-            role: "",
-            division_id: "",
-            division: "",
-            access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXVpZCI6IjU2NzkyZTFjLTc3MDEtNDdjZC1iMzdkLTg1Y2VjMzI3MjkyZCIsIm5hbWUiOiJCaXlhbiIsImVtYWlsIjoiYml5YW4uYmVsaW5kYUBwYXdvb24uY29tIiwicm9sZV9pZCI6MSwiZGl2aXNpb25faWQiOjQsInN0YXR1cyI6MCwiaWF0IjoxNTk2OTQ1NjUxfQ.GRw5DCBxkbtZt9VcTDcA9_KWAXqw23Xav17AC3BdKTg'
+            detailUser:''
         };
-
         this.onDrop = this.onDrop.bind(this);
-        apiClient.defaults.headers.common['authorization'] = 'Bearer ' + token;
     }
 
     componentDidMount() {
@@ -107,6 +91,15 @@ class FormikEditKaryawan extends Component {
                 this.setState({dataCities});
             }).catch((e) => {
             console.log(e.message)
+        })
+
+        const userID = uri => uri.substring(uri.lastIndexOf('/') + 1);
+
+        apiClient.get('/users/' + userID(window.location.href))
+        .then(res => {
+          this.setState({detailUser: res.data.data})
+        }).catch((e) => {
+          console.log(e.message)
         })
     }
 
@@ -157,20 +150,19 @@ class FormikEditKaryawan extends Component {
                         <CardBody>
                             <Formik
                                 initialValues={{
-                                    code:"IT-1",
-                                    firstName: "Asri",
-                                    lastName: " ",
-                                    email: "asri@pawoon.com",
-                                    role: "Employee",
+                                    code:this.state.code,
+                                    firstName: this.state.firstName,
+                                    lastName: this.state.lastName,
+                                    email: this.state.email,
+                                    role: "",
                                     division: "Engineering",
                                     city: "Jakarta",
                                     address:"Matraman Raya"
-                                  }}>
+                                  }}
+                                  enableReinitialize={true}
+                                  >
+                                      
                                 {({
-                                      handleSubmit,
-                                      handleOnChange,
-                                      handleChange,
-                                      handleBlur,
                                       setFieldValue,
                                       setFieldTouched,
                                       values,
@@ -185,6 +177,7 @@ class FormikEditKaryawan extends Component {
                                                 onChange={this.handleChange}
                                                 className="form-control"
                                                 name="code"
+                                                value={this.state.detailUser.code}
                                             />
                                             {errors.code && touched.code ? (
                                                 <div className="invalid-feedback d-block">
@@ -195,7 +188,12 @@ class FormikEditKaryawan extends Component {
 
                                         <FormGroup className="error-l-100">
                                             <Label>Nama Depan</Label>
-                                            <input onChange={this.handleChange} className="form-control" name="firstName"/>
+                                            <input 
+                                                onChange={this.handleChange}
+                                                className="form-control" 
+                                                name="firstName"
+                                                value={this.state.detailUser.name}
+                                                />
                                             {errors.firstName && touched.firstName ? (
                                                 <div className="invalid-feedback d-block">
                                                     {errors.firstName}
@@ -205,7 +203,12 @@ class FormikEditKaryawan extends Component {
 
                                         <FormGroup className="error-l-100">
                                             <Label>Nama Belakang</Label>
-                                            <input onChange={this.handleChange} className="form-control" name="lastName"/>
+                                            <input 
+                                                onChange={this.handleChange} 
+                                                className="form-control" 
+                                                name="lastName"
+                                                value={this.state.detailUser.name}
+                                                />
                                             {errors.lastName && touched.lastName ? (
                                                 <div className="invalid-feedback d-block">
                                                     {errors.lastName}
@@ -220,6 +223,7 @@ class FormikEditKaryawan extends Component {
                                                 className="form-control"
                                                 name="email"
                                                 type="email"
+                                                value={this.state.detailUser.email}
                                             />
                                             {errors.email && touched.email ? (
                                                 <div className="invalid-feedback d-block">
@@ -233,7 +237,7 @@ class FormikEditKaryawan extends Component {
                                             <FormikReactSelect
                                                 name="role"
                                                 id="role"
-                                                value={values.role}
+                                                value={this.state.detailUser.role}
                                                 isMulti={false}
                                                 options={this.state.dataRoles}
                                                 onChange={setFieldValue}
@@ -251,7 +255,7 @@ class FormikEditKaryawan extends Component {
                                             <FormikReactSelect
                                                 name="division"
                                                 id="division"
-                                                value={values.division}
+                                                value={this.state.detailUser.division_name}
                                                 isMulti={false}
                                                 options={this.state.dataDivisions}
                                                 onChange={setFieldValue}
@@ -280,7 +284,7 @@ class FormikEditKaryawan extends Component {
                                                         errorMessage: "Please enter a number"
                                                     }
                                                 }}
-                                                value={this.state.phone}
+                                                value={this.state.detailUser.phone}
                                                 onChange={phone => this.setState({phone})}
                                             />
                                         </FormGroup>
@@ -310,6 +314,7 @@ class FormikEditKaryawan extends Component {
                                                 className="form-control"
                                                 name="address"
                                                 component="textarea"
+                                                value={this.state.detailUser.address}
                                             />
                                             {errors.address && touched.address ? (
                                                 <div className="invalid-feedback d-block">

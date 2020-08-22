@@ -17,8 +17,17 @@ class UserProfil extends Component {
         };
     }
 
+    componentDidMount() {
+      apiClient.get('/users/' + me.id)
+          .then(res => {
+            reactLocalStorage.setObject('me', res.data.data);
+            this.setState({detailUser: me})          
+          }).catch((e) => {
+          console.log(e.message)
+      });
+    }
+
     render() {
-      const me = reactLocalStorage.getObject('me')
         return (
             <Fragment>
                 <Row>
