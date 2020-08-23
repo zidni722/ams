@@ -213,7 +213,11 @@ class FormikEditBarang extends Component {
                     <FormGroup className="error-l-50">
                       <Label>Upload Gambar</Label>
                         <div className="mb-2">
-                          <input type="file" name="image" onChange= {this.onChange} />
+                          <input 
+                            type="file" 
+                            name="image"
+                            accept= "image/jpeg, image/png" 
+                            onChange= {this.onChange} />
                         </div>
                     </FormGroup>
 

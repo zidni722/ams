@@ -65,7 +65,6 @@ class FormikEditKaryawan extends Component {
             role: "",
             division_id: "",
             division: "",
-            access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXVpZCI6IjU2NzkyZTFjLTc3MDEtNDdjZC1iMzdkLTg1Y2VjMzI3MjkyZCIsIm5hbWUiOiJCaXlhbiIsImVtYWlsIjoiYml5YW4uYmVsaW5kYUBwYXdvb24uY29tIiwicm9sZV9pZCI6MSwiZGl2aXNpb25faWQiOjQsInN0YXR1cyI6MCwiaWF0IjoxNTk2OTQ1NjUxfQ.GRw5DCBxkbtZt9VcTDcA9_KWAXqw23Xav17AC3BdKTg'
         };
 
         this.onDrop = this.onDrop.bind(this);
