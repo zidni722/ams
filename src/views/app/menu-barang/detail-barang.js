@@ -67,7 +67,7 @@ class DetailPages extends Component {
                         <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Nama Barang" /></p>
                         <p className="pl-3">{this.state.detailAsset.name}</p>
                         <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Jenis Barang" /></p>
-                        <p className="pl-3">{this.state.detailAsset.category}</p>
+                        <p className="pl-3">{this.state.detailAsset.category_name}</p>
                         <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Merk" /></p>
                         <p className="pl-3">{this.state.detailAsset.brand}</p>
                         <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Tahun" /></p>

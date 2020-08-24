@@ -54,6 +54,8 @@ class FormikEditBarang extends Component {
           this.setState({year: this.state.asset.year})
           this.setState({qty: this.state.asset.qty})
           this.setState({price: this.state.asset.price})
+          this.setState({image: this.state.asset.image})
+
 
           reactLocalStorage.set('defaultCategoryValue',this.state.asset.category_id);
           reactLocalStorage.set('defaultCategoryLabel',this.state.asset.category_name);
@@ -79,10 +81,13 @@ class FormikEditBarang extends Component {
     this.setState({[e.target.name] : e.target.value})
   }
 
+  handleFileChange = (e) => {
+    this.setState({ [e.target.name]: e.target.files[0] });
+  };  
+
   handlerSubmit = async (event) => {
     event.preventDefault();
     
-
     if (this.state.code.length > 0) {
         this.setState({ isValid: true })
       } else if (this.state.code.length === 0) {
@@ -131,7 +136,7 @@ class FormikEditBarang extends Component {
     formData.append('category_id', reactLocalStorage.get('category'))
     formData.append('code', this.state.code)
     formData.append('qty', this.state.qty)
-    formData.append('price', parseInt(this.state.price))
+    formData.append('price', this.state.price)
 
     apiClient.put('/assets/' + this.state.asset.id, formData)
         .then(res => {
@@ -188,6 +193,7 @@ class FormikEditBarang extends Component {
                         className="form-control" 
                         name="name" 
                         defaultValue={this.state.asset.name}
+                        onChange={this.handlerChange}
                       />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
@@ -220,6 +226,7 @@ class FormikEditBarang extends Component {
                         className="form-control" 
                         name="brand" 
                         defaultValue={this.state.asset.brand}
+                        onChange={this.handlerChange}
                       />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
@@ -235,6 +242,7 @@ class FormikEditBarang extends Component {
                         name="year"
                         type="number" 
                         defaultValue={this.state.asset.year}
+                        onChange={this.handlerChange}
                       />
                       {errors.npk && touched.npk ? (
                         <div className="invalid-feedback d-block">
@@ -247,9 +255,10 @@ class FormikEditBarang extends Component {
                       <Label>Jumlah Barang</Label>
                       <input 
                         className="form-control" 
-                        name="jumlah"
+                        name="qty"
                         type="number" 
                         defaultValue={this.state.asset.qty}
+                        onChange={this.handlerChange}
                       />
                       {errors.npk && touched.npk ? (
                         <div className="invalid-feedback d-block">
@@ -262,8 +271,9 @@ class FormikEditBarang extends Component {
                       <Label>Harga Barang</Label>
                       <input 
                         className="form-control" 
-                        name="harga"
+                        name="price"
                         defaultValue={this.state.asset.price}
+                        onChange={this.handlerChange}
                       />
                       {errors.npk && touched.npk ? (
                         <div className="invalid-feedback d-block">
@@ -279,7 +289,7 @@ class FormikEditBarang extends Component {
                             type="file" 
                             name="image"
                             accept= "image/jpeg, image/png" 
-                            onChange= {this.onChange} />
+                            onChange= {this.handleFileChange} />
                         </div>
                     </FormGroup>
 
