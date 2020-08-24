@@ -142,7 +142,7 @@ class FormikTambahBarang extends Component {
         formData.append('category_id', reactLocalStorage.get('category'))
         formData.append('code', this.state.code)
         formData.append('qty', this.state.qty)
-        formData.append('price', this.state.price)
+        formData.append('price', parseInt(this.state.price))
 
         apiClient.post('/assets', formData)
             .then(res => {
@@ -164,7 +164,6 @@ class FormikTambahBarang extends Component {
 
                             <Formik
                                 initialValues={this.state}
-                                validationSchema={SignupSchema}
                                 onSubmit={fields => {
                                     NotificationManager.success(
                                         "Karyawan berhasil ditambahkan",
@@ -178,13 +177,9 @@ class FormikTambahBarang extends Component {
                                 }}>
                                 {({
                                     setFieldValue,
-                                    handleChange,
-                                    handlerChange,
-                                    handlerSubmit,
                                     setFieldTouched,
                                     values,
                                     errors,
-                                    touched,
                                 }) => (
 
                                         <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">

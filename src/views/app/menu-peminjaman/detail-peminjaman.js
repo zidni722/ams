@@ -69,16 +69,6 @@ class DetailPeminjaman extends Component {
                       <p className="pl-3">{this.state.detailBorrow.asset_year}</p>
                       <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Status" /></p>
                       <p className="pl-3">{this.state.detailBorrow.status}</p>
-                         
-                      {/* <div className="pl-3 pr-3 pt-3 mb-4">
-                        <p className="mb-3">
-                          <IntlMessages id="Stok Barang" />
-                          <span className="float-right text-muted">
-                            {this.state.detailBorrow.qty}/{20}
-                          </span>
-                        </p>
-                        <Progress value={(this.state.detailBorrow.qty / 20) * 100} className="mb-3" />
-                      </div> */}
                       </CardBody>
                     </Card>
                   </Colxx>

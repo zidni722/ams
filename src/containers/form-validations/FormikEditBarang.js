@@ -1,39 +1,35 @@
 import React, { Component } from "react";
 
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
 
 import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { FormikReactSelect } from "./FormikFields";
 import { NotificationManager } from "../../components/common/react-notifications";
 import { apiClient } from "../../helpers/ApiService";
-
-const SignupSchema = Yup.object().shape({
-  categories: Yup.object()
-    .shape({
-      label: Yup.string().required(),
-      value: Yup.string().required()
-    })
-    .nullable()
-    .required("Jenis Barang harus diisi!"),
-  assets: Yup.object()
-  .shape({
-    label: Yup.string().required(),
-    value: Yup.string().required()
-  })
-  .nullable()
-  .required("Nama Barang harus diisi!")
-});
+import { reactLocalStorage } from "reactjs-localstorage";
+import Select from 'react-select'
 
 class FormikEditBarang extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id:"",
+      code: "",
+      name: "",
+      category: "",
+      defaultCategory: "",
+      brand: "",
+      year: "",
+      qty: "",
+      price: "",
+      image: "",
+      isValid: null,
       'categories': '',
       'asset': ''
     };
   }
+  
   componentDidMount() {
     const assetID = uri => uri.substring(uri.lastIndexOf('/') + 1);
 
@@ -50,6 +46,17 @@ class FormikEditBarang extends Component {
       apiClient.get('/assets/' + assetID(window.location.href))
         .then(res => {
           this.setState({asset: res.data.data})
+
+          this.setState({code: this.state.asset.code})
+          this.setState({name: this.state.asset.name})
+          this.setState({category: this.state.asset.category_id})
+          this.setState({brand: this.state.asset.brand})
+          this.setState({year: this.state.asset.year})
+          this.setState({qty: this.state.asset.qty})
+          this.setState({price: this.state.asset.price})
+
+          reactLocalStorage.set('defaultCategoryValue',this.state.asset.category_id);
+          reactLocalStorage.set('defaultCategoryLabel',this.state.asset.category_name);
         }).catch((e) => {
           console.log(e.message)
         })
@@ -67,14 +74,74 @@ class FormikEditBarang extends Component {
       );
     }
   }
-
+  
   handlerChange = (e) =>{
     this.setState({[e.target.name] : e.target.value})
   }
 
   handlerSubmit = async (event) => {
     event.preventDefault();
-  }
+    
+
+    if (this.state.code.length > 0) {
+        this.setState({ isValid: true })
+      } else if (this.state.code.length === 0) {
+        this.setState({ isValid: false })
+      }
+
+    if (this.state.name.length > 0) {
+        this.setState({ isValid: true })
+        } else if (this.state.name.length === 0) {
+        this.setState({ isValid: false })
+        }
+
+    if (this.state.brand.length > 0) {
+        this.setState({ isValid: true })
+      } else if (this.state.brand.length === 0) {
+        this.setState({ isValid: false })
+      }
+
+    if (this.state.year.length > 0) {
+        this.setState({ isValid: true })
+        } else if (this.state.year.length === 0) {
+        this.setState({ isValid: false })
+        }
+
+    if (this.state.qty.length > 0) {
+        this.setState({ isValid: true })
+        } else if (this.state.qty.length === 0) {
+        this.setState({ isValid: false })
+        }
+
+    if (this.state.price.length > 0) {
+        this.setState({ isValid: true })
+        } else if (this.state.price.length === 0) {
+        this.setState({ isValid: false })
+        }
+
+    apiClient.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+
+    const formData = new FormData();
+
+    formData.append('name', this.state.name)
+    formData.append('brand', this.state.brand)
+    formData.append('year', this.state.year)
+    if (this.state.image) formData.append('image', this.state.image)
+    formData.append('description', this.state.description)
+    formData.append('category_id', reactLocalStorage.get('category'))
+    formData.append('code', this.state.code)
+    formData.append('qty', this.state.qty)
+    formData.append('price', parseInt(this.state.price))
+
+    apiClient.put('/assets/' + this.state.asset.id, formData)
+        .then(res => {
+            if (res.status === 200) {
+              window.location.href="../barang"
+            }
+        }).catch((e) => {
+            console.log(e.message)
+        });
+    };
 
   render() {
     return (
@@ -85,13 +152,7 @@ class FormikEditBarang extends Component {
               
               <Formik
               initialValues={{
-                code: this.state.asset.code,
-                name: this.state.asset.name,
-                category: [{ value: this.state.asset.category, label: this.state.asset.category }],
-                brand: this.state.asset.brand,
-                year: this.state.asset.year,
-                jumlah: this.state.asset.qty,
-                harga: this.state.asset.price
+                
               }}
               enableReinitialize={true}
               >
@@ -108,9 +169,11 @@ class FormikEditBarang extends Component {
                   <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
                     <FormGroup className="error-l-100">
                       <Label>Kode Barang</Label>
-                      <input className="form-control"
+                      <input 
+                        className="form-control"
                         name="code"
-                        value={this.state.asset.code}
+                        defaultValue={this.state.asset.code}
+                        onChange={this.handlerChange}
                       />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
@@ -124,7 +187,7 @@ class FormikEditBarang extends Component {
                       <input 
                         className="form-control" 
                         name="name" 
-                        value={this.state.asset.name}
+                        defaultValue={this.state.asset.name}
                       />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
@@ -135,10 +198,10 @@ class FormikEditBarang extends Component {
 
                     <FormGroup className="error-l-100">
                       <Label>Jenis Barang</Label>
-                      <FormikReactSelect
+                      <Select
                         name="category"
                         id="category"
-                        value={values.dataCategories}
+                        defaultValue={{ value: reactLocalStorage.get('defaultCategoryValue'), label: reactLocalStorage.get('defaultCategoryLabel') }}
                         isMulti={false}
                         options={this.state.dataCategories}
                         onChange={handleChange}
@@ -156,7 +219,7 @@ class FormikEditBarang extends Component {
                       <input 
                         className="form-control" 
                         name="brand" 
-                        value={this.state.asset.brand}
+                        defaultValue={this.state.asset.brand}
                       />
                       {errors.firstName && touched.firstName ? (
                         <div className="invalid-feedback d-block">
@@ -171,7 +234,7 @@ class FormikEditBarang extends Component {
                         className="form-control" 
                         name="year"
                         type="number" 
-                        value={this.state.asset.year}
+                        defaultValue={this.state.asset.year}
                       />
                       {errors.npk && touched.npk ? (
                         <div className="invalid-feedback d-block">
@@ -186,7 +249,7 @@ class FormikEditBarang extends Component {
                         className="form-control" 
                         name="jumlah"
                         type="number" 
-                        value={this.state.asset.qty}
+                        defaultValue={this.state.asset.qty}
                       />
                       {errors.npk && touched.npk ? (
                         <div className="invalid-feedback d-block">
@@ -200,8 +263,7 @@ class FormikEditBarang extends Component {
                       <input 
                         className="form-control" 
                         name="harga"
-                        type="number" 
-                        value={this.state.asset.price}
+                        defaultValue={this.state.asset.price}
                       />
                       {errors.npk && touched.npk ? (
                         <div className="invalid-feedback d-block">

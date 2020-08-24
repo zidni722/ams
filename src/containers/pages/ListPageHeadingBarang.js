@@ -36,9 +36,6 @@ class ListPageHeadingBarang extends Component {
       displayOptionsIsOpen: false,
       filteredData: [],
       value: "",
-      modal: false,
-      fileName: "",
-      fileFormat: "xlsx"
     };
   }
 
@@ -54,34 +51,6 @@ class ListPageHeadingBarang extends Component {
   }
   toggleModal = () => {
     this.setState({ modal: !this.state.modal })
-  }
-
-  handleExport = () => {
-    this.toggleModal()
-    let table = ReactDOM.findDOMNode(this.tableRef)
-    let bookType = this.state.fileFormat.length ? this.state.fileFormat : "xlsx"
-    let wb = XLSX.utils.table_to_book(table, { sheet: "Sheet JS" })
-    let wbout = XLSX.write(wb, { bookType, bookSST: true, type: "binary" })
-
-    const s2ab = s => {
-      var buf = new ArrayBuffer(s.length)
-      var view = new Uint8Array(buf)
-      for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xff
-      return buf
-    }
-    let file =
-      this.state.fileFormat.length && this.state.fileFormat.length
-        ? `${this.state.fileName}.${this.state.fileFormat}`
-        : this.state.fileName.length
-        ? `${this.state.fileName}.xlsx`
-        : this.state.fileFormat.length
-        ? `excel-sheet.${this.state.fileFormat}`
-        : "excel-sheet.xlsx"
-
-    return FileSaver.saveAs(
-      new Blob([s2ab(wbout)], { type: "application/octet-stream" }),
-      file
-    )
   }
 
   generatePDF = () => {
@@ -154,13 +123,13 @@ class ListPageHeadingBarang extends Component {
                 Tambah Barang
               </Link>
             <div className="position-relative d-none d-none d-lg-inline-block">
-              <a
-                className="btn btn-outline-primary btn-sm ml-2"
+              <Button
+                className="btn btn-outline btn-sm ml-2"
                 target="_top"
                 onClick={this.generatePDF}
               >
               <i className="simple-icon-cloud-download"/>
-              </a>
+              </Button>
             </div>
             </div>
             <Breadcrumb match={match} />
