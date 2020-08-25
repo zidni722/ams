@@ -81,6 +81,13 @@ class FormikEditBarang extends Component {
     this.setState({[e.target.name] : e.target.value})
   }
 
+  handlerSelectChange = (e, action) => {
+    const {value} = e;
+    const name = action
+    this.setState({[name]: value});
+    reactLocalStorage.set(name, value);
+  };
+
   handleFileChange = (e) => {
     this.setState({ [e.target.name]: e.target.files[0] });
   };  
@@ -138,14 +145,15 @@ class FormikEditBarang extends Component {
     formData.append('qty', this.state.qty)
     formData.append('price', this.state.price)
 
-    apiClient.put('/assets/' + this.state.asset.id, formData)
-        .then(res => {
-            if (res.status === 200) {
-              window.location.href="../barang"
-            }
-        }).catch((e) => {
-            console.log(e.message)
-        });
+    console.log(reactLocalStorage.get('category'));
+      apiClient.put('/assets/' + this.state.asset.id, formData)
+          .then(res => {
+              if (res.status === 200) {
+                window.location.href="../barang"
+              }
+          }).catch((e) => {
+              console.log(e.message)
+          });
     };
 
   render() {
@@ -210,7 +218,7 @@ class FormikEditBarang extends Component {
                         defaultValue={{ value: reactLocalStorage.get('defaultCategoryValue'), label: reactLocalStorage.get('defaultCategoryLabel') }}
                         isMulti={false}
                         options={this.state.dataCategories}
-                        onChange={handleChange}
+                        onChange={e => this.handlerSelectChange(e, 'category')}
                         onBlur={setFieldTouched}
                       />
                       {errors.categories && touched.categories ? (

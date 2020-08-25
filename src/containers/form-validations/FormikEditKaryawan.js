@@ -1,51 +1,14 @@
 import React, {Component} from "react";
 import {reactLocalStorage} from 'reactjs-localstorage';
 
-import {Field, Form, Formik} from "formik";
-import * as Yup from "yup";
+import {Form, Formik} from "formik";
 
 import {Button, Card, CardBody, FormGroup, Label, Row} from "reactstrap";
 import {Colxx} from "../../components/common/CustomBootstrap";
-import {FormikReactSelect} from "./FormikFields";
 import PhoneInput from 'react-phone-input-2'
-import {NotificationManager} from "../../components/common/react-notifications";
-import {token} from "../../constants/defaultValues";
 import {apiClient} from "../../helpers/ApiService";
+import Select from 'react-select'
 
-const SignupSchema = Yup.object().shape({
-    code: Yup.string()
-        .required("NPK Harus diisi!"),
-    firstName: Yup.string()
-        .min(2, "Terlalu Pendek!")
-        .max(50, "Terlalu Panjang!")
-        .required("Nama Depan Harus diisi!"),
-    lastName: Yup.string()
-        .min(2, "Terlalu Pendek!")
-        .max(50, "Terlalu Panjang!")
-        .required("Nama Belakang Harus diisi!"),
-    email: Yup.string()
-        .email("Invalid email")
-        .required("Alamat Email Harus diisi!"),
-    division: Yup.object()
-        .shape({
-            label: Yup.string().required(),
-            value: Yup.string().required()
-        })
-        .nullable()
-        .required("Divisi harus diisi!"),
-    phone: Yup.string()
-        .min(10, "Terlalu Pendek!")
-        .required("NoTlpn Harus diisi!"),
-    address: Yup.string()
-        .required("Alamat Harus diisi!"),
-    role: Yup.object()
-        .shape({
-            label: Yup.string().required(),
-            value: Yup.string().required()
-        })
-        .nullable()
-        .required("Role harus diisi!")
-});
 
 class FormikEditKaryawan extends Component {
     constructor(props) {
@@ -98,6 +61,23 @@ class FormikEditKaryawan extends Component {
         apiClient.get('/users/' + userID(window.location.href))
         .then(res => {
           this.setState({detailUser: res.data.data})
+
+          this.setState({code: this.state.detailUser.code})
+          this.setState({name: this.state.detailUser.name})
+          this.setState({email: this.state.detailUser.email})
+          this.setState({role: this.state.detailUser.role_id})
+          this.setState({division: this.state.detailUser.division_id})
+          this.setState({city: this.state.detailUser.city_id})
+          this.setState({phone: this.state.detailUser.phone})
+          this.setState({address: this.state.detailUser.address})
+
+          reactLocalStorage.set('defaultRoleValue',this.state.detailUser.role_id);
+          reactLocalStorage.set('defaultRoleLabel',this.state.detailUser.role_name);
+          reactLocalStorage.set('defaultDivisionValue',this.state.detailUser.division_id);
+          reactLocalStorage.set('defaultDivisionLabel',this.state.detailUser.division_name);
+          reactLocalStorage.set('defaultCityValue',this.state.detailUser.city_id);
+          reactLocalStorage.set('defaultCityLabel',this.state.detailUser.city_name);
+
         }).catch((e) => {
           console.log(e.message)
         })
@@ -114,29 +94,35 @@ class FormikEditKaryawan extends Component {
         this.setState({[name]: value});
     };
 
+    handlerSelectChange = (e, action) => {
+        const {value} = e;
+        const name = action
+        this.setState({[name]: value});
+        reactLocalStorage.set(name, value);
+      };
+
     handlerSubmit = async (event, values) => {
         event.preventDefault();
 
         apiClient.defaults.headers.common['Content-Type'] = 'application/json';
 
-        const data = {
-            "name": this.state.firstName + ' ' + this.state.lastName,
-            "email": this.state.email,
-            "phone": this.state.phone,
-            "address": this.state.address,
-            "code": this.state.code,
-            "photo": "default.jpg",
-            "city_id": reactLocalStorage.get('city'),
-            "role_id": reactLocalStorage.get('role'),
-            "division_id": reactLocalStorage.get('division')
-        };
+        const formData = new FormData();
 
-        apiClient.post('/users', data)
+        formData.append('name', this.state.name)
+        formData.append('email', this.state.email)
+        formData.append('phone', this.state.phone)
+        formData.append('address', this.state.address)
+        formData.append('code', this.state.code)
+        formData.append('city_id', this.state.city)
+        formData.append('role_id', this.state.role)
+        formData.append('division_id', this.state.division)
+
+        apiClient.put('/users/'+ this.state.detailUser.id, formData)
             .then(res => {
-                if (res.status === 200)
-                    this.props.history.push('/karyawan')
+            if (res.status === 200){
+                window.location.href="../karyawan"
+            }
 
-                this.props.history.push('/karyawan')
             }).catch((e) => {
                 console.log(e.message)
         });
@@ -177,7 +163,7 @@ class FormikEditKaryawan extends Component {
                                                 onChange={this.handleChange}
                                                 className="form-control"
                                                 name="code"
-                                                value={this.state.detailUser.code}
+                                                defaultValue={this.state.detailUser.code}
                                             />
                                             {errors.code && touched.code ? (
                                                 <div className="invalid-feedback d-block">
@@ -187,31 +173,16 @@ class FormikEditKaryawan extends Component {
                                         </FormGroup>
 
                                         <FormGroup className="error-l-100">
-                                            <Label>Nama Depan</Label>
+                                            <Label>Nama Lengkap</Label>
                                             <input 
                                                 onChange={this.handleChange}
                                                 className="form-control" 
-                                                name="firstName"
-                                                value={this.state.detailUser.name}
+                                                name="name"
+                                                defaultValue={this.state.detailUser.name}
                                                 />
                                             {errors.firstName && touched.firstName ? (
                                                 <div className="invalid-feedback d-block">
                                                     {errors.firstName}
-                                                </div>
-                                            ) : null}
-                                        </FormGroup>
-
-                                        <FormGroup className="error-l-100">
-                                            <Label>Nama Belakang</Label>
-                                            <input 
-                                                onChange={this.handleChange} 
-                                                className="form-control" 
-                                                name="lastName"
-                                                value={this.state.detailUser.name}
-                                                />
-                                            {errors.lastName && touched.lastName ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.lastName}
                                                 </div>
                                             ) : null}
                                         </FormGroup>
@@ -223,7 +194,7 @@ class FormikEditKaryawan extends Component {
                                                 className="form-control"
                                                 name="email"
                                                 type="email"
-                                                value={this.state.detailUser.email}
+                                                defaultValue={this.state.detailUser.email}
                                             />
                                             {errors.email && touched.email ? (
                                                 <div className="invalid-feedback d-block">
@@ -234,13 +205,13 @@ class FormikEditKaryawan extends Component {
 
                                         <FormGroup className="error-l-50">
                                             <Label>Role</Label>
-                                            <FormikReactSelect
+                                            <Select
                                                 name="role"
                                                 id="role"
-                                                value={this.state.detailUser.role}
+                                                defaultValue={{ value: reactLocalStorage.get('defaultRoleValue'), label: reactLocalStorage.get('defaultRoleLabel') }}
                                                 isMulti={false}
                                                 options={this.state.dataRoles}
-                                                onChange={setFieldValue}
+                                                onChange={e => this.handlerSelectChange(e, 'role')}
                                                 onBlur={setFieldTouched}
                                             />
                                             {errors.role && touched.role ? (
@@ -252,13 +223,13 @@ class FormikEditKaryawan extends Component {
 
                                         <FormGroup className="error-l-50">
                                             <Label>Divisi</Label>
-                                            <FormikReactSelect
+                                            <Select
                                                 name="division"
                                                 id="division"
-                                                value={this.state.detailUser.division_name}
+                                                defaultValue={{ value: reactLocalStorage.get('defaultDivisionValue'), label: reactLocalStorage.get('defaultDivisionLabel') }}
                                                 isMulti={false}
                                                 options={this.state.dataDivisions}
-                                                onChange={setFieldValue}
+                                                onChange={e => this.handlerSelectChange(e, 'division')}
                                                 onBlur={setFieldTouched}
                                             />
                                             {errors.divisi && touched.divisi ? (
@@ -291,13 +262,13 @@ class FormikEditKaryawan extends Component {
 
                                         <FormGroup className="error-l-50">
                                             <Label>City</Label>
-                                            <FormikReactSelect
+                                            <Select
                                                 name="city"
                                                 id="city"
-                                                value={values.city}
+                                                defaultValue={{ value: reactLocalStorage.get('defaultCityValue'), label: reactLocalStorage.get('defaultCityLabel') }}
                                                 isMulti={false}
                                                 options={this.state.dataCities}
-                                                onChange={setFieldValue}
+                                                onChange={e => this.handlerSelectChange(e, 'city')}
                                                 onBlur={setFieldTouched}
                                             />
                                             {errors.city && touched.city ? (
@@ -314,7 +285,7 @@ class FormikEditKaryawan extends Component {
                                                 className="form-control"
                                                 name="address"
                                                 component="textarea"
-                                                value={this.state.detailUser.address}
+                                                defaultValue={this.state.detailUser.address}
                                             />
                                             {errors.address && touched.address ? (
                                                 <div className="invalid-feedback d-block">
