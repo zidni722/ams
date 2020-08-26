@@ -1,14 +1,15 @@
 import React from "react";
-import { Row, Card, CardBody, Badge } from "reactstrap";
+import { Card, Badge } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
+import { ContextMenuTrigger } from "react-contextmenu";
 
 const ListPeminjaman = ({ borrow, statusColor }) => {
   return (
-      <Colxx xxs="12" className="mb-3" key={borrow.id}>
-
+    <Colxx xxs="12" className="mb-3" key={borrow.id}>
+      <ContextMenuTrigger id="menu_id" data={borrow.id}>
         <Card onClick={() => {
-          window.location.href="./detail-peminjaman/" + borrow.id
-          }} >
+          window.location.href = "./detail-peminjaman/" + borrow.id
+        }} >
           <div className="d-flex flex-grow-1 min-width-zero">
 
             <div className="d-flex flex-grow-1 min-width-zero">
@@ -28,7 +29,8 @@ const ListPeminjaman = ({ borrow, statusColor }) => {
             </div>
           </div>
         </Card>
-      </Colxx>
+      </ContextMenuTrigger>
+    </Colxx>
   );
 };
 

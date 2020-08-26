@@ -23,7 +23,7 @@ const MenuPeminjaman = ({ match }) => (
         render={props => <FormPeminjaman {...props} />}
       />
       <Route
-        path={`${match.url}/detail-peminjaman`}
+        path={`${match.url}/detail-peminjaman/:id`}
         render={props => <DetailPeminjaman {...props} />}
       />
       <Redirect to="/error" />

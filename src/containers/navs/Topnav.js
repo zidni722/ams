@@ -245,14 +245,14 @@ class TopNav extends Component {
                 </span>
               </DropdownToggle>
               <DropdownMenu className="mt-3" right>
-                <DropdownItem onClick={() => window.location.href="/app/menu-profil"}>
+                <DropdownItem name="profile" onClick={() => {window.location.href="/app/menu-profil"}}>
                   Profil
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem onClick={
+                <DropdownItem name="logout" onClick={
                   () => {
-                    reactLocalStorage.clear()
                     window.location.href="/user/login"
+                    reactLocalStorage.clear()
                   }
                 }>
                   Sign Out

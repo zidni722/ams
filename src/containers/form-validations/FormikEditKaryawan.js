@@ -134,18 +134,7 @@ class FormikEditKaryawan extends Component {
                 <Colxx xxs="12">
                     <Card>
                         <CardBody>
-                            <Formik
-                                initialValues={{
-                                    code:this.state.code,
-                                    firstName: this.state.firstName,
-                                    lastName: this.state.lastName,
-                                    email: this.state.email,
-                                    role: "",
-                                    division: "Engineering",
-                                    city: "Jakarta",
-                                    address:"Matraman Raya"
-                                  }}
-                                  enableReinitialize={true}
+                            <Formik enableReinitialize={true}
                                   >
                                       
                                 {({
@@ -209,7 +198,6 @@ class FormikEditKaryawan extends Component {
                                                 name="role"
                                                 id="role"
                                                 defaultValue={{ value: reactLocalStorage.get('defaultRoleValue'), label: reactLocalStorage.get('defaultRoleLabel') }}
-                                                isMulti={false}
                                                 options={this.state.dataRoles}
                                                 onChange={e => this.handlerSelectChange(e, 'role')}
                                                 onBlur={setFieldTouched}
@@ -227,7 +215,6 @@ class FormikEditKaryawan extends Component {
                                                 name="division"
                                                 id="division"
                                                 defaultValue={{ value: reactLocalStorage.get('defaultDivisionValue'), label: reactLocalStorage.get('defaultDivisionLabel') }}
-                                                isMulti={false}
                                                 options={this.state.dataDivisions}
                                                 onChange={e => this.handlerSelectChange(e, 'division')}
                                                 onBlur={setFieldTouched}
@@ -266,16 +253,10 @@ class FormikEditKaryawan extends Component {
                                                 name="city"
                                                 id="city"
                                                 defaultValue={{ value: reactLocalStorage.get('defaultCityValue'), label: reactLocalStorage.get('defaultCityLabel') }}
-                                                isMulti={false}
                                                 options={this.state.dataCities}
                                                 onChange={e => this.handlerSelectChange(e, 'city')}
                                                 onBlur={setFieldTouched}
                                             />
-                                            {errors.city && touched.city ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.city}
-                                                </div>
-                                            ) : null}
                                         </FormGroup>
 
                                         <FormGroup>
