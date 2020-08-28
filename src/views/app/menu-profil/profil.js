@@ -69,7 +69,7 @@ class UserProfil extends Component {
                     {me.email}
                   </p>
                   <p className="mb-3">
-                    <Badge color={me.statusColor} className="mb-1 mr-1" pill>{me.status}</Badge>
+                    <Badge color="outline-selesai" className="mb-1 mr-1" pill>{me.status}</Badge>
                   </p>
                 </div>
                 <p className="text-muted text-small mb-2"><IntlMessages id="NPK" /></p>

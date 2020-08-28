@@ -38,6 +38,7 @@
     "react-google-maps": "^9.4.5",
     "react-image-lightbox": "^5.1.0",
     "react-images-upload": "^1.2.8",
+    "react-input-mask": "^2.0.4",
     "react-intl": "2.4.0",
     "react-lines-ellipsis": "^0.14.1",
     "react-perfect-scrollbar": "^1.1.1",

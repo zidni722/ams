@@ -9,6 +9,7 @@ import PhoneInput from 'react-phone-input-2'
 import { me } from "../../constants/defaultValues";
 import { apiClient } from "../../helpers/ApiService";
 import Select from "react-select";
+import { NotificationManager } from "../../components/common/react-notifications";
 
 class FormikEditProfil extends Component {
     constructor(props) {
@@ -79,7 +80,7 @@ class FormikEditProfil extends Component {
 
     handleFileChange = (e) => {
         this.setState({ [e.target.name]: e.target.files[0] });
-      };  
+    };
 
     handlerSelectChange = (e, action) => {
         const { value } = e;
@@ -116,11 +117,22 @@ class FormikEditProfil extends Component {
                                 const newMe = res.data.data
                                 newMe.token = me.token
 
+                                reactLocalStorage.remove('me')
                                 reactLocalStorage.setObject('me', newMe)
                                 window.location.href = "./profil"
+                                reactLocalStorage.set('isSuccesSubmit', true)
                             }
                         }).catch((e) => {
                             console.log(e.message)
+                            NotificationManager.error(
+                                "Silahkan coba kembali beberapa saat lagi!",
+                                "Terjadi Kesalahan",
+                                5000,
+                                () => {
+                                    this.setState({ visible: false });
+                                },
+                                null
+                            );
                         });
                 }
                 console.log(this.state.detailUser);

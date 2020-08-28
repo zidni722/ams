@@ -15,18 +15,15 @@ class Error extends Component {
   render() {
     return (
       <Fragment>
-        <div className="fixed-background" />
+        <div className="fixed-background-p" />
         <main>
           <div className="container">
             <Row className="h-100">
-              <Colxx xxs="12" md="10" className="mx-auto my-auto">
+              <Colxx xxs="12" md="9" className="mx-auto my-auto">
                 <Card className="auth-card">
-                  <div className="position-relative image-side ">
-                    <p className="text-white h2">MAGIC IS IN THE DETAILS</p>
-                    <p className="white mb-0">Yes, it is indeed!</p>
-                  </div>
+                  <div className="position-relative image-side-404"/>
                   <div className="form-side">
-                    <NavLink to={`/`} className="white">
+                    <NavLink to={`/`} className="black">
                       <span className="logo-single" />
                     </NavLink>
                     <CardTitle className="mb-4">

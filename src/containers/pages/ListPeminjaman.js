@@ -3,10 +3,10 @@ import { Card, Badge } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { ContextMenuTrigger } from "react-contextmenu";
 
-const ListPeminjaman = ({ borrow, statusColor }) => {
+const ListPeminjaman = ({ borrow, statusColor, collect }) => {
   return (
     <Colxx xxs="12" className="mb-3" key={borrow.id}>
-      <ContextMenuTrigger id="menu_id" data={borrow.id}>
+      <ContextMenuTrigger id="menu_id" data={borrow.id} collect={collect}>
         <Card onClick={() => {
           window.location.href = "./detail-peminjaman/" + borrow.id
         }} >

@@ -29,7 +29,7 @@ const SignupSchema = Yup.object().shape({
             label: Yup.string().required(),
             value: Yup.string().required()
         })
-                    .nullable()
+        .nullable()
         .required("Jenis Barang harus diisi!"),
     assets: Yup.object()
         .shape({
@@ -96,39 +96,39 @@ class FormikTambahBarang extends Component {
 
         if (this.state.code.length > 0) {
             this.setState({ isValid: true })
-          } else if (this.state.code.length === 0) {
+        } else if (this.state.code.length === 0) {
             this.setState({ isValid: false })
-          }
+        }
 
         if (this.state.name.length > 0) {
             this.setState({ isValid: true })
-            } else if (this.state.name.length === 0) {
+        } else if (this.state.name.length === 0) {
             this.setState({ isValid: false })
-            }
+        }
 
         if (this.state.brand.length > 0) {
             this.setState({ isValid: true })
-          } else if (this.state.brand.length === 0) {
+        } else if (this.state.brand.length === 0) {
             this.setState({ isValid: false })
-          }
+        }
 
         if (this.state.year.length > 0) {
             this.setState({ isValid: true })
-            } else if (this.state.year.length === 0) {
+        } else if (this.state.year.length === 0) {
             this.setState({ isValid: false })
-            }
+        }
 
         if (this.state.qty.length > 0) {
             this.setState({ isValid: true })
-            } else if (this.state.qty.length === 0) {
+        } else if (this.state.qty.length === 0) {
             this.setState({ isValid: false })
-            }
+        }
 
         if (this.state.price.length > 0) {
             this.setState({ isValid: true })
-            } else if (this.state.price.length === 0) {
+        } else if (this.state.price.length === 0) {
             this.setState({ isValid: false })
-            }
+        }
 
         apiClient.defaults.headers.common['Content-Type'] = 'multipart/form-data';
 
@@ -148,9 +148,19 @@ class FormikTambahBarang extends Component {
             .then(res => {
                 if (res.status === 200) {
                     window.location.href = "./barang" // similar behavior as clicking on a link
+                    reactLocalStorage.set('isSuccesSubmit', true)
                 }
             }).catch((e) => {
                 console.log(e.message)
+                NotificationManager.error(
+                    "Silahkan coba kembali beberapa saat lagi!",
+                    "Terjadi Kesalahan",
+                    5000,
+                    () => {
+                        this.setState({ visible: false });
+                    },
+                    null
+                );
             });
     };
 
@@ -162,19 +172,7 @@ class FormikTambahBarang extends Component {
                     <Card className="d-flex flex-row mb-3">
                         <CardBody>
 
-                            <Formik
-                                initialValues={this.state}
-                                onSubmit={fields => {
-                                    NotificationManager.success(
-                                        "Karyawan berhasil ditambahkan",
-                                        "Registrasi Berhasil",
-                                        3000,
-                                        null,
-                                        null,
-                                        +JSON.stringify(fields, null, 4)
-                                    );
-                                    this.handlerSubmit.bind(this, fields)
-                                }}>
+                            <Formik initialValues={this.state}>
                                 {({
                                     setFieldValue,
                                     setFieldTouched,
@@ -197,8 +195,8 @@ class FormikTambahBarang extends Component {
                                                         Wajib di isi!
                                                     </span>
                                                 ) : (
-                                                    ""
-                                                )}
+                                                        ""
+                                                    )}
                                             </FormGroup>
 
                                             <FormGroup className="error-l-100">
@@ -214,8 +212,8 @@ class FormikTambahBarang extends Component {
                                                         Wajib di isi!
                                                     </span>
                                                 ) : (
-                                                    ""
-                                                )}
+                                                        ""
+                                                    )}
                                             </FormGroup>
 
                                             <FormGroup className="error-l-100">
@@ -236,10 +234,10 @@ class FormikTambahBarang extends Component {
                                                         Wajib di isi!
                                                     </span>
                                                 ) : (
-                                                    ""
-                                                )}
+                                                        ""
+                                                    )}
                                                 <FormFeedback>Oh noes! that name is already taken</FormFeedback>
-  
+
                                             </FormGroup>
 
                                             <FormGroup className="error-l-50">
@@ -255,8 +253,8 @@ class FormikTambahBarang extends Component {
                                                         Wajib di isi!
                                                     </span>
                                                 ) : (
-                                                    ""
-                                                )}
+                                                        ""
+                                                    )}
                                             </FormGroup>
 
                                             <FormGroup className="error-l-50">
@@ -274,8 +272,8 @@ class FormikTambahBarang extends Component {
                                                         Wajib di isi!
                                                     </span>
                                                 ) : (
-                                                    ""
-                                                )}
+                                                        ""
+                                                    )}
                                             </FormGroup>
 
                                             <FormGroup className="error-l-100">
@@ -293,8 +291,8 @@ class FormikTambahBarang extends Component {
                                                         Wajib di isi!
                                                     </span>
                                                 ) : (
-                                                    ""
-                                                )}
+                                                        ""
+                                                    )}
                                             </FormGroup>
 
                                             <FormGroup className="error-l-100">
@@ -312,8 +310,8 @@ class FormikTambahBarang extends Component {
                                                         Wajib di isi!
                                                     </span>
                                                 ) : (
-                                                    ""
-                                                )}
+                                                        ""
+                                                    )}
                                             </FormGroup>
 
                                             <FormGroup className="error-l-75">
@@ -331,8 +329,8 @@ class FormikTambahBarang extends Component {
                                                         Wajib di isi!
                                                     </span>
                                                 ) : (
-                                                    ""
-                                                )}
+                                                        ""
+                                                    )}
                                             </FormGroup>
 
                                             <FormGroup className="error-l-50">

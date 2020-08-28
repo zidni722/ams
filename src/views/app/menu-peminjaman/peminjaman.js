@@ -7,6 +7,7 @@ import ListItemPeminjaman from "../../../containers/pages/ListPeminjaman";
 import ListPageHeadingPeminjaman from "../../../containers/pages/ListPageHeadingPeminjaman";
 import { apiClient } from "../../../helpers/ApiService";
 import TitlePeminjaman from "../../../containers/pages/TitlePeminjaman";
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 function collect(props) {
   return { data: props.data };
@@ -140,7 +141,19 @@ class Peminjaman extends Component {
           totalItemCount: data.meta.count,
           isLoading: true
         });
-      });
+      })
+      .catch((e) => {
+        console.log(e.message)
+        NotificationManager.error(
+            "Silahkan coba kembali beberapa saat lagi!",
+            "Terjadi Kesalahan",
+            1000000000,
+            () => {
+                this.setState({ visible: false });
+            },
+            null
+        );
+    });
   }
 
   onContextMenuClick = (e, data, target) => {

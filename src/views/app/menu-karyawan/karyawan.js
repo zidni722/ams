@@ -6,6 +6,8 @@ import AddNewModalUser from "../../../containers/pages/AddNewModalUser";
 import TitleKaryawan from "../../../containers/pages/TitleKaryawan";
 import DataListViewKaryawan from "../../../containers/pages/DataListViewKaryawan";
 import { apiClient } from "../../../helpers/ApiService";
+import { reactLocalStorage } from 'reactjs-localstorage';
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 function collect(props) {
   return { data: props.data };
@@ -41,8 +43,26 @@ class Karyawan extends Component {
       isLoading: false
     };
   }
+
   componentDidMount() {
     this.dataListRender();
+
+    if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+      NotificationManager.success(
+        "Anda Berhasil Menambahkan Karyawan Baru",
+        "Penambahan Karyawan Berhasil",
+        1000000000,
+        () => {
+          reactLocalStorage.set('isSuccesSubmit', false)
+          this.setState({ visible: false });
+        },
+        null
+      );
+    }
+  }
+
+  onDismiss =()=> {
+    this.setState({ visible: false });
   }
 
   toggleModal = () => {
@@ -134,6 +154,18 @@ class Karyawan extends Component {
           isLoading: true
         });
         console.log(this.state.items);
+      })
+      .catch((e) => {
+        console.log(e.message)
+        NotificationManager.error(
+          "Silahkan coba kembali beberapa saat lagi!",
+          "Terjadi Kesalahan",
+          1000000000,
+          () => {
+            this.setState({ visible: false });
+          },
+          null
+        );
       });
   }
 

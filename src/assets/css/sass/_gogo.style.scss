@@ -6067,6 +6067,17 @@ input:-webkit-autofill {
     }
   }
 
+  .image-side-404 {
+    width: 50%;
+    background: url("/assets/img/img404.png") no-repeat center;
+    background-size: 100%;
+    padding: 100px 100px;
+
+    .h3 {
+      line-height: 0.8rem;
+    }
+  }
+
   .image-side-p {
     width: 40%;
     background: url("/assets/img/Img-Login.png") no-repeat center;
