@@ -1,33 +1,21 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {reactLocalStorage} from 'reactjs-localstorage';
-import { injectIntl } from "react-intl";
-import {
-  UncontrolledDropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu
-} from "reactstrap";
+import {injectIntl} from "react-intl";
+import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "reactstrap";
 
-import { NavLink } from "react-router-dom";
-import { connect } from "react-redux";
+import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
 
-import {
-  setContainerClassnames,
-  clickOnMobileMenu,
-  changeLocale
-} from "../../redux/actions";
+import {changeLocale, clickOnMobileMenu, setContainerClassnames} from "../../redux/actions";
 
-import {
-  menuHiddenBreakpoint,
-  searchPath,
-  isDarkSwitchActive,
-} from "../../constants/defaultValues";
+import {isDarkSwitchActive, menuHiddenBreakpoint, searchPath,} from "../../constants/defaultValues";
 
-import { MobileMenuIcon, MenuIcon } from "../../components/svg";
+import {MenuIcon, MobileMenuIcon} from "../../components/svg";
 import TopnavNotifications from "./Topnav.Notifications";
 import TopnavDarkSwitch from "./Topnav.DarkSwitch";
 
-import { getDirection, setDirection } from "../../helpers/Utils";
+import {getDirection, setDirection} from "../../helpers/Utils";
+import {apiClient} from "../../helpers/ApiService";
 
 class TopNav extends Component {
   constructor(props) {
@@ -53,12 +41,12 @@ class TopNav extends Component {
 
   isInFullScreen = () => {
     return (
-      (document.fullscreenElement && document.fullscreenElement !== null) ||
-      (document.webkitFullscreenElement &&
-        document.webkitFullscreenElement !== null) ||
-      (document.mozFullScreenElement &&
-        document.mozFullScreenElement !== null) ||
-      (document.msFullscreenElement && document.msFullscreenElement !== null)
+        (document.fullscreenElement && document.fullscreenElement !== null) ||
+        (document.webkitFullscreenElement &&
+            document.webkitFullscreenElement !== null) ||
+        (document.mozFullScreenElement &&
+            document.mozFullScreenElement !== null) ||
+        (document.msFullscreenElement && document.msFullscreenElement !== null)
     );
   };
 
@@ -69,7 +57,7 @@ class TopNav extends Component {
         if (e.target.parentElement.classList.contains("search")) {
           elem = e.target.parentElement;
         } else if (
-          e.target.parentElement.parentElement.classList.contains("search")
+            e.target.parentElement.parentElement.classList.contains("search")
         ) {
           elem = e.target.parentElement.parentElement;
         }
@@ -97,19 +85,19 @@ class TopNav extends Component {
   handleDocumentClickSearch = e => {
     let isSearchClick = false;
     if (
-      e.target &&
-      e.target.classList &&
-      (e.target.classList.contains("navbar") ||
-        e.target.classList.contains("simple-icon-magnifier"))
+        e.target &&
+        e.target.classList &&
+        (e.target.classList.contains("navbar") ||
+            e.target.classList.contains("simple-icon-magnifier"))
     ) {
       isSearchClick = true;
       if (e.target.classList.contains("simple-icon-magnifier")) {
         this.search();
       }
     } else if (
-      e.target.parentElement &&
-      e.target.parentElement.classList &&
-      e.target.parentElement.classList.contains("search")
+        e.target.parentElement &&
+        e.target.parentElement.classList &&
+        e.target.parentElement.classList.contains("search")
     ) {
       isSearchClick = true;
     }
@@ -189,9 +177,9 @@ class TopNav extends Component {
       window.dispatchEvent(event);
     }, 350);
     this.props.setContainerClassnames(
-      ++menuClickCount,
-      containerClassnames,
-      this.props.selectedMenuHasSubItems
+        ++menuClickCount,
+        containerClassnames,
+        this.props.selectedMenuHasSubItems
     );
   };
   mobileMenuButtonClick = (e, containerClassnames) => {
@@ -200,75 +188,84 @@ class TopNav extends Component {
   };
 
   render() {
-    const { containerClassnames, menuClickCount } = this.props;
-    const me = reactLocalStorage.getObject('me')
+    const {containerClassnames, menuClickCount} = this.props;
+    const me = reactLocalStorage.getObject('me');
 
     return (
-      <nav className="navbar fixed-top">
-        <div className="d-flex align-items-center navbar-left">
-          <NavLink
-            to="#"
-            className="menu-button d-none d-md-block"
-            onClick={e =>
-              this.menuButtonClick(e, menuClickCount, containerClassnames)
-            }
-          >
-            <MenuIcon />
-          </NavLink>
-          <NavLink
-            to="#"
-            className="menu-button-mobile d-xs-block d-sm-block d-md-none"
-            onClick={e => this.mobileMenuButtonClick(e, containerClassnames)}
-          >
-            <MobileMenuIcon />
-          </NavLink>
-
-        </div>
-        <a className="navbar-logo" href="/">
-          <span className="logo d-none d-xs-block" />
-          <span className="logo-mobile d-block d-xs-none" />
-        </a>
-        <div className="navbar-right">
-          {isDarkSwitchActive && <TopnavDarkSwitch />}
-
-          <div className="header-icons d-inline-block align-middle">
-
-            <TopnavNotifications />
+        <nav className="navbar fixed-top">
+          <div className="d-flex align-items-center navbar-left">
+            <NavLink
+                to="#"
+                className="menu-button d-none d-md-block"
+                onClick={e =>
+                    this.menuButtonClick(e, menuClickCount, containerClassnames)
+                }
+            >
+              <MenuIcon/>
+            </NavLink>
+            <NavLink
+                to="#"
+                className="menu-button-mobile d-xs-block d-sm-block d-md-none"
+                onClick={e => this.mobileMenuButtonClick(e, containerClassnames)}
+            >
+              <MobileMenuIcon/>
+            </NavLink>
 
           </div>
-          <div className="user d-inline-block">
-            <UncontrolledDropdown className="dropdown-menu-right">
-              <DropdownToggle className="p-0" color="empty">
-                <span className="name mr-1">{me.name}</span>
-                <span>
-                  <img alt="Profile" src={me.photo} />
+          <a className="navbar-logo" href="/">
+            <span className="logo d-none d-xs-block"/>
+            <span className="logo-mobile d-block d-xs-none"/>
+          </a>
+          <div className="navbar-right">
+            {isDarkSwitchActive && <TopnavDarkSwitch/>}
+
+            <div className="header-icons d-inline-block align-middle">
+
+              <TopnavNotifications/>
+
+            </div>
+            <div className="user d-inline-block">
+              <UncontrolledDropdown className="dropdown-menu-right">
+                <DropdownToggle className="p-0" color="empty">
+                  <span className="name mr-1">{me.name}</span>
+                  <span>
+                  <img alt="Profile" src={me.photo}/>
                 </span>
-              </DropdownToggle>
-              <DropdownMenu className="mt-3" right>
-                <DropdownItem name="profile" onClick={() => {window.location.href="/app/menu-profil"}}>
-                  Profil
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem name="logout" onClick={
-                  () => {
-                    window.location.href="/user/login"
-                    reactLocalStorage.clear()
-                  }
-                }>
-                  Sign Out
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+                </DropdownToggle>
+                <DropdownMenu className="mt-3" right>
+                  <DropdownItem name="profile" onClick={() => {
+                    window.location.href = "/app/menu-profil"
+                  }}>
+                    Profil
+                  </DropdownItem>
+                  <DropdownItem divider/>
+                  <DropdownItem name="logout" onClick={
+                    () => {
+                      apiClient.get('/auth/logout')
+                          .then(res => {
+                            if (res.status === 204) {
+                              window.location.href = "/user/login";
+                              reactLocalStorage.clear()
+                            }
+                          }).catch((e) => {
+                            console.log(e.message)
+                          })
+                    }
+                  }>
+                    Sign Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
     );
   }
 }
 
-const mapStateToProps = ({ menu, settings }) => {
-  const { containerClassnames, menuClickCount, selectedMenuHasSubItems } = menu;
-  const { locale } = settings;
+const mapStateToProps = ({menu, settings}) => {
+  const {containerClassnames, menuClickCount, selectedMenuHasSubItems} = menu;
+  const {locale} = settings;
   return {
     containerClassnames,
     menuClickCount,
@@ -277,8 +274,8 @@ const mapStateToProps = ({ menu, settings }) => {
   };
 };
 export default injectIntl(
-  connect(
-    mapStateToProps,
-    { setContainerClassnames, clickOnMobileMenu, changeLocale }
-  )(TopNav)
+    connect(
+        mapStateToProps,
+        {setContainerClassnames, clickOnMobileMenu, changeLocale}
+    )(TopNav)
 );
