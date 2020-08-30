@@ -7,8 +7,40 @@ import ProductCategoriesDoughnut from '../../../containers/dashboards/ProductCat
 import BestSellers from '../../../containers/dashboards/BestSellers'
 import IntlMessages from "../../../helpers/IntlMessages";
 import Banner from "../../../containers/dashboards/banner";
+import {reactLocalStorage} from "reactjs-localstorage";
+import {apiClient} from "../../../helpers/ApiService";
 
 export default class Dashboards extends Component {
+    componentDidMount() {
+        const module = reactLocalStorage.get('module') || 'borrows'
+
+        apiClient.get(`${module}/count-all-status`)
+            .then(res => {
+                const responseData = res.data.data
+                const iconCardsData = [
+                    {
+                        title: 'Menunggu',
+                        icon1: "simple-icon-clock",
+                        valueMenunggu: responseData ? responseData.count_pending_status : 0
+                    },
+                    {
+                        title: 'Tolak',
+                        icon2: "simple-icon-close",
+                        valueTolak: responseData ? responseData.count_reject_status : 0
+                    },
+                    {
+                        title: 'Selesai',
+                        icon3: "simple-icon-check",
+                        valueSelesai: responseData ? responseData.count_success_status : 0
+                    },
+                ]
+
+                reactLocalStorage.setObject('iconCardsData', iconCardsData)
+            }).catch((e) => {
+            console.log(e.message)
+        });
+    }
+
     render() {
         return (
             <Fragment>

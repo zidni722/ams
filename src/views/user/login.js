@@ -20,6 +20,25 @@ class Login extends Component {
       email: "",
       password: ""
     };
+    const iconCardsData = [
+      {
+        title: 'Menunggu',
+        icon1: "simple-icon-clock",
+        valueMenunggu: 0
+      },
+      {
+        title: 'Tolak',
+        icon2: "simple-icon-close",
+        valueTolak: 0
+      },
+      {
+        title: 'Selesai',
+        icon3: "simple-icon-check",
+        valueSelesai: 0
+      },
+    ]
+
+    reactLocalStorage.setObject('iconCardsData', iconCardsData)
   }
 
   onUserLogin = (values) => {
@@ -33,9 +52,39 @@ class Login extends Component {
         };
 
         apiClient.defaults.headers.common['Content-Type'] = 'application/json';
-        apiClient.post(url, paramsLogin).then(result => {
 
-          reactLocalStorage.setObject('me', result.data.data);
+        apiClient.post(url, paramsLogin).then(async (result) => {
+          const module = 'borrows'
+          await reactLocalStorage.setObject('me', result.data.data);
+          await reactLocalStorage.set('token', result.data.data.token);
+          await reactLocalStorage.set('module', module);
+
+          await apiClient.get(`${module}/count-all-status`)
+              .then(res => {
+                const responseData = res.data.data
+                const iconCardsData = [
+                  {
+                    title: 'Menunggu',
+                    icon1: "simple-icon-clock",
+                    valueMenunggu: responseData ? responseData.count_pending_status : 0
+                  },
+                  {
+                    title: 'Tolak',
+                    icon2: "simple-icon-close",
+                    valueTolak: responseData ? responseData.count_reject_status : 0
+                  },
+                  {
+                    title: 'Selesai',
+                    icon3: "simple-icon-check",
+                    valueSelesai: responseData ? responseData.count_success_status : 0
+                  },
+                ]
+
+                reactLocalStorage.setObject('iconCardsData', iconCardsData)
+              }).catch((e) => {
+            console.log(e.message)
+          });
+
           window.location.href = "/"
         }).catch(e => {
           console.log(e.message)

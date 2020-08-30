@@ -1,12 +1,15 @@
 import React from "react";
 import IconCard from "../../components/cards/IconCard";
-import data from "../../data/iconCards";
+// import data from "../../data/iconCards";
 import GlideComponent from "../../components/carousel/GlideComponent";
+import {reactLocalStorage} from "reactjs-localstorage";
+
+const data = reactLocalStorage.getObject('iconCardsData')
 
 const IconCardsCarousel = ({className="icon-cards-row"}) => {
 
   return (
-    
+
     <div className={className}>
       <GlideComponent settings={
         {
@@ -30,8 +33,6 @@ const IconCardsCarousel = ({className="icon-cards-row"}) => {
         );
       })}
       </GlideComponent>
-
-
     </div>
   );
 };
