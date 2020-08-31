@@ -19,6 +19,10 @@ import {apiClient} from "../../../helpers/ApiService";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { NotificationManager } from "../../../components/common/react-notifications";
 
+const statusColor = {
+    inactive : "outline-menunggu",
+    active : "outline-selesai"
+  }
 
 class DetailKaryawan extends Component {
     constructor(props) {
@@ -108,7 +112,7 @@ class DetailKaryawan extends Component {
                                         {this.state.detailUser.email}
                                     </p>
                                     <p className="mb-3">
-                                        <Badge color="outline-selesai" className="mb-1 mr-1"
+                                        <Badge color={statusColor[this.state.detailUser.status]} className="mb-1 mr-1"
                                                 pill>{this.state.detailUser.status}</Badge>
                                     </p>
                                 </div>

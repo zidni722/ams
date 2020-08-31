@@ -18,6 +18,7 @@ import {
 } from '../../redux/actions';
 
 import menuItems from '../../constants/menu';
+import { me } from '../../constants/defaultValues';
 
 class Sidebar extends Component {
   constructor(props) {
@@ -340,7 +341,6 @@ class Sidebar extends Component {
               <Nav vertical className="list-unstyled">
                 {menuItems &&
                   menuItems.map(item => {
-                    const me = reactLocalStorage.getObject('me')
                     const userRoleName = me ? me.role_name.toLowerCase() : null
                     let notAllowedMenu = []
 

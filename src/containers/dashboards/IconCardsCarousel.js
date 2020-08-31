@@ -15,11 +15,12 @@ const IconCardsCarousel = ({className="icon-cards-row"}) => {
         {
           gap: 5,
           perView: 3,
-          type: "carousel",
+          type: "",
           breakpoints: {
             320: { perView: 1 },
             576: { perView: 2 },
-            1600: { perView: 3 }          },
+            1600: { perView: 3 }
+          },
           hideNav: true
         }
       }>

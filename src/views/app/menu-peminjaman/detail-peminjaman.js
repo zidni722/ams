@@ -17,10 +17,12 @@ class DetailPeminjaman extends Component {
       detailBorrow: ''
     };
     reactLocalStorage.set('sweetAlertTitle', 'peminjaman')
+    reactLocalStorage.set('module-action', 'peminjaman')
   }
 
   componentDidMount() {
     const borrowID = uri => uri.substring(uri.lastIndexOf('/') + 1);
+    reactLocalStorage.set('currentBorrowID', borrowID(window.location.href))
 
     apiClient.get("/borrows/" + borrowID(window.location.href))
       .then(res => {
@@ -37,8 +39,9 @@ class DetailPeminjaman extends Component {
         <Row>
           <Colxx xxs="12">
             <Breadcrumb heading="menu.detail-peminjaman" match={this.props.match} />
-            {
-              me.role_name.toLowerCase() == 'super admin' &&
+            { 
+              me.role_name.toLowerCase() !== 'employee' && 
+              this.state.detailBorrow.status === "pending" &&
               <SweetAlertCallback />
             }
             <Separator className="mb-5" />
@@ -65,7 +68,7 @@ class DetailPeminjaman extends Component {
             </Card>
           </Colxx>
 
-          {me.role_name.toLowerCase() == 'super admin' &&
+          {me.role_name.toLowerCase() !== 'employee' &&
             <Colxx xxs="12" lg="4" xl="4" className="col-right">
               <Card className="mb-4">
                 <CardBody>

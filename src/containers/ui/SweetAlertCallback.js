@@ -3,6 +3,8 @@ import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle } from
 import SweetAlert from 'react-bootstrap-sweetalert';
 import IntlMessages from "../../helpers/IntlMessages";
 import {reactLocalStorage} from 'reactjs-localstorage';
+import { apiClient } from "../../helpers/ApiService";
+import { NotificationManager } from "../../components/common/react-notifications";
 
 class BasicSweetCallback extends React.Component {
   constructor(props) {
@@ -33,7 +35,15 @@ class BasicSweetCallback extends React.Component {
             <IntlMessages id="ACTIONS" />
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem onClick={() => this.handleAlert("setujuAlert", true)}>
+            <DropdownItem onClick={() => {
+              let module = reactLocalStorage.get('module-action') ? reactLocalStorage.get('module-action') : 'peminjaman'
+
+              if (module === 'pengadaan') {
+                window.location.href = "../../../app/menu-pengadaan/form-update-pengadaan/" + reactLocalStorage.get('currentProcurementID')
+              } else {
+                this.handleAlert("setujuAlert", true)
+              }
+            }}>
               <IntlMessages id="Terima"/>
             </DropdownItem>
             <DropdownItem onClick={() => this.handleAlert("tolakAlert", true)}>
@@ -51,9 +61,46 @@ class BasicSweetCallback extends React.Component {
             confirmBtnText="Ya, saya yakin!"
             cancelBtnText="Batal"
             onConfirm={() => {
-              this.handleAlert("basicAlert", false)
-              this.handleAlert("confirmsetujuAlert", true)
+              let module = reactLocalStorage.get('module-action') ? reactLocalStorage.get('module-action') : 'peminjaman'
+              let uuid = ''
+              let path = ''
+
+              switch (module) {
+                case 'peminjaman' :
+                  uuid = reactLocalStorage.get('currentBorrowID');
+                  path = "borrows";
+                  break;
+                case 'pengembalian' :
+                  uuid = reactLocalStorage.get('currentReturnID');
+                  path = "returns";
+                  break;
+                case 'pengadaan' :
+                  uuid = reactLocalStorage.get('currentProcurementID');
+                  path = "returns";
+                  break;
+                default: 
+                  break;
+              }
+
+              if (module === 'peminjaman' || module === 'pengembalian') {
+                apiClient.put(`/${path}/` + uuid + '/approve?action=true')
+                .then((result) => {
+                  if (result.status === 200) {
+                    this.handleAlert("basicAlert", false)
+                    this.handleAlert("confirmsetujuAlert", true)
+                  }
+                });    
+              } else if (module === 'pengadaan') {
+                apiClient.put(`/${path}/` + uuid + '/approve?action=true')
+                .then((result) => {
+                  if (result.status === 200) {
+                    this.handleAlert("basicAlert", false)
+                    this.handleAlert("confirmsetujuAlert", true)
+                  }
+                });   
+              }
             }}
+            
             onCancel={() => {
               this.handleAlert("setujuAlert", false)
               this.handleAlert("cancelAlert", false)
@@ -68,6 +115,7 @@ class BasicSweetCallback extends React.Component {
             onConfirm={() => {
               this.handleAlert("setujuAlert", false)
               this.handleAlert("confirmsetujuAlert", false)
+              window.location.reload();
             }}
           >
               <p className="sweet-alert-text">{reactLocalStorage.get('sweetAlertTitle')} berhasil disetujui.</p>
@@ -82,8 +130,13 @@ class BasicSweetCallback extends React.Component {
             confirmBtnText="Ya, saya yakin!"
             cancelBtnText="Batal"
             onConfirm={() => {
-              this.handleAlert("basicAlert", false)
-              this.handleAlert("confirmtolakAlert", true)
+              apiClient.put('/borrows/' + reactLocalStorage.get('currentborrowID') + '/approve?action=false')
+              .then((result) => {
+                if (result.status === 200) {
+                  this.handleAlert("basicAlert", false)
+                  this.handleAlert("confirmtolakAlert", true)
+                }
+              });
             }}
             onCancel={() => {
               this.handleAlert("tolakAlert", false)
@@ -99,6 +152,7 @@ class BasicSweetCallback extends React.Component {
             onConfirm={() => {
               this.handleAlert("tolakAlert", false)
               this.handleAlert("confirmtolakAlert", false)
+              window.location.reload();
             }}
           >
               <p className="sweet-alert-text">{reactLocalStorage.get('sweetAlertTitle')} ditolak.</p>

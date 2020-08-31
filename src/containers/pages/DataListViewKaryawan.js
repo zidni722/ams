@@ -3,7 +3,12 @@ import { ContextMenuTrigger } from "react-contextmenu";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { Card, Badge } from "reactstrap";
 
-const DataListViewKaryawan = ({ karyawan, collect, statusColor}) => {
+const statusColor = {
+  inactive : "outline-menunggu",
+  active : "outline-selesai"
+}
+
+const DataListViewKaryawan = ({ karyawan, collect}) => {
   return (
     <Colxx xxs="12" className="mb-3" key={karyawan.id}>
       <ContextMenuTrigger id="menu_id" data={karyawan.id} collect={collect}>
@@ -28,7 +33,7 @@ const DataListViewKaryawan = ({ karyawan, collect, statusColor}) => {
                 {karyawan.role_name}
               </p>
               <div className="mb-1 text-p text-small w-50 text-relative">
-                <Badge color={statusColor} pill>
+                <Badge color={statusColor[karyawan.status]} pill>
                   {karyawan.status}
                 </Badge>
               </div>

@@ -3,7 +3,13 @@ import { Card, Badge } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { ContextMenuTrigger } from "react-contextmenu";
 
-const ListPeminjaman = ({ borrow, statusColor, collect }) => {
+const statusColor = {
+  pending : "outline-menunggu",
+  approved : "outline-selesai",
+  rejected : "outline-tolak"
+}
+
+const ListPeminjaman = ({ borrow, collect }) => {
   return (
     <Colxx xxs="12" className="mb-3" key={borrow.id}>
       <ContextMenuTrigger id="menu_id" data={borrow.id} collect={collect}>
@@ -21,7 +27,7 @@ const ListPeminjaman = ({ borrow, statusColor, collect }) => {
                 <p className="mb-1 text-p text-small w-50">{borrow.updated_at}</p>
 
                 <div className="mb-1 text-p text-small w-50 text-relative">
-                  <Badge color="outline-menunggu" pill>
+                  <Badge color={statusColor[borrow.status]} pill>
                     {borrow.status}
                   </Badge>
                 </div>

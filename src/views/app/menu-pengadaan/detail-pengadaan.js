@@ -17,10 +17,12 @@ class DetailPeminjaman extends Component {
           detailProcurement:''
         };
         reactLocalStorage.set('sweetAlertTitle','pengadaan')
+        reactLocalStorage.set('module-action', 'pengadaan')
     }
 
     componentDidMount() {
       const procurementID = uri => uri.substring(uri.lastIndexOf('/') + 1);
+      reactLocalStorage.set('currentProcurementID', procurementID(window.location.href));
 
       apiClient.get('/procurements/' + procurementID(window.location.href))
           .then(res => {
@@ -36,6 +38,11 @@ class DetailPeminjaman extends Component {
           console.log(e.message)
       });
   }
+
+  editPengadaan = () => {
+    window.location.href = "../form-update-pengadaan/" + this.state.detailProcurement.id
+  }
+
     toggle = () => {
       this.setState(prevState => ({
         modal: !prevState.modal
@@ -48,8 +55,29 @@ class DetailPeminjaman extends Component {
               <Row>
               <Colxx xxs="12">
                     <Breadcrumb heading="menu.detail-pengadaan" match={this.props.match} />
+                    {/* <div className="text-zero top-right-button-container">
+                      <UncontrolledDropdown>
+                        <DropdownToggle
+                          caret
+                          color="primary"
+                          size="lg"
+                          outline
+                          className="top-right-button top-right-button-single">
+                          <IntlMessages id="ACTIONS" />
+                        </DropdownToggle>
+                        <DropdownMenu>
+                          <DropdownItem onClick={() => this.editPengadaan()}>
+                            <IntlMessages id="Terima"/>
+                          </DropdownItem>
+                          <DropdownItem onClick={() => this.handleAlert("tolakAlert", true)}>
+                            <IntlMessages id="Tolak"/>
+                          </DropdownItem>
+                        </DropdownMenu>
+                      </UncontrolledDropdown>
+                    </div> */}
                     { 
                       me.role_name.toLowerCase() == 'super admin' &&
+                      this.state.detailProcurement.status === "pending" &&
                       <SweetAlertCallback/>
                     }
                     <Separator className="mb-5" />

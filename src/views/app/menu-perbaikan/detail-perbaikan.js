@@ -17,6 +17,7 @@ class DetailPerbaikan extends Component {
         detailService:''
       };
       reactLocalStorage.set('sweetAlertTitle','perbaikan')
+      reactLocalStorage.set('module-action', 'perbaikan')
     }
 
     componentDidMount() {

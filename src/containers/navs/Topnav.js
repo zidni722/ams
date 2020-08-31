@@ -8,7 +8,7 @@ import {connect} from "react-redux";
 
 import {changeLocale, clickOnMobileMenu, setContainerClassnames} from "../../redux/actions";
 
-import {isDarkSwitchActive, menuHiddenBreakpoint, searchPath,} from "../../constants/defaultValues";
+import {isDarkSwitchActive, menuHiddenBreakpoint, searchPath, me,} from "../../constants/defaultValues";
 
 import {MenuIcon, MobileMenuIcon} from "../../components/svg";
 import TopnavNotifications from "./Topnav.Notifications";
@@ -192,7 +192,6 @@ class TopNav extends Component {
 
   render() {
     const {containerClassnames, menuClickCount} = this.props;
-    const me = reactLocalStorage.getObject('me');
 
     return (
         <nav className="navbar fixed-top">

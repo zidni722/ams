@@ -7,6 +7,9 @@ const Pengadaan = React.lazy(() =>
 const FormPengadaan = React.lazy(() =>
   import(/* webpackChunkName: "forpm-pengadaan" */ './form-pengadaan')
 );
+const FormEditPengadaan = React.lazy(() =>
+  import(/* webpackChunkName: "form-edit-pengadaan" */ './form-update-pengadaan')
+);
 const DetailPengadaan = React.lazy(() =>
   import(/* webpackChunkName: "detail-pengadaan" */ './detail-pengadaan')
 );
@@ -21,6 +24,10 @@ const MenuPengadaan = ({ match }) => (
       <Route
         path={`${match.url}/form-pengadaan`}
         render={props => <FormPengadaan {...props} />}
+      />
+      <Route
+        path={`${match.url}/form-update-pengadaan`}
+        render={props => <FormEditPengadaan {...props} />}
       />
       <Route
         path={`${match.url}/detail-pengadaan`}

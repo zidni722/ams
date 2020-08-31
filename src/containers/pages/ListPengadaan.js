@@ -2,7 +2,14 @@ import React from "react";
 import { Card, Badge } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 
-const ListPengadaan = ({ procurment, statusColor }) => {
+
+const statusColor = {
+  pending : "outline-menunggu",
+  approved : "outline-selesai",
+  rejected : "outline-tolak"
+}
+
+const ListPengadaan = ({ procurment }) => {
   return (
       <Colxx xxs="12" className="mb-3" key={procurment.id}>
 
@@ -20,7 +27,7 @@ const ListPengadaan = ({ procurment, statusColor }) => {
                 <p className="mb-1 text-p text-small w-50">{procurment.updated_at}</p>
 
                 <div className="mb-1 text-p text-small w-50 text-relative">
-                  <Badge color="outline-menunggu" pill>
+                  <Badge color={statusColor[procurment.status]} pill>
                     {procurment.status}
                   </Badge>
                 </div>
