@@ -16,6 +16,9 @@ import TopnavDarkSwitch from "./Topnav.DarkSwitch";
 
 import {getDirection, setDirection} from "../../helpers/Utils";
 import {apiClient} from "../../helpers/ApiService";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 class TopNav extends Component {
   constructor(props) {
@@ -160,7 +163,7 @@ class TopNav extends Component {
   };
 
   handleLogout = () => {
-    //this.props.loginUser(this.props.history);
+    this.props.loginUser(this.props.history);
   };
 
   handlePageChange() {

@@ -22,9 +22,9 @@ export const firebaseConfig = {
 
 export const searchPath = "/app/pages/search";
 export const servicePath = "http://ams-aaz-backend.herokuapp.com";
-export const me = reactLocalStorage.getObject('me') || null;
+export const me = reactLocalStorage.getObject('me');
 export const isSuccesSubmit = reactLocalStorage.get('isSuccesSubmit') || false;
-export const token = me ? me.token : null;
+export const token = reactLocalStorage.get('token');
 
 export const themeColorStorageKey="__theme_color"
 export const isMultiColorActive = false;

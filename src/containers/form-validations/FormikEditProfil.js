@@ -5,7 +5,6 @@ import { Form, Formik } from "formik";
 
 import { Button, Card, CardBody, FormGroup, Label, Row } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
-import PhoneInput from 'react-phone-input-2'
 import { me } from "../../constants/defaultValues";
 import { apiClient } from "../../helpers/ApiService";
 import Select from "react-select";
@@ -34,19 +33,6 @@ class FormikEditProfil extends Component {
     }
 
     componentDidMount() {
-        apiClient.get('/cities')
-            .then(res => {
-                let dataCities = [];
-                const cities = res.data.data;
-                for (const city of cities) {
-                    dataCities.push({ value: city.id, label: city.name })
-                }
-                this.setState({ dataCities });
-                console.log(this.state.dataCities);
-            }).catch((e) => {
-                console.log(e.message)
-            })
-
         apiClient.get('/users/' + me.id)
             .then(res => {
                 this.setState({ detailUser: res.data.data })
@@ -68,6 +54,19 @@ class FormikEditProfil extends Component {
                 reactLocalStorage.set('defaultCityValue', this.state.detailUser.city_id);
                 reactLocalStorage.set('defaultCityLabel', this.state.detailUser.city_name);
 
+            }).catch((e) => {
+            console.log(e.message)
+        })
+
+        apiClient.get('/cities')
+            .then(res => {
+                let dataCities = [];
+                const cities = res.data.data;
+                for (const city of cities) {
+                    dataCities.push({ value: city.id, label: city.name })
+                }
+                this.setState({ dataCities });
+                console.log(this.state.dataCities);
             }).catch((e) => {
                 console.log(e.message)
             })
