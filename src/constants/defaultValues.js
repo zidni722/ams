@@ -21,7 +21,7 @@ export const firebaseConfig = {
 };
 
 export const searchPath = "/app/pages/search";
-export const servicePath = "http://ams-aaz-backend.herokuapp.com";
+export const servicePath = "https://ams-aaz-backend.herokuapp.com";
 export const me = reactLocalStorage.getObject('me');
 export const isSuccesSubmit = reactLocalStorage.get('isSuccesSubmit') || false;
 export const token = reactLocalStorage.get('token');
