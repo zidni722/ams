@@ -1,50 +1,15 @@
-import React, {Component} from "react";
-import {reactLocalStorage} from 'reactjs-localstorage';
+import React, { Component } from "react";
+import { reactLocalStorage } from 'reactjs-localstorage';
 
-import {Form, Formik} from "formik";
-import * as Yup from "yup";
+import { Form, Formik } from "formik";
 
-import {Button, Card, CardBody, FormGroup, Label, Row} from "reactstrap";
-import {Colxx} from "../../components/common/CustomBootstrap";
-import {FormikReactSelect} from "./FormikFields";
-import PhoneInput from 'react-phone-input-2'
-import {NotificationManager} from "../../components/common/react-notifications";
-import {apiClient} from "../../helpers/ApiService";
+import { Button, Card, CardBody, FormGroup, Label, Row } from "reactstrap";
+import { Colxx } from "../../components/common/CustomBootstrap";
+import { NotificationManager } from "../../components/common/react-notifications";
+import { apiClient } from "../../helpers/ApiService";
+import InputMask from "react-input-mask";
+import Select from "react-select";
 
-const SignupSchema = Yup.object().shape({
-    code: Yup.string()
-        .required("NPK Harus diisi!"),
-    firstName: Yup.string()
-        .min(2, "Terlalu Pendek!")
-        .max(50, "Terlalu Panjang!")
-        .required("Nama Depan Harus diisi!"),
-    lastName: Yup.string()
-        .min(2, "Terlalu Pendek!")
-        .max(50, "Terlalu Panjang!")
-        .required("Nama Belakang Harus diisi!"),
-    email: Yup.string()
-        .email("Invalid email")
-        .required("Alamat Email Harus diisi!"),
-    division: Yup.object()
-        .shape({
-            label: Yup.string().required(),
-            value: Yup.string().required()
-        })
-        .nullable()
-        .required("Divisi harus diisi!"),
-    phone: Yup.string()
-        .min(10, "Terlalu Pendek!")
-        .required("NoTlpn Harus diisi!"),
-    address: Yup.string()
-        .required("Alamat Harus diisi!"),
-    role: Yup.object()
-        .shape({
-            label: Yup.string().required(),
-            value: Yup.string().required()
-        })
-        .nullable()
-        .required("Role harus diisi!")
-});
 
 class FormikPenambahanKaryawan extends Component {
     constructor(props) {
@@ -75,36 +40,36 @@ class FormikPenambahanKaryawan extends Component {
                 let dataRoles = [];
                 const roles = res.data.data;
                 for (const role of roles) {
-                    dataRoles.push({value: role.id, label: role.name})
+                    dataRoles.push({ value: role.id, label: role.name })
                 }
-                this.setState({dataRoles});
+                this.setState({ dataRoles });
             }).catch((e) => {
-            console.log(e.message)
-        });
+                console.log(e.message)
+            });
 
         apiClient.get('/divisions')
             .then(res => {
                 let dataDivisions = [];
                 const divisions = res.data.data;
                 for (const division of divisions) {
-                    dataDivisions.push({value: division.id, label: division.name})
-                }   
-                this.setState({dataDivisions});
+                    dataDivisions.push({ value: division.id, label: division.name })
+                }
+                this.setState({ dataDivisions });
             }).catch((e) => {
-            console.log(e.message)
-        });
+                console.log(e.message)
+            });
 
         apiClient.get('/cities')
             .then(res => {
                 let dataCities = [];
                 const cities = res.data.data;
                 for (const city of cities) {
-                    dataCities.push({value: city.id, label: city.name})
+                    dataCities.push({ value: city.id, label: city.name })
                 }
-                this.setState({dataCities});
+                this.setState({ dataCities });
             }).catch((e) => {
-            console.log(e.message)
-        })
+                console.log(e.message)
+            })
     }
 
     onDrop(photo) {
@@ -114,21 +79,70 @@ class FormikPenambahanKaryawan extends Component {
     }
 
     handleChange = (e) => {
-        const {name, value} = e.target;
-        this.setState({[name]: value});
+        const { name, value } = e.target;
+        this.setState({ [name]: value });
+    };
+
+    handlerSelectChange = (e, action) => {
+        const { value } = e;
+        const name = action
+        this.setState({ [name]: value });
+        reactLocalStorage.set(name, value);
     };
 
     handlerSubmit = async (event, values) => {
         event.preventDefault();
 
+        if (this.state.code.length > 0) {
+            this.setState({ isValid: true })
+        } else if (this.state.code.length === 0) {
+            this.setState({ isValid: false })
+        }
+
+        if (this.state.name.length > 0) {
+            this.setState({ isValid: true })
+        } else if (this.state.name.length === 0) {
+            this.setState({ isValid: false })
+        }
+
+        if (this.state.email.length > 0) {
+            this.setState({ isValid: true })
+        } else if (this.state.email.length === 0) {
+            this.setState({ isValid: false })
+        }
+
+        if (this.state.address.length > 0) {
+            this.setState({ isValid: true })
+        } else if (this.state.address.length === 0) {
+            this.setState({ isValid: false })
+        }
+
+        if (this.state.city.length > 0) {
+            this.setState({ isValid: true })
+        } else if (this.state.city.length === 0) {
+            this.setState({ isValid: false })
+        }
+
+        if (this.state.role.length > 0) {
+            this.setState({ isValid: true })
+        } else if (this.state.role.length === 0) {
+            this.setState({ isValid: false })
+        }
+
+        if (this.state.division.length > 0) {
+            this.setState({ isValid: true })
+        } else if (this.state.division.length === 0) {
+            this.setState({ isValid: false })
+        }
+
         apiClient.defaults.headers.common['Content-Type'] = 'application/json';
 
         const data = {
-            "name": this.state.firstName + ' ' + this.state.lastName,
-            "email": this.state.email,
-            "phone": this.state.phone,
-            "address": this.state.address,
             "code": this.state.code,
+            "name": this.state.name,
+            "email": this.state.email,
+            "phone": parseInt(this.state.phone),
+            "address": this.state.address,
             "photo": "default.jpg",
             "city_id": reactLocalStorage.get('city'),
             "role_id": reactLocalStorage.get('role'),
@@ -139,11 +153,20 @@ class FormikPenambahanKaryawan extends Component {
             .then(res => {
                 if (res.status === 200) {
                     window.location.href = "./karyawan" // similar behavior as clicking on a link
+                    reactLocalStorage.set('isSuccesSubmit', true)
                 }
-
             }).catch((e) => {
                 console.log(e.message)
-        });
+                NotificationManager.error(
+                    "Silahkan coba kembali beberapa saat lagi!",
+                    "Terjadi Kesalahan",
+                    5000,
+                    () => {
+                        this.setState({ visible: false });
+                    },
+                    null
+                  );
+            });
     };
 
     render() {
@@ -154,7 +177,6 @@ class FormikPenambahanKaryawan extends Component {
                         <CardBody>
                             <Formik
                                 initialValues={this.state}
-                                validationSchema={SignupSchema}
                                 onSubmit={fields => {
                                     NotificationManager.success(
                                         "Karyawan berhasil ditambahkan",
@@ -167,173 +189,166 @@ class FormikPenambahanKaryawan extends Component {
                                     this.handlerSubmit.bind(this, fields)
                                 }}>
                                 {({
-                                      handleSubmit,
-                                      handleOnChange,
-                                      handleChange,
-                                      handleBlur,
-                                      setFieldValue,
-                                      setFieldTouched,
-                                      values,
-                                      errors,
-                                      touched,
-                                      isSubmitting
-                                  }) => (
-                                    <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
-                                        <FormGroup className="error-l-50">
-                                            <Label>NPK</Label>
-                                            <input
-                                                onChange={this.handleChange}
-                                                className="form-control"
-                                                name="code"
-                                            />
-                                            {errors.code && touched.code ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.code}
-                                                </div>
-                                            ) : null}
-                                        </FormGroup>
+                                    setFieldTouched,
+                                    errors,
+                                    touched,
+                                    isSubmitting
+                                }) => (
+                                        <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
+                                            <FormGroup className="error-l-50">
+                                                <Label>NPK</Label>
+                                                <InputMask
+                                                    className="form-control"
+                                                    name="code"
+                                                    mask="aa-99"
+                                                    onChange={this.handleChange}
+                                                />
+                                                {this.state.isValid === false ? (
+                                                    <span className="invalid-feedback d-block">
+                                                        Wajib di isi!
+                                                    </span>
+                                                ) : (
+                                                        ""
+                                                    )}
+                                            </FormGroup>
 
-                                        <FormGroup className="error-l-100">
-                                            <Label>Nama Depan</Label>
-                                            <input onChange={this.handleChange} className="form-control" name="firstName"/>
-                                            {errors.firstName && touched.firstName ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.firstName}
-                                                </div>
-                                            ) : null}
-                                        </FormGroup>
+                                            <FormGroup className="error-l-100">
+                                                <Label>Nama Lengkap</Label>
+                                                <input
+                                                    className="form-control"
+                                                    name="name"
+                                                    onChange={this.handleChange}
+                                                />
+                                                {this.state.isValid === false ? (
+                                                    <span className="invalid-feedback d-block">
+                                                        Wajib di isi!
+                                                    </span>
+                                                ) : (
+                                                        ""
+                                                    )}
+                                            </FormGroup>
 
-                                        <FormGroup className="error-l-100">
-                                            <Label>Nama Belakang</Label>
-                                            <input onChange={this.handleChange} className="form-control" name="lastName"/>
-                                            {errors.lastName && touched.lastName ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.lastName}
-                                                </div>
-                                            ) : null}
-                                        </FormGroup>
+                                            <FormGroup>
+                                                <Label>Email</Label>
+                                                <input
+                                                    className="form-control"
+                                                    name="email"
+                                                    type="email"
+                                                    onChange={this.handleChange}
+                                                />
+                                                {this.state.isValid === false ? (
+                                                    <span className="invalid-feedback d-block">
+                                                        Wajib di isi!
+                                                    </span>
+                                                ) : (
+                                                        ""
+                                                    )}
+                                            </FormGroup>
 
-                                        <FormGroup>
-                                            <Label>Email</Label>
-                                            <input
-                                                onChange={this.handleChange}
-                                                className="form-control"
-                                                name="email"
-                                                type="email"
-                                            />
-                                            {errors.email && touched.email ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.email}
-                                                </div>
-                                            ) : null}
-                                        </FormGroup>
+                                            <FormGroup className="error-l-50">
+                                                <Label>Role</Label>
+                                                <Select
+                                                    name="role"
+                                                    id="role"
+                                                    options={this.state.dataRoles}
+                                                    onChange={e => this.handlerSelectChange(e, 'role')}
+                                                    onBlur={setFieldTouched}
+                                                />
+                                                {this.state.isValid === false ? (
+                                                    <span className="invalid-feedback d-block">
+                                                        Wajib di isi!
+                                                    </span>
+                                                ) : (
+                                                        ""
+                                                    )}
+                                            </FormGroup>
 
-                                        <FormGroup className="error-l-50">
-                                            <Label>Role</Label>
-                                            <FormikReactSelect
-                                                name="role"
-                                                id="role"
-                                                value={values.role}
-                                                isMulti={false}
-                                                options={this.state.dataRoles}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                            {errors.role && touched.role ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.role}
-                                                </div>
-                                            ) : null}
-                                        </FormGroup>
+                                            <FormGroup className="error-l-50">
+                                                <Label>Divisi</Label>
+                                                <Select
+                                                    name="division"
+                                                    id="division"
+                                                    options={this.state.dataDivisions}
+                                                    onChange={e => this.handlerSelectChange(e, 'division')}
+                                                    onBlur={setFieldTouched}
+                                                />
+                                                {this.state.isValid === false ? (
+                                                    <span className="invalid-feedback d-block">
+                                                        Wajib di isi!
+                                                    </span>
+                                                ) : (
+                                                        ""
+                                                    )}
+                                            </FormGroup>
 
-                                        <FormGroup className="error-l-50">
-                                            <Label>Divisi</Label>
-                                            <FormikReactSelect
-                                                name="division"
-                                                id="division"
-                                                value={values.division}
-                                                isMulti={false}
-                                                options={this.state.dataDivisions}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                            {errors.divisi && touched.divisi ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.divisi}
-                                                </div>
-                                            ) : null}
-                                        </FormGroup>
+                                            <FormGroup className="error-l-100">
+                                                <Label>Nomor Telepon</Label>
+                                                <InputMask
+                                                    className="form-control"
+                                                    name="phone"
+                                                    mask="+62 9999 9999 999"
+                                                    onChange={this.handleChange}
+                                                />
+                                                {this.state.isValid === false ? (
+                                                    <span className="invalid-feedback d-block">
+                                                        Wajib di isi!
+                                                    </span>
+                                                ) : (
+                                                        ""
+                                                    )}
+                                            </FormGroup>
 
-                                        <FormGroup className="error-l-50">
-                                            <Label>Nomor Telepon</Label>
-                                            <PhoneInput
-                                                className="form-control"
-                                                name="phone"
-                                                country='id'
-                                                validate={{
-                                                    number: {
-                                                        value: true,
-                                                        errorMessage: "Value must be a number"
-                                                    },
-                                                    required: {
-                                                        value: true,
-                                                        errorMessage: "Please enter a number"
-                                                    }
-                                                }}
-                                                value={this.state.phone}
-                                                onChange={phone => this.setState({phone})}
-                                            />
-                                        </FormGroup>
+                                            <FormGroup className="error-l-50">
+                                                <Label>City</Label>
+                                                <Select
+                                                    name="city"
+                                                    id="city"
+                                                    options={this.state.dataCities}
+                                                    onChange={e => this.handlerSelectChange(e, 'city')}
+                                                    onBlur={setFieldTouched}
+                                                />
+                                                {this.state.isValid === false ? (
+                                                    <span className="invalid-feedback d-block">
+                                                        Wajib di isi!
+                                                    </span>
+                                                ) : (
+                                                        ""
+                                                    )}
+                                            </FormGroup>
 
-                                        <FormGroup className="error-l-50">
-                                            <Label>City</Label>
-                                            <FormikReactSelect
-                                                name="city"
-                                                id="city"
-                                                value={values.city}
-                                                isMulti={false}
-                                                options={this.state.dataCities}
-                                                onChange={setFieldValue}
-                                                onBlur={setFieldTouched}
-                                            />
-                                            {errors.city && touched.city ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.city}
-                                                </div>
-                                            ) : null}
-                                        </FormGroup>
+                                            <FormGroup>
+                                                <Label>Alamat</Label>
+                                                <input
+                                                    className="form-control"
+                                                    name="address"
+                                                    component="textarea"
+                                                    onChange={this.handleChange}
+                                                />
+                                                {this.state.isValid === false ? (
+                                                    <span className="invalid-feedback d-block">
+                                                        Wajib di isi!
+                                                    </span>
+                                                ) : (
+                                                        ""
+                                                    )}
+                                            </FormGroup>
 
-                                        <FormGroup>
-                                            <Label>Alamat</Label>
-                                            <input
-                                                onChange={this.handleChange}
-                                                className="form-control"
-                                                name="address"
-                                                component="textarea"
-                                            />
-                                            {errors.address && touched.address ? (
-                                                <div className="invalid-feedback d-block">
-                                                    {errors.address}
-                                                </div>
-                                            ) : null}
-                                        </FormGroup>
-
-                                        <div className="d-flex justify-content-between align-items-center"><p/>
-                                            <Button
-                                                color="primary"
-                                                className={`btn-shadow btn-multiple-state ${this.props.loading ? "show-spinner" : ""}`}
-                                                size="lg"
-                                            >
-                                                <span className="spinner d-inline-block">
-                                                  <span className="bounce1"/>
-                                                  <span className="bounce2"/>
-                                                  <span className="bounce3"/>
-                                                </span>
-                                                <span className="label">Submit</span>
-                                            </Button>
-                                        </div>
-                                    </Form>
-                                )}
+                                            <div className="d-flex justify-content-between align-items-center"><p />
+                                                <Button
+                                                    color="primary"
+                                                    className={`btn-shadow btn-multiple-state ${this.props.loading ? "show-spinner" : ""}`}
+                                                    size="lg"
+                                                >
+                                                    <span className="spinner d-inline-block">
+                                                        <span className="bounce1" />
+                                                        <span className="bounce2" />
+                                                        <span className="bounce3" />
+                                                    </span>
+                                                    <span className="label">Submit</span>
+                                                </Button>
+                                            </div>
+                                        </Form>
+                                    )}
                             </Formik>
                         </CardBody>
                     </Card>

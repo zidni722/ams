@@ -1,8 +1,8 @@
 import React from "react";
-import {  
-  Card,  
-  CardBody,  
-  CardTitle, 
+import {
+  Card,
+  CardBody,
+  CardTitle,
   UncontrolledDropdown,
   DropdownItem,
   DropdownToggle,
@@ -14,6 +14,7 @@ import {DoughnutChart} from "../../components/charts"
 
 
 import { doughnutChartData } from "../../data/charts";
+import {reactLocalStorage} from "reactjs-localstorage";
 
 const ProductCategoriesDoughnut = (controls = true) => {
   return (
@@ -24,17 +25,40 @@ const ProductCategoriesDoughnut = (controls = true) => {
         {controls && (
           <div className="btn-group float-right float-none-xs mt-2">
             <UncontrolledDropdown>
-              <DropdownToggle caret color="primary" className="btn-xs" outline>
-                <IntlMessages id="Peminjaman" />
-              </DropdownToggle>
+            <DropdownToggle color="" className="btn btn-header-light icon-button">
+              <i className="simple-icon-refresh" />
+            </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
-                  <IntlMessages id="Pengembalian" />
+              <DropdownItem onClick={
+                  () => {
+                    reactLocalStorage.set('module', 'borrows')
+                    window.location.reload();
+                  }
+                }>
+                  <IntlMessages id="Peminjaman"/>
                 </DropdownItem>
-                <DropdownItem>
+              <DropdownItem onClick={
+                  () => {
+                    reactLocalStorage.set('module', 'returns')
+                    window.location.reload();
+                  }
+                }>
+                  <IntlMessages id="Pengembalian"/>
+                </DropdownItem>
+                <DropdownItem onClick={
+                  () => {
+                    reactLocalStorage.set('module', 'services')
+                    window.location.reload();
+                  }
+                }>
                   <IntlMessages id="Perbaikan" />
                 </DropdownItem>
-                <DropdownItem>
+                <DropdownItem onClick={
+                  () => {
+                    reactLocalStorage.set('module', 'procurements')
+                    window.location.reload();
+                  }
+                }>
                   <IntlMessages id="Pengadaan" />
                 </DropdownItem>
               </DropdownMenu>

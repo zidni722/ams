@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom"
 import {
   Row,
   Button,
@@ -6,7 +7,14 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
-  Collapse
+  Collapse,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  FormGroup,
+  Input,
+  CustomInput,
+  ModalFooter
 } from "reactstrap";
 import { injectIntl } from "react-intl";
 
@@ -14,13 +22,20 @@ import { Colxx, Separator } from "../../components/common/CustomBootstrap";
 import Breadcrumb from "../navs/Breadcrumb";
 import IntlMessages from "../../helpers/IntlMessages";
 import { Link } from "react-router-dom";
+import XLSX from "xlsx"
+import * as FileSaver from "file-saver"
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { apiClient } from "../../helpers/ApiService";
 
 class ListPageHeadingBarang extends Component {
   constructor(props) {
     super();
     this.state = {
       dropdownSplitOpen: false,
-      displayOptionsIsOpen: false
+      displayOptionsIsOpen: false,
+      filteredData: [],
+      value: "",
     };
   }
 
@@ -33,6 +48,46 @@ class ListPageHeadingBarang extends Component {
     this.setState(prevState => ({
       dropdownSplitOpen: !prevState.dropdownSplitOpen
     }));
+  }
+  toggleModal = () => {
+    this.setState({ modal: !this.state.modal })
+  }
+
+  generatePDF = () => {
+    try {
+      apiClient.get('/assets')
+            .then(res => {
+                const assets = res.data.data
+                const doc = new jsPDF('p', 'pt')
+
+                let body = []
+
+                for(const asset of assets) {
+                  let data = []
+
+                  data.push(asset.code)
+                  data.push(asset.name) 
+                  data.push(asset.category) 
+                  data.push(asset.brand)
+                  data.push(asset.year)
+                  data.push(asset.qty)
+                  body.push(data)
+                }
+
+                doc.autoTable({ html: '#my-table' })
+                doc.autoTable({
+                  head: [['Kode Barang', 'Nama Barang', 'Jenis Barang', 'Merek', 'Tahun','Jumlah']],
+                  body: body,
+                })
+
+                doc.save(`asset-report-${Date.now()}.pdf`)
+            }).catch((e) => {
+            console.log(e.message)
+        });
+    } catch(e){
+
+    }
+    
   }
 
   render() {
@@ -52,7 +107,7 @@ class ListPageHeadingBarang extends Component {
       heading
     } = this.props;
 
-    const { displayOptionsIsOpen } = this.state;
+    const { displayOptionsIsOpen, dropdownSplitOpen } = this.state;
     return (
       <Row>
         <Colxx xxs="12">
@@ -68,13 +123,13 @@ class ListPageHeadingBarang extends Component {
                 Tambah Barang
               </Link>
             <div className="position-relative d-none d-none d-lg-inline-block">
-              <a
-                className="btn btn-outline-primary btn-sm ml-2"
+              <Button
+                className="btn btn-outline btn-sm ml-2"
                 target="_top"
-                href="#"
+                onClick={this.generatePDF}
               >
               <i className="simple-icon-cloud-download"/>
-              </a>
+              </Button>
             </div>
             </div>
             <Breadcrumb match={match} />
@@ -101,13 +156,13 @@ class ListPageHeadingBarang extends Component {
                     {selectedOrderOption.label}
                   </DropdownToggle>
                   <DropdownMenu>
-                    {orderOptions.map((ListBarang, index) => {
+                    {orderOptions.map((product, index) => {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeOrderBy(ListBarang.products)}
+                          onClick={() => changeOrderBy(product.column)}
                         >
-                          {ListBarang.label}
+                          {product.label}
                         </DropdownItem>
                       );
                     })}
@@ -147,6 +202,42 @@ class ListPageHeadingBarang extends Component {
           </div>
           <Separator className="mb-5" />
         </Colxx>
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggleModal}
+          className="modal-dialog-centered">
+          <ModalHeader toggle={this.toggleModal}>Export To Excel</ModalHeader>
+          <ModalBody>
+            <FormGroup>
+              <Input
+                type="text"
+                value={this.state.fileName}
+                onChange={e => this.setState({ fileName: e.target.value })}
+                placeholder="Enter File Name"
+              />
+            </FormGroup>
+            <FormGroup>
+              <CustomInput
+                type="select"
+                id="selectFileFormat"
+                name="customSelect"
+                value={XLSX}
+                onChange={e => this.setState({ fileFormat: e.target.value })}>
+                <option>xlsx</option>
+                <option>csv</option>
+                <option>txt</option>
+              </CustomInput>
+            </FormGroup>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.handleExport}>
+              Export
+            </Button>
+            <Button color="flat-danger" onClick={this.toggleModal}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
       </Row>
       
     );

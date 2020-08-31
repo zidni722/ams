@@ -28,7 +28,7 @@ const MenuBarang = ({ match }) => (
       {
         isAuthorize() &&
         <Route
-            path={`${match.url}/detail-barang`}
+            path={`${match.url}/detail-barang/:id`}
             render={props => <DetailsPages {...props} />}
         />
       }
@@ -42,7 +42,7 @@ const MenuBarang = ({ match }) => (
       {
         isAuthorize() &&
         <Route
-          path={`${match.url}/edit-barang`}
+          path={`${match.url}/edit-barang/:id`}
           render={props => <FormEditBarang {...props} />}
         />
       }

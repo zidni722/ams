@@ -1,12 +1,15 @@
 import React from "react";
-import { Row, Card, CardBody, Badge } from "reactstrap";
+import { Card, Badge } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
+import { ContextMenuTrigger } from "react-contextmenu";
 
-const ListPeminjaman = ({ borrow, statusColor }) => {
+const ListPeminjaman = ({ borrow, statusColor, collect }) => {
   return (
-      <Colxx xxs="12" className="mb-3" key={borrow.id}>
-
-        <Card onClick = {() => window.location.href="/app/menu-peminjaman/detail-peminjaman"} >
+    <Colxx xxs="12" className="mb-3" key={borrow.id}>
+      <ContextMenuTrigger id="menu_id" data={borrow.id} collect={collect}>
+        <Card onClick={() => {
+          window.location.href = "./detail-peminjaman/" + borrow.id
+        }} >
           <div className="d-flex flex-grow-1 min-width-zero">
 
             <div className="d-flex flex-grow-1 min-width-zero">
@@ -18,7 +21,7 @@ const ListPeminjaman = ({ borrow, statusColor }) => {
                 <p className="mb-1 text-p text-small w-50">{borrow.updated_at}</p>
 
                 <div className="mb-1 text-p text-small w-50 text-relative">
-                  <Badge color={statusColor} pill>
+                  <Badge color="outline-menunggu" pill>
                     {borrow.status}
                   </Badge>
                 </div>
@@ -26,7 +29,8 @@ const ListPeminjaman = ({ borrow, statusColor }) => {
             </div>
           </div>
         </Card>
-      </Colxx>
+      </ContextMenuTrigger>
+    </Colxx>
   );
 };
 

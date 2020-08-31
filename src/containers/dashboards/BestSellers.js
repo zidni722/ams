@@ -79,8 +79,8 @@ class BestSellers extends Component {
             {controls && (
               <div className="btn-group float-right float-none-xs mt-2">
                 <UncontrolledDropdown>
-                  <DropdownToggle caret color="primary" className="btn-xs" outline>
-                    <IntlMessages id="Peminjaman" />
+                  <DropdownToggle color="" className="btn btn-header-light icon-button">
+                  <i className="simple-icon-refresh" />
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem>

@@ -10,8 +10,8 @@ import { NotificationManager } from "../../components/common/react-notifications
 import { servicePath, token } from "../../constants/defaultValues";
 
 import Axios from "axios";
-
-const apiUrl = servicePath;
+import { apiClient } from "../../helpers/ApiService";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 const SignupSchema = Yup.object().shape({
   categories: Yup.object()
@@ -22,55 +22,38 @@ const SignupSchema = Yup.object().shape({
     .nullable()
     .required("Jenis Barang harus diisi!"),
   assets: Yup.object()
-  .shape({
-    label: Yup.string().required(),
-    value: Yup.string().required()
-  })
-  .nullable()
-  .required("Nama Barang harus diisi!")
+    .shape({
+      label: Yup.string().required(),
+      value: Yup.string().required()
+    })
+    .nullable()
+    .required("Nama Barang harus diisi!")
 });
 
 class FormikPengadaan extends Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      categories: [],
-      assets: []
+      name: "",
+      brand: "",
+      year: "",
+      category: "",
+      description: ""
     };
   }
-  componentDidMount() {
-    Axios.get(
-      `${apiUrl}/categories`,
-    {
-      headers : {
-        Authorization: 'Bearer ' + token
-      }
-    })
-      .then(res => {
-        let dataCategories = []
-        const categories = res.data.data;
-        for(const category of categories) {
-          dataCategories.push({value:category.id, label:category.name})
-        }
-        this.setState( {dataCategories} );
-      })
 
-      Axios.get(
-        `${apiUrl}/assets`,
-      {
-        headers : {
-          Authorization: 'Bearer ' + token
+  componentDidMount() {
+    apiClient.get('/categories')
+      .then(res => {
+        let dataCategory = [];
+        const categories = res.data.data;
+        for (const category of categories) {
+          dataCategory.push({ value: category.id, label: category.name })
         }
-      })
-        .then(res => {
-          let dataAssets = []
-          const assets = res.data.data;
-          for(const asset of assets) {
-            dataAssets.push({value:asset.id, label:asset.name})
-          }
-          this.setState( {dataAssets} );
-        })
+        this.setState({ dataCategory });
+      }).catch((e) => {
+        console.log(e.message)
+      });
   }
 
   componentDidUpdate() {
@@ -86,88 +69,140 @@ class FormikPengadaan extends Component {
     }
   }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    
-    const apiClient = Axios.create({
-      baseURL: apiUrl
-    })
-
-    apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTEsInV1aWQiOiJlOGViN2QxZS03MDU1LTQxYzUtOWM3OC1hNDIyYWJjYzBkMWYiLCJuYW1lIjoiQXNyaSIsImVtYWlsIjoiYXNyaUBwYXdvb24uY29tIiwicm9sZV9pZCI6MjEsImRpdmlzaW9uX2lkIjoxLCJzdGF0dXMiOjAsImlhdCI6MTU5NjcyNjU3N30.bzIoNbnxSqxuzuV1d49S7JypGP9kC-wneFVZ6dMecPk';
-    apiClient.defaults.headers.common['Accept'] = 'application/json';
-
-    const url = '/borrows'
-    let data = {
-      //"asset_id" : "7caaa334-8f6e-42b0-96eb-dde2a483804e"
-      "asset_id" : this.state.categoryID
-    }
-    console.log(this.state)
-    console.log(data)
-
-    apiClient.post(url, data)
-      .then((res) => {
-        const category = res.data.data;
-        console.log(res)
-        this.setState( {category} );
-      })
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
   }
+
+  handlerSubmit = async (event, values) => {
+    event.preventDefault();
+
+    apiClient.defaults.headers.common['Content-Type'] = 'application/json';
+
+    const data = {
+      "name": this.state.name,
+      "category_id": reactLocalStorage.get('category'),
+      "brand": this.state.brand,
+      "year": this.state.year,
+      "description": this.state.description
+    };
+
+    apiClient.post('/procurements', data)
+      .then(res => {
+        if (res.status === 200) {
+          window.location.href = "./pengadaan" // similar behavior as clicking on a link
+          reactLocalStorage.set('isSuccesSubmit', true)
+        }
+      }).catch((e) => {
+        console.log(e.message)
+        NotificationManager.error(
+          "Silahkan coba kembali beberapa saat lagi!",
+          "Terjadi Kesalahan",
+          5000,
+          () => {
+            this.setState({ visible: false });
+          },
+          null
+        );
+      });
+  };
 
   render() {
     return (
       <Row className="mb-4">
         <Colxx xxs="12" lg="12" xl="12" className="mb-3">
           <Card className="d-flex flex-row mb-3">
-            <CardBody>  
-              <Formik>
+            <CardBody>
+              <Formik validationSchema={SignupSchema}>
                 {({
                   setFieldValue,
                   setFieldTouched,
+                  handleChange,
                   values,
                   errors,
                   touched,
                 }) => (
 
-                  <Form onSubmit={this.handleSubmit} className="av-tooltip tooltip-label-right">
-                    <FormGroup row>
-                      <Colxx sm={6}>
-                        <FormGroup className="error-l-100">
-                          <Label>Jenis Barang</Label>
-                          <FormikReactSelect
-                            name="JenisBarang"
-                            id="jenisbarang"
-                            value={values.dataCategories}
-                            isMulti={false}
-                            options={this.state.dataCategories}
-                            onChange={setFieldValue}
-                            onBlur={setFieldTouched}
-                          />
-                          {errors.categories && touched.categories ? (
-                            <div className="invalid-feedback d-block">
-                              {errors.categories}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                      </Colxx>
-                      <Colxx sm={6}>
-                        <FormGroup className="error-l-100">
-                          <Label>Nama Barang</Label>
-                          <Field className="form-control" name="name" />
-                          {errors.firstName && touched.firstName ? (
-                            <div className="invalid-feedback d-block">
-                              {errors.firstName}
-                            </div>
-                          ) : null}
-                        </FormGroup>
-                      </Colxx>
-                    </FormGroup>                
-                    {/* <div className="d-flex justify-content-between align-items-center"><p/>
-                      <Button color="primary" size="lg" type="submit">
-                        Submit
-                      </Button>
-                    </div> */}
+                    <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
+                      <FormGroup className="error-l-100">
+                        <Label>Nama Barang</Label>
+                        <input className="form-control"
+                          onChange={this.handleChange}
+                          name="name"
+                        />
+                        {errors.firstName && touched.firstName ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.name}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                  </Form>
-                )}
+                      <FormGroup className="error-l-100">
+                        <Label>Jenis Barang</Label>
+                        <FormikReactSelect
+                          name="category"
+                          id="category"
+                          value={values.dataCategory}
+                          isMulti={false}
+                          options={this.state.dataCategory}
+                          onChange={setFieldValue}
+                          onBlur={setFieldTouched}
+                        />
+                        {errors.categories && touched.categories ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.categories}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="error-l-100">
+                        <Label>Merek</Label>
+                        <input className="form-control"
+                          onChange={this.handleChange}
+                          name="brand"
+                        />
+                        {errors.firstName && touched.firstName ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.firstName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="error-l-50">
+                        <Label>Tahun</Label>
+                        <input
+                          className="form-control"
+                          onChange={this.handleChange}
+                          name="year"
+                          type="year"
+                        />
+                        {errors.npk && touched.npk ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.npk}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <FormGroup className="error-l-100">
+                        <Label>Deskripsi</Label>
+                        <input className="form-control"
+                          onChange={this.handleChange}
+                          name="description"
+                        />
+                        {errors.firstName && touched.firstName ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.firstName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
+
+                      <div className="d-flex justify-content-between align-items-center"><p />
+                        <Button color="primary" size="lg" type="submit">
+                          Submit
+                      </Button>
+                      </div>
+
+                    </Form>
+                  )}
               </Formik>
             </CardBody>
           </Card>

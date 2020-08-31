@@ -22,8 +22,9 @@ export const firebaseConfig = {
 
 export const searchPath = "/app/pages/search";
 export const servicePath = "http://ams-aaz-backend.herokuapp.com";
-export const me = reactLocalStorage.getObject('me') || null;
-export const token = me ? me.token : null;
+export const me = reactLocalStorage.getObject('me');
+export const isSuccesSubmit = reactLocalStorage.get('isSuccesSubmit') || false;
+export const token = reactLocalStorage.get('token');
 
 export const themeColorStorageKey="__theme_color"
 export const isMultiColorActive = false;
@@ -31,4 +32,4 @@ export const isDarkSwitchActive = false;
 export const defaultColor = "light.blue";
 export const defaultDirection = "ltr";
 export const themeRadiusStorageKey = "__theme_radius";
-export const isDemo = true;
+export const isDemo = false;

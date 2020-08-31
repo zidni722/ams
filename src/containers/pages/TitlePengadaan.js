@@ -14,6 +14,9 @@ const TitlePengadaan = () => {
                     <IntlMessages id="Jenis Barang" />
                 </p>
                 <p className="mb-1 text-p text-small font-weight-semibold w-50">
+                    <IntlMessages id="Nama Pengaju" />
+                </p>
+                <p className="mb-1 text-p text-small font-weight-semibold w-50">
                     <IntlMessages id="Tanggal Pengajuan" />
                 </p>
                 <p className="mb-1 text-p text-small font-weight-semibold w-50">

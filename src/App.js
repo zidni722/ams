@@ -11,8 +11,9 @@ import './helpers/Firebase';
 import AppLocale from './lang';
 import ColorSwitcher from './components/common/ColorSwitcher';
 import NotificationContainer from './components/common/react-notifications/NotificationContainer';
-import { isMultiColorActive, isDemo } from './constants/defaultValues';
+import { isMultiColorActive, isDemo, me } from './constants/defaultValues';
 import { getDirection } from './helpers/Utils';
+import { reactLocalStorage } from 'reactjs-localstorage';
 
 const ViewMain = React.lazy(() =>
   import(/* webpackChunkName: "views" */ './views')
@@ -27,22 +28,27 @@ const ViewError = React.lazy(() =>
   import(/* webpackChunkName: "views-error" */ './views/error')
 );
 
-const AuthRoute = ({ component: Component, authUser, ...rest }) => {
+const AuthRoute = ({ component: Component, authUser, path, ...rest }) => {
+  console.log(authUser);
   return (
     <Route
+      path={path}
       {...rest}
-      render={props =>
-        authUser || isDemo ? (
+      render={(props) => {
+        return me ? (
           <Component {...props} />
         ) : (
           <Redirect
             to={{
-              pathname: '/user/login',
-              state: { from: props.location }
+              pathname:'/user/login',
+              state: { 
+                prevLocation: path,
+                error: "You need to login first!"
+               }
             }}
           />
         )
-      }
+      }}
     />
   );
 }
@@ -61,7 +67,7 @@ class App extends Component {
   }
 
   render() {
-    const { locale, loginUser } = this.props;
+    const { locale, me } = this.props;
     const currentAppLocale = AppLocale[locale];
 
     return (
@@ -78,7 +84,6 @@ class App extends Component {
                 <Switch>
                   <AuthRoute
                     path="/app"
-                    authUser={loginUser}
                     component={ViewApp}
                   />
                   <Route

@@ -1,17 +1,15 @@
 import React, { Component, Fragment } from "react";
 import { Row } from "reactstrap";
 
-import axios from "axios";
-
-import { servicePath } from "../../../constants/defaultValues";
-
 import Pagination from "../../../containers/pages/Pagination";
-import ContextMenuContainer from "../../../containers/pages/ContextMenuContainer";
-import ListPageHeading from "../../../containers/pages/ListPageHeadingPengadaan";
-import { Colxx } from "../../../components/common/CustomBootstrap";
 import ListItemPengadaan from "../../../containers/pages/ListPengadaan";
 import { apiClient } from "../../../helpers/ApiService";
 import TitlePengadaan from "../../../containers/pages/TitlePengadaan";
+import ListPageHeadingPengadaan from "../../../containers/pages/ListPageHeadingPengadaan";
+
+function collect(props) {
+  return { data: props.data };
+}
 
 const apiUrl = "/procurements";
 
@@ -23,7 +21,7 @@ class Pengadaan extends Component {
     this.state = {
       displayMode: "list",
 
-      selectedPageSize: 10, 
+      selectedPageSize: 10,
       orderOptions: [
         { column: "code", label: "Kode Barang" },
         { column: "category", label: "Jenis Barang" },
@@ -45,22 +43,6 @@ class Pengadaan extends Component {
   }
   componentDidMount() {
     this.dataListRender();
-    this.mouseTrap.bind(["ctrl+a", "command+a"], () =>
-      this.handleChangeSelectAll(false)
-    );
-    this.mouseTrap.bind(["ctrl+d", "command+d"], () => {
-      this.setState({
-        selectedItems: []
-      });
-      return false;
-    });
-  }
-
-  componentWillUnmount() {
-    this.mouseTrap.unbind("ctrl+a");
-    this.mouseTrap.unbind("command+a");
-    this.mouseTrap.unbind("ctrl+d");
-    this.mouseTrap.unbind("command+d");
   }
 
   changeOrderBy = column => {
@@ -73,6 +55,7 @@ class Pengadaan extends Component {
       () => this.dataListRender()
     );
   };
+
   changePageSize = size => {
     this.setState(
       {
@@ -82,12 +65,14 @@ class Pengadaan extends Component {
       () => this.dataListRender()
     );
   };
+
   changeDisplayMode = mode => {
     this.setState({
       displayMode: mode
     });
     return false;
   };
+
   onChangePage = page => {
     this.setState(
       {
@@ -108,47 +93,6 @@ class Pengadaan extends Component {
     }
   };
 
-  onCheckItem = (event, id) => {
-    if (
-      event.target.tagName === "A" ||
-      (event.target.parentElement && event.target.parentElement.tagName === "A")
-    ) {
-      return true;
-    }
-    if (this.state.lastChecked === null) {
-      this.setState({
-        lastChecked: id
-      });
-    }
-
-    let selectedItems = this.state.selectedItems;
-    if (selectedItems.includes(id)) {
-      selectedItems = selectedItems.filter(x => x !== id);
-    } else {
-      selectedItems.push(id);
-    }
-    this.setState({
-      selectedItems
-    });
-
-    if (event.shiftKey) {
-      var items = this.state.items;
-      var start = this.getIndex(id, items, "id");
-      var end = this.getIndex(this.state.lastChecked, items, "id");
-      items = items.slice(Math.min(start, end), Math.max(start, end) + 1);
-      selectedItems.push(
-        ...items.map(item => {
-          return item.id;
-        })
-      );
-      selectedItems = Array.from(new Set(selectedItems));
-      this.setState({
-        selectedItems
-      });
-    }
-    document.activeElement.blur();
-  };
-
   getIndex(value, arr, prop) {
     for (var i = 0; i < arr.length; i++) {
       if (arr[i][prop] === value) {
@@ -157,21 +101,6 @@ class Pengadaan extends Component {
     }
     return -1;
   }
-  handleChangeSelectAll = isToggle => {
-    if (this.state.selectedItems.length >= this.state.items.length) {
-      if (isToggle) {
-        this.setState({
-          selectedItems: []
-        });
-      }
-    } else {
-      this.setState({
-        selectedItems: this.state.items.map(x => x.id)
-      });
-    }
-    document.activeElement.blur();
-    return false;
-  };
 
   dataListRender() {
     const {
@@ -180,11 +109,11 @@ class Pengadaan extends Component {
       selectedOrderOption,
       search
     } = this.state;
-    
+
     apiClient
       .get(
         `${apiUrl}?per_page=${selectedPageSize}&page=${currentPage}&orderBy=${
-          selectedOrderOption.column
+        selectedOrderOption.column
         }&search=${search}`
       )
       .then(res => {
@@ -192,14 +121,14 @@ class Pengadaan extends Component {
       })
       .then(data => {
         this.setState({
-          totalPage: data.totalPage,
+          totalPage: data.meta.total,
           procurments: data.data,
           selectedItems: [],
-          totalItemCount: data.totalItem,
+          totalItemCount: data.meta.count,
           isLoading: true
         });
       });
-    }
+  }
 
   onContextMenuClick = (e, data, target) => {
     console.log(
@@ -239,51 +168,49 @@ class Pengadaan extends Component {
     return !this.state.isLoading ? (
       <div className="loading" />
     ) : (
-      <Fragment>
-        <div className="disable-text-selection">
-          <ListPageHeading
-            heading="Pengadaan"
-            displayMode={displayMode}
-            changeDisplayMode={this.changeDisplayMode}
-            handleChangeSelectAll={this.handleChangeSelectAll}
-            changeOrderBy={this.changeOrderBy}
-            changePageSize={this.changePageSize}
-            selectedPageSize={selectedPageSize}
-            totalItemCount={totalItemCount}
-            selectedOrderOption={selectedOrderOption}
-            match={match}
-            startIndex={startIndex}
-            endIndex={endIndex}
-            selectedItemsLength={selectedItems ? selectedItems.length : 0}
-            itemsLength={procurments ? procurments.length : 0}
-            onSearchKey={this.onSearchKey}
-            orderOptions={orderOptions}
-            pageSizes={pageSizes}
-          />
-          <TitlePengadaan />
-          <Row>
-            {procurments.map(procurment => {
-              return (
+        <Fragment>
+          <div className="disable-text-selection">
+            <ListPageHeadingPengadaan
+              heading="Pengadaan"
+              displayMode={displayMode}
+              changeDisplayMode={this.changeDisplayMode}
+              handleChangeSelectAll={this.handleChangeSelectAll}
+              changeOrderBy={this.changeOrderBy}
+              changePageSize={this.changePageSize}
+              selectedPageSize={selectedPageSize}
+              totalItemCount={totalItemCount}
+              selectedOrderOption={selectedOrderOption}
+              match={match}
+              startIndex={startIndex}
+              endIndex={endIndex}
+              selectedItemsLength={selectedItems ? selectedItems.length : 0}
+              itemsLength={procurments ? procurments.length : 0}
+              onSearchKey={this.onSearchKey}
+              orderOptions={orderOptions}
+              pageSizes={pageSizes}
+            />
+            <TitlePengadaan />
+            <Row>
+              {procurments.map(procurment => {
+                return (
                   <ListItemPengadaan
-                      key={procurment.id}
-                      procurment={procurment}
-                      defaultPageSize={10}
+                    key={procurment.id}
+                    procurment={procurment}
+                    collect={collect}
+                    isSelect={this.state.selectedItems.includes(procurment.id)}
+
                   />
-              );
-            })}
-            <Pagination
-              currentPage={this.state.currentPage}
-              totalPage={this.state.totalPage}
-              onChangePage={i => this.onChangePage(i)}
-            />
-            <ContextMenuContainer
-              onContextMenuClick={this.onContextMenuClick}
-              onContextMenu={this.onContextMenu}
-            />
-          </Row>
-        </div>
-      </Fragment>
-    );
+                );
+              })}
+              <Pagination
+                currentPage={this.state.currentPage}
+                totalPage={this.state.totalPage}
+                onChangePage={i => this.onChangePage(i)}
+              />
+            </Row>
+          </div>
+        </Fragment>
+      );
   }
 }
 export default Pengadaan;

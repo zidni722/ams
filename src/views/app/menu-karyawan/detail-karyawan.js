@@ -16,6 +16,8 @@ import {injectIntl} from "react-intl";
 import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
 import {apiClient} from "../../../helpers/ApiService";
+import { reactLocalStorage } from "reactjs-localstorage";
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 
 class DetailKaryawan extends Component {
@@ -34,7 +36,19 @@ class DetailKaryawan extends Component {
                 this.setState({detailUser: res.data.data})
             }).catch((e) => {
             console.log(e.message)
-        });
+        })
+        if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+            NotificationManager.success(
+              "Anda berhasil merubah data karyawan",
+              "Perubahan Data Berhasil",
+              1000000000,
+              () => {
+                reactLocalStorage.set('isSuccesSubmit', false)
+                this.setState({ visible: false });
+              },
+              null
+            );
+          }
     }
 
     render() {
@@ -95,7 +109,7 @@ class DetailKaryawan extends Component {
                                     </p>
                                     <p className="mb-3">
                                         <Badge color="outline-selesai" className="mb-1 mr-1"
-                                               pill>{this.state.detailUser.status}</Badge>
+                                                pill>{this.state.detailUser.status}</Badge>
                                     </p>
                                 </div>
                                 <p className="text-muted text-small mb-2"><IntlMessages id="NPK"/></p>

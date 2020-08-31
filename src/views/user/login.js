@@ -10,6 +10,7 @@ import {loginUser} from "../../redux/actions";
 import {Colxx} from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 import {apiClient} from "../../helpers/ApiService";
+import {Spinner} from "reactstrap"
 
 
 class Login extends Component {
@@ -19,6 +20,25 @@ class Login extends Component {
       email: "",
       password: ""
     };
+    const iconCardsData = [
+      {
+        title: 'Menunggu',
+        icon1: "simple-icon-clock",
+        valueMenunggu: 0
+      },
+      {
+        title: 'Tolak',
+        icon2: "simple-icon-close",
+        valueTolak: 0
+      },
+      {
+        title: 'Selesai',
+        icon3: "simple-icon-check",
+        valueSelesai: 0
+      },
+    ]
+
+    reactLocalStorage.setObject('iconCardsData', iconCardsData)
   }
 
   onUserLogin = (values) => {
@@ -32,11 +52,49 @@ class Login extends Component {
         };
 
         apiClient.defaults.headers.common['Content-Type'] = 'application/json';
-        apiClient.post(url, paramsLogin).then(result => {
 
-          reactLocalStorage.setObject('me', result.data.data);
-          window.location.href = "/"
-        }).catch(e => {
+        apiClient.post(url, paramsLogin).then((result) => {
+          const module = 'borrows'
+
+          if (result.status === 200) {
+            reactLocalStorage.setObject('me', result.data.data);
+            reactLocalStorage.set('token', result.data.data.token);
+            reactLocalStorage.set('module', module);  
+            
+            window.onbeforeunload = () => {
+              reactLocalStorage.set('token', result.data.data.token);
+            }
+          }
+        })
+        .then(() => {
+          apiClient.get(`${module}/count-all-status`)
+              .then(res => {
+                const responseData = res.data.data
+                const iconCardsData = [
+                  {
+                    title: 'Menunggu',
+                    icon1: "simple-icon-clock",
+                    valueMenunggu: responseData ? responseData.count_pending_status : 0
+                  },
+                  {
+                    title: 'Tolak',
+                    icon2: "simple-icon-close",
+                    valueTolak: responseData ? responseData.count_reject_status : 0
+                  },
+                  {
+                    title: 'Selesai',
+                    icon3: "simple-icon-check",
+                    valueSelesai: responseData ? responseData.count_success_status : 0
+                  },
+                ]
+
+                reactLocalStorage.setObject('iconCardsData', iconCardsData)
+                window.location.href = "/"
+              }).catch((e) => {
+            console.log(e.message)
+          });
+        })
+        .catch(e => {
           console.log(e.message)
         })
       }
@@ -137,11 +195,7 @@ class Login extends Component {
                         className={`btn-shadow btn-multiple-state ${this.props.loading ? "show-spinner" : ""}`}
                         size="lg"
                       >
-                        <span className="spinner d-inline-block">
-                          <span className="bounce1" />
-                          <span className="bounce2" />
-                          <span className="bounce3" />
-                        </span>
+                        <Spinner color="primary" />
                         <span className="label"><IntlMessages id="user.login-button" /></span>
                       </Button>
                     </div>

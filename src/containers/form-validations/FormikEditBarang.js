@@ -1,75 +1,67 @@
 import React, { Component } from "react";
 
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import { Formik, Form } from "formik";
 
 import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { FormikReactSelect } from "./FormikFields";
 import { NotificationManager } from "../../components/common/react-notifications";
-import { servicePath, token } from "../../constants/defaultValues";
-
-import Axios from "axios";
-
-const apiUrl = servicePath;
-
-const SignupSchema = Yup.object().shape({
-  categories: Yup.object()
-    .shape({
-      label: Yup.string().required(),
-      value: Yup.string().required()
-    })
-    .nullable()
-    .required("Jenis Barang harus diisi!"),
-  assets: Yup.object()
-  .shape({
-    label: Yup.string().required(),
-    value: Yup.string().required()
-  })
-  .nullable()
-  .required("Nama Barang harus diisi!")
-});
+import { apiClient } from "../../helpers/ApiService";
+import { reactLocalStorage } from "reactjs-localstorage";
+import Select from 'react-select'
 
 class FormikEditBarang extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: "",
+      code: "",
+      name: "",
+      category: "",
+      defaultCategory: "",
+      brand: "",
+      year: "",
+      qty: "",
+      price: "",
+      image: "",
+      isValid: null,
       'categories': '',
-      'assets': ''
+      'asset': ''
     };
   }
+
   componentDidMount() {
-    Axios.get(
-      `${apiUrl}/categories`,
-    {
-      headers : {
-        Authorization: 'Bearer ' + token
-      }
-    })
+    const assetID = uri => uri.substring(uri.lastIndexOf('/') + 1);
+
+    apiClient.get('/categories')
       .then(res => {
         let dataCategories = []
         const categories = res.data.data;
-        for(const category of categories) {
-          dataCategories.push({value:category.id, label:category.name})
+        for (const category of categories) {
+          dataCategories.push({ value: category.id, label: category.name })
         }
-        this.setState( {dataCategories} );
+        this.setState({ dataCategories });
       })
 
-      Axios.get(
-        `${apiUrl}/assets`,
-      {
-        headers : {
-          Authorization: 'Bearer ' + token
-        }
+    apiClient.get('/assets/' + assetID(window.location.href))
+      .then(res => {
+        this.setState({ asset: res.data.data })
+
+        this.setState({ code: this.state.asset.code })
+        this.setState({ name: this.state.asset.name })
+        this.setState({ category: this.state.asset.category_id })
+        this.setState({ brand: this.state.asset.brand })
+        this.setState({ year: this.state.asset.year })
+        this.setState({ qty: this.state.asset.qty })
+        this.setState({ price: this.state.asset.price })
+        this.setState({ image: this.state.asset.image })
+
+
+        reactLocalStorage.set('defaultCategoryValue', this.state.asset.category_id);
+        reactLocalStorage.set('defaultCategoryLabel', this.state.asset.category_name);
+      }).catch((e) => {
+        console.log(e.message)
       })
-        .then(res => {
-          let dataAssets = []
-          const assets = res.data.data;
-          for(const asset of assets) {
-            dataAssets.push({value:asset.id, label:asset.name})
-          }
-          this.setState( {dataAssets} );
-        })
   }
 
   componentDidUpdate() {
@@ -85,34 +77,107 @@ class FormikEditBarang extends Component {
     }
   }
 
-  handlerChange = (e) =>{
-    this.setState({[e.target.name] : e.target.value})
+  handlerChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
   }
+
+  handlerSelectChange = (e, action) => {
+    const { value } = e;
+    const name = action
+    this.setState({ [name]: value });
+    reactLocalStorage.set(name, value);
+  };
+
+  handleFileChange = (e) => {
+    this.setState({ [e.target.name]: e.target.files[0] });
+  };
 
   handlerSubmit = async (event) => {
     event.preventDefault();
 
-    await Axios.post(`${apiUrl}/users`, this.state)
-    this.props.history.push('/karyawan')
-  }
+    if (this.state.code.length > 0) {
+      this.setState({ isValid: true })
+    } else if (this.state.code.length === 0) {
+      this.setState({ isValid: false })
+    }
+
+    if (this.state.name.length > 0) {
+      this.setState({ isValid: true })
+    } else if (this.state.name.length === 0) {
+      this.setState({ isValid: false })
+    }
+
+    if (this.state.brand.length > 0) {
+      this.setState({ isValid: true })
+    } else if (this.state.brand.length === 0) {
+      this.setState({ isValid: false })
+    }
+
+    if (this.state.year.length > 0) {
+      this.setState({ isValid: true })
+    } else if (this.state.year.length === 0) {
+      this.setState({ isValid: false })
+    }
+
+    if (this.state.qty.length > 0) {
+      this.setState({ isValid: true })
+    } else if (this.state.qty.length === 0) {
+      this.setState({ isValid: false })
+    }
+
+    if (this.state.price.length > 0) {
+      this.setState({ isValid: true })
+    } else if (this.state.price.length === 0) {
+      this.setState({ isValid: false })
+    }
+
+    apiClient.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+
+    const formData = new FormData();
+
+    formData.append('name', this.state.name)
+    formData.append('brand', this.state.brand)
+    formData.append('year', this.state.year)
+    if (this.state.image) formData.append('image', this.state.image)
+    formData.append('description', this.state.description)
+    formData.append('category_id', reactLocalStorage.get('category'))
+    formData.append('code', this.state.code)
+    formData.append('qty', this.state.qty)
+    formData.append('price', this.state.price)
+
+    console.log(reactLocalStorage.get('category'));
+    apiClient.put('/assets/' + this.state.asset.id, formData)
+      .then(res => {
+        if (res.status === 200) {
+          window.location.href = "../detail-barang/" + this.state.asset.id
+          reactLocalStorage.set('isSuccesSubmit', true)
+        }
+      }).catch((e) => {
+        console.log(e.message)
+        NotificationManager.error(
+          "Silahkan coba kembali beberapa saat lagi!",
+          "Terjadi Kesalahan",
+          5000,
+          () => {
+            this.setState({ visible: false });
+          },
+          null
+        );
+      });
+  };
 
   render() {
     return (
       <Row className="mb-4">
         <Colxx xxs="12" lg="12" xl="12" className="mb-3">
           <Card className="d-flex flex-row mb-3">
-            <CardBody> 
-              
+            <CardBody>
+
               <Formik
-              initialValues={{
-                code:"Lap-1",
-                name: "Macbook Pro 13inch",
-                category: [{ value: "lap", label: "Laptop" }],
-                brand: "Apple",
-                year: "2020",
-                jumlah: "10",
-                harga: "21000000"
-              }}
+                initialValues={{
+
+                }}
+                enableReinitialize={true}
               >
                 {({
                   setFieldValue,
@@ -124,111 +189,133 @@ class FormikEditBarang extends Component {
                   touched,
                 }) => (
 
-                  <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
-                    <FormGroup className="error-l-100">
-                      <Label>Kode Barang</Label>
-                      <Field className="form-control" name="code" />
-                      {errors.firstName && touched.firstName ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.firstName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                    <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
+                      <FormGroup className="error-l-100">
+                        <Label>Kode Barang</Label>
+                        <input
+                          className="form-control"
+                          name="code"
+                          defaultValue={this.state.asset.code}
+                          onChange={this.handlerChange}
+                        />
+                        {errors.firstName && touched.firstName ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.firstName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <FormGroup className="error-l-100">
-                      <Label>Nama Barang</Label>
-                      <Field className="form-control" name="name" />
-                      {errors.firstName && touched.firstName ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.firstName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      <FormGroup className="error-l-100">
+                        <Label>Nama Barang</Label>
+                        <input
+                          className="form-control"
+                          name="name"
+                          defaultValue={this.state.asset.name}
+                          onChange={this.handlerChange}
+                        />
+                        {errors.firstName && touched.firstName ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.firstName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <FormGroup className="error-l-100">
-                      <Label>Jenis Barang</Label>
-                      <FormikReactSelect
-                        name="category"
-                        id="category"
-                        value={values.dataCategories}
-                        isMulti={false}
-                        options={this.state.dataCategories}
-                        onChange={handleChange}
-                        onBlur={setFieldTouched}
-                      />
-                      {errors.categories && touched.categories ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.categories}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      <FormGroup className="error-l-100">
+                        <Label>Jenis Barang</Label>
+                        <Select
+                          name="category"
+                          id="category"
+                          defaultValue={{ value: reactLocalStorage.get('defaultCategoryValue'), label: reactLocalStorage.get('defaultCategoryLabel') }}
+                          options={this.state.dataCategories}
+                          onChange={e => this.handlerSelectChange(e, 'category')}
+                        />
+                        {errors.categories && touched.categories ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.categories}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <FormGroup className="error-l-100">
-                      <Label>Merek</Label>
-                      <Field className="form-control" name="brand" />
-                      {errors.firstName && touched.firstName ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.firstName}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      <FormGroup className="error-l-100">
+                        <Label>Merek</Label>
+                        <input
+                          className="form-control"
+                          name="brand"
+                          defaultValue={this.state.asset.brand}
+                          onChange={this.handlerChange}
+                        />
+                        {errors.firstName && touched.firstName ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.firstName}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <FormGroup className="error-l-50">
-                      <Label>Tahun</Label>
-                      <Field 
-                        className="form-control" 
-                        name="year"
-                        type="number" 
-                      />
-                      {errors.npk && touched.npk ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.npk}
-                        </div>
-                      ) : null}
-                    </FormGroup>
+                      <FormGroup className="error-l-50">
+                        <Label>Tahun</Label>
+                        <input
+                          className="form-control"
+                          name="year"
+                          type="number"
+                          defaultValue={this.state.asset.year}
+                          onChange={this.handlerChange}
+                        />
+                        {errors.npk && touched.npk ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.npk}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <FormGroup className="error-l-50">
-                      <Label>Jumlah Barang</Label>
-                      <Field 
-                        className="form-control" 
-                        name="jumlah"
-                        type="number" 
-                      />
-                      {errors.npk && touched.npk ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.npk}
-                        </div>
-                      ) : null}
-                    </FormGroup>    
+                      <FormGroup className="error-l-50">
+                        <Label>Jumlah Barang</Label>
+                        <input
+                          className="form-control"
+                          name="qty"
+                          type="number"
+                          defaultValue={this.state.asset.qty}
+                          onChange={this.handlerChange}
+                        />
+                        {errors.npk && touched.npk ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.npk}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <FormGroup className="error-l-50">
-                      <Label>Harga Barang</Label>
-                      <Field 
-                        className="form-control" 
-                        name="harga"
-                        type="number" 
-                      />
-                      {errors.npk && touched.npk ? (
-                        <div className="invalid-feedback d-block">
-                          {errors.npk}
-                        </div>
-                      ) : null}
-                    </FormGroup>  
+                      <FormGroup className="error-l-50">
+                        <Label>Harga Barang</Label>
+                        <input
+                          className="form-control"
+                          name="price"
+                          defaultValue={this.state.asset.price}
+                          onChange={this.handlerChange}
+                        />
+                        {errors.npk && touched.npk ? (
+                          <div className="invalid-feedback d-block">
+                            {errors.npk}
+                          </div>
+                        ) : null}
+                      </FormGroup>
 
-                    <FormGroup className="error-l-50">
-                      <Label>Upload Gambar</Label>
+                      <FormGroup className="error-l-50">
+                        <Label>Upload Gambar</Label>
                         <div className="mb-2">
-                          <input type="file" name="image" onChange= {this.onChange} />
+                          <input
+                            type="file"
+                            name="image"
+                            accept="image/jpeg, image/png"
+                            onChange={this.handleFileChange} />
                         </div>
-                    </FormGroup>
+                      </FormGroup>
 
-                    <div className="d-flex justify-content-between align-items-center"><p/>
-                      <Button color="primary" size="lg" type="submit">
-                        Submit
+                      <div className="d-flex justify-content-between align-items-center"><p />
+                        <Button color="primary" size="lg" type="submit">
+                          Submit
                       </Button>
-                    </div>
-                  </Form>
-                )}
+                      </div>
+                    </Form>
+                  )}
               </Formik>
             </CardBody>
           </Card>
