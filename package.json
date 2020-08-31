@@ -1,6 +1,10 @@
 {
   "name": "gogo-react",
   "version": "4.2.3",
+  "engines": {
+    "node": "10.x",
+    "npm": "6.x"
+  },
   "description": "Gogo - React Bootstrap 4 Admin Dashboard Template",
   "private": true,
   "dependencies": {
