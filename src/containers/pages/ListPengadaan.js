@@ -15,11 +15,12 @@ const ListPengadaan = ({ procurment, statusColor }) => {
               <div className="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">          
                 <p className="mb-1 text-p text-small w-50">{procurment.asset_name}</p>
                 <p className="mb-1 text-p text-small w-50">{procurment.asset_category_name}</p>
+                <p className="mb-1 text-p text-small w-50">{procurment.user_name}</p>
                 <p className="mb-1 text-p text-small w-50">{procurment.created_at}</p>
                 <p className="mb-1 text-p text-small w-50">{procurment.updated_at}</p>
 
                 <div className="mb-1 text-p text-small w-50 text-relative">
-                  <Badge color={statusColor} pill>
+                  <Badge color="outline-menunggu" pill>
                     {procurment.status}
                   </Badge>
                 </div>

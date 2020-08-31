@@ -199,7 +199,7 @@ class FormikEditProfil extends Component {
                                             <Label>City</Label>
                                             <Select
                                                 name="city"
-                                                id="city"
+                                                // id="city"
                                                 defaultValue={{ value: reactLocalStorage.get('defaultCityValue'), label: reactLocalStorage.get('defaultCityLabel') }}
                                                 options={this.state.dataCities}
                                                 onChange={e => this.handlerSelectChange(e, 'city')}

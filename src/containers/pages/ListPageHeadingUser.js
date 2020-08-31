@@ -98,7 +98,7 @@ class ListPageHeadingUser extends Component {
                       return (
                         <DropdownItem
                           key={index}
-                          onClick={() => changeOrderBy(user.user)}
+                          onClick={() => changeOrderBy(user.column)}
                         >
                           {user.label}
                         </DropdownItem>

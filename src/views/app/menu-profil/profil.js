@@ -8,6 +8,7 @@ import IntlMessages from "../../../helpers/IntlMessages";
 import { me } from "../../../constants/defaultValues";
 import { apiClient } from "../../../helpers/ApiService";
 import { reactLocalStorage } from "reactjs-localstorage";
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 class UserProfil extends Component {
   constructor(props) {
@@ -25,6 +26,18 @@ class UserProfil extends Component {
       }).catch((e) => {
         console.log(e.message)
       });
+      if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+        NotificationManager.success(
+          "Anda berhasil data profil",
+          "Perubahan Data Berhasil",
+          1000000000,
+          () => {
+            reactLocalStorage.set('isSuccesSubmit', false)
+            this.setState({ visible: false });
+          },
+          null
+        );
+      }
   }
 
   render() {

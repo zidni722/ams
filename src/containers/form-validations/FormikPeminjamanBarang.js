@@ -10,6 +10,7 @@ import { NotificationManager } from "../../components/common/react-notifications
 
 import { apiClient } from "../../helpers/ApiService";
 import { reactLocalStorage } from "reactjs-localstorage";
+import Select from "react-select";
 
 const SignupSchema = Yup.object().shape({
   categories: Yup.object()
@@ -32,7 +33,8 @@ class FormikPeminjamanBarang extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      asset: ""
+      asset_id: "",
+      category_id:""
     };
 
   }
@@ -63,13 +65,21 @@ class FormikPeminjamanBarang extends Component {
       });
   }
 
+  handlerSelectChange = (e, action) => {
+    const { value } = e;
+    const name = action
+    this.setState({ [name]: value });
+    reactLocalStorage.set(name, value);
+  };
+
   handleSubmit = async (event, values) => {
     event.preventDefault();
 
     apiClient.defaults.headers.common['Content-Type'] = 'application/json';
 
     const data = {
-      "asset_id": reactLocalStorage.get('assets')
+      "asset_id": reactLocalStorage.get('asset'),
+      "category_id": reactLocalStorage.get('category')
     };
 
     apiClient.post('/borrows', data)
@@ -98,20 +108,7 @@ class FormikPeminjamanBarang extends Component {
         <Colxx xxs="12" lg="12" xl="12" className="mb-3">
           <Card className="d-flex flex-row mb-3">
             <CardBody>
-              <Formik
-                initialValues={this.state}
-                validationSchema={SignupSchema}
-                onSubmit={fields => {
-                  NotificationManager.success(
-                    "Peminjaman berhasil ditambahkan",
-                    "Registrasi Berhasil",
-                    3000,
-                    null,
-                    null,
-                    +JSON.stringify(fields, null, 4)
-                  );
-                  this.handleSubmit.bind(this, fields)
-                }}>
+              <Formik >
                 {({
                   setFieldValue,
                   setFieldTouched,
@@ -125,39 +122,25 @@ class FormikPeminjamanBarang extends Component {
                         <Colxx sm={6}>
                           <FormGroup className="error-l-100">
                             <Label>Jenis Barang</Label>
-                            <FormikReactSelect
-                              name="categories"
-                              id="categories"
+                            <Select
+                              name="category"
+                              id="category"
                               value={values.dataCategories}
-                              isMulti={false}
                               options={this.state.dataCategories}
-                              onChange={setFieldValue}
-                              onBlur={setFieldTouched}
+                              onChange={e => this.handlerSelectChange(e, 'category')}
                             />
-                            {errors.categories && touched.categories ? (
-                              <div className="invalid-feedback d-block">
-                                {errors.categories}
-                              </div>
-                            ) : null}
                           </FormGroup>
                         </Colxx>
                         <Colxx sm={6}>
                           <FormGroup className="error-l-100">
                             <Label>Nama Barang</Label>
-                            <FormikReactSelect
-                              name="assets"
-                              id="assets"
+                            <Select
+                              name="asset"
+                              id="asset"
                               value={values.dataAssets}
-                              isMulti={false}
                               options={this.state.dataAssets}
-                              onChange={setFieldValue}
-                              onBlur={setFieldTouched}
+                              onChange={e => this.handlerSelectChange(e, 'asset')}
                             />
-                            {errors.assets && touched.assets ? (
-                              <div className="invalid-feedback d-block">
-                                {errors.assets}
-                              </div>
-                            ) : null}
                           </FormGroup>
                         </Colxx>
                       </FormGroup>

@@ -149,7 +149,7 @@ class FormikEditBarang extends Component {
     apiClient.put('/assets/' + this.state.asset.id, formData)
       .then(res => {
         if (res.status === 200) {
-          window.location.href = "../barang"
+          window.location.href = "../detail-barang/" + this.state.asset.id
           reactLocalStorage.set('isSuccesSubmit', true)
         }
       }).catch((e) => {

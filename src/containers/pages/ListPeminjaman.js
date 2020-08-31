@@ -21,7 +21,7 @@ const ListPeminjaman = ({ borrow, statusColor, collect }) => {
                 <p className="mb-1 text-p text-small w-50">{borrow.updated_at}</p>
 
                 <div className="mb-1 text-p text-small w-50 text-relative">
-                  <Badge color={statusColor} pill>
+                  <Badge color="outline-menunggu" pill>
                     {borrow.status}
                   </Badge>
                 </div>

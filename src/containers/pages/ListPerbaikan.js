@@ -20,7 +20,7 @@ const ListPerbaikan = ({ service, statusColor }) => {
                 <p className="mb-1 text-p text-small w-50">{service.updated_at}</p>
 
                 <div className="mb-1 text-p text-small w-50 text-relative">
-                  <Badge color={statusColor} pill>
+                  <Badge color="outline-menunggu" pill>
                     {service.status}
                   </Badge>
                 </div>

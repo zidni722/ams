@@ -173,7 +173,7 @@ class FormikPengadaan extends Component {
                           className="form-control"
                           onChange={this.handleChange}
                           name="year"
-                          type="number"
+                          type="year"
                         />
                         {errors.npk && touched.npk ? (
                           <div className="invalid-feedback d-block">

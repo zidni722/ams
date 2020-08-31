@@ -10,6 +10,7 @@ import { apiClient } from "../../../helpers/ApiService";
 import SweetAlertDelete from "../../../containers/ui/SweetAlertDelete";
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { me } from "../../../constants/defaultValues";
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 
 class DetailPages extends Component {
@@ -28,6 +29,18 @@ class DetailPages extends Component {
       }).catch((e) => {
         console.log(e.message)
       })
+      if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+        NotificationManager.success(
+          "Anda berhasil merubah data barang",
+          "Perubahan Data Berhasil",
+          1000000000,
+          () => {
+            reactLocalStorage.set('isSuccesSubmit', false)
+            this.setState({ visible: false });
+          },
+          null
+        );
+      }
   }
 
   editBarang = () => {
@@ -72,6 +85,8 @@ class DetailPages extends Component {
               <p className="pl-3">{this.state.detailAsset.brand}</p>
               <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Tahun" /></p>
               <p className="pl-3">{this.state.detailAsset.year}</p>
+              <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Harga" /></p>
+              <p className="pl-3">{this.state.detailAsset.price}</p>
 
               <div className="pl-3 pr-3 pt-3 mb-4">
                 <p className="mb-3">

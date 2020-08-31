@@ -133,7 +133,7 @@ class FormikEditKaryawan extends Component {
                                     reactLocalStorage.remove('me')
                                     reactLocalStorage.setObject('me', newMe)                                        
                                 }
-                                window.location.href = "../karyawan"
+                                window.location.href = "../detail-karyawan/" + this.state.detailUser.id
                                 reactLocalStorage.set('isSuccesSubmit', true)
                             }
                         }).catch((e) => {

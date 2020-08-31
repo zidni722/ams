@@ -16,6 +16,8 @@ import {injectIntl} from "react-intl";
 import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
 import {apiClient} from "../../../helpers/ApiService";
+import { reactLocalStorage } from "reactjs-localstorage";
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 
 class DetailKaryawan extends Component {
@@ -34,7 +36,19 @@ class DetailKaryawan extends Component {
                 this.setState({detailUser: res.data.data})
             }).catch((e) => {
             console.log(e.message)
-        });
+        })
+        if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+            NotificationManager.success(
+              "Anda berhasil merubah data karyawan",
+              "Perubahan Data Berhasil",
+              1000000000,
+              () => {
+                reactLocalStorage.set('isSuccesSubmit', false)
+                this.setState({ visible: false });
+              },
+              null
+            );
+          }
     }
 
     render() {
