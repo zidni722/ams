@@ -2944,6 +2944,13 @@ main {
   border-radius: calc(0.75rem - 1px);
 }
 
+.card-img-fit-t {
+  width: 100%;
+  background-color: transparent;
+  object-fit: cover;
+  border-radius: calc(0.75rem - 1px);
+}
+
 .card-img-bottom {
   width: 100%;
   padding: 2rem;

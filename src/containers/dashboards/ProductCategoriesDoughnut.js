@@ -16,12 +16,35 @@ import {DoughnutChart} from "../../components/charts"
 import { doughnutChartData } from "../../data/charts";
 import {reactLocalStorage} from "reactjs-localstorage";
 
+const convertModuleToIndo = (module) => {
+  let moduleIndo = ''
+
+  switch (module) {
+    case 'borrows':
+      moduleIndo = 'Peminjaman'
+      break;
+    case 'returns':
+      moduleIndo = 'Pengembalian'
+      break;
+    case 'services':
+      moduleIndo = 'Perbaikan'
+      break;
+    case 'procurements':
+      moduleIndo = 'Pengadaan'
+      break;
+    default:
+        break;
+  }
+
+  return moduleIndo
+}
+
 const ProductCategoriesDoughnut = (controls = true) => {
   return (
     <Card className="h-100">
       <CardBody>
         <CardTitle>
-        <IntlMessages id="Status Peminjaman" />
+        <IntlMessages id={`Status ${convertModuleToIndo(reactLocalStorage.get('module'))}`} />
         {controls && (
           <div className="btn-group float-right float-none-xs mt-2">
             <UncontrolledDropdown>

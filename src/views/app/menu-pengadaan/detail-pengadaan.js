@@ -55,26 +55,6 @@ class DetailPeminjaman extends Component {
               <Row>
               <Colxx xxs="12">
                     <Breadcrumb heading="menu.detail-pengadaan" match={this.props.match} />
-                    {/* <div className="text-zero top-right-button-container">
-                      <UncontrolledDropdown>
-                        <DropdownToggle
-                          caret
-                          color="primary"
-                          size="lg"
-                          outline
-                          className="top-right-button top-right-button-single">
-                          <IntlMessages id="ACTIONS" />
-                        </DropdownToggle>
-                        <DropdownMenu>
-                          <DropdownItem onClick={() => this.editPengadaan()}>
-                            <IntlMessages id="Terima"/>
-                          </DropdownItem>
-                          <DropdownItem onClick={() => this.handleAlert("tolakAlert", true)}>
-                            <IntlMessages id="Tolak"/>
-                          </DropdownItem>
-                        </DropdownMenu>
-                      </UncontrolledDropdown>
-                    </div> */}
                     { 
                       me.role_name.toLowerCase() == 'super admin' &&
                       this.state.detailProcurement.status === "pending" &&
@@ -87,7 +67,8 @@ class DetailPeminjaman extends Component {
                   <Colxx xxs="12" lg="8" xl="8" className="col-left">
                     <Card className="mb-3">
                       <CardBody>
-                      <CardTitle> Data Pengadaan Barang</CardTitle>                          
+                      <CardTitle> Data Pengadaan Barang</CardTitle>    
+                      <SingleLightbox thumb={this.state.detailProcurement.invoice} large={this.state.detailProcurement.invoice} className="responsive card-img-top" />
                         <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Nama Barang" /></p>
                         <p className="pl-3">{this.state.detailProcurement.name}</p>
                         <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Jenis Barang" /></p>
