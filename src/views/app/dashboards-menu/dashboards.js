@@ -44,28 +44,6 @@ export default class Dashboards extends Component {
         .then(res => {
           console.log(res.data.data)
           const recentData=res.data.data
-          // [
-          //   {
-          //     Header: "Kode Barang",
-          //     accessor: "code",
-          //     Cell: props => <p className="text-muted mb-0">{this.state.detailBorrow.asset_code}</p>
-          //   },
-          //   {
-          //     Header: "Nama Barang",
-          //     accessor: "title",
-          //     Cell: props => <p className="text-muted">{props.value}</p>
-          //   },
-          //   {
-          //     Header: "Tanggal Request",
-          //     accessor: "createDate",
-          //     Cell: props => <p className="text-muted">{props.value}</p>
-          //   },
-          //   {
-          //     Header: "Status Request",
-          //     accessor: "status",
-          //     Cell: props => <p className="text-muted">{props.value}</p>
-          //   }
-          // ]
           reactLocalStorage.setObject(`recent-${module}`, recentData)
         }).catch((e) => {
           console.log(e.message)

@@ -112,31 +112,6 @@ class BestSellers extends Component {
               </div>
         )}
           </CardTitle>
-            {/* <ReactTable
-              data={this.state.dataTable}
-              defaultPageSize={5}
-              showPagination = {false}
-              columns={[{
-                Header: "Kode Barang",
-                accessor: "code",
-                Cell: props => <p className="text-muted mb-0">{props.value}</p>
-              },
-              {
-                Header: "Nama Barang",
-                accessor: "title",
-                Cell: props => <p className="text-muted">{props.value}</p>
-              },
-              {
-                Header: "Tanggal Request",
-                accessor: "createDate",
-                Cell: props => <p className="text-muted">{props.value}</p>
-              },
-              {
-                Header: "Status Request",
-                accessor: "status",
-                Cell: props => <p className="text-muted">{props.value}</p>
-              }]}
-            /> */}
             <Table hover>
                   <thead>
                     <tr>
