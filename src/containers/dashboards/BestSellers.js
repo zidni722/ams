@@ -63,14 +63,10 @@ class BestSellers extends Component {
 
   componentDidMount() {
     let module = reactLocalStorage.get('module')
-    // console.log(module);
-    // console.log("TYandaa");
     let recentDatas = reactLocalStorage.getObject(`recent-${module}`)
-// console.log(recentDatas);
+
     this.setState({ dataTable: recentDatas})
-   
-      console.log('this.state.dataTable'); 
-      console.log(this.state.dataTable); 
+    
     const dataEdited = data.slice(0, 12);
     var checkedCopy = [];
     var selectAll = this.state.selectAll;

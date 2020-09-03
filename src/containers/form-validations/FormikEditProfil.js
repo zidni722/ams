@@ -28,13 +28,14 @@ class FormikEditProfil extends Component {
             role: "",
             division_id: "",
             division: "",
-            detailUser: ''
+            detailUser: '',
+            isLoading: false
         };
     }
 
     componentDidMount() {
         apiClient.get('/users/' + me.id)
-            .then(res => {
+            .then(async (res) => {
                 this.setState({ detailUser: res.data.data })
 
                 this.setState({ code: this.state.detailUser.code })
@@ -47,12 +48,15 @@ class FormikEditProfil extends Component {
                 this.setState({ address: this.state.detailUser.address })
                 this.setState({ photo: this.state.detailUser.photo })
 
-                reactLocalStorage.set('defaultRoleValue', this.state.detailUser.role_id);
-                reactLocalStorage.set('defaultRoleLabel', this.state.detailUser.role_name);
-                reactLocalStorage.set('defaultDivisionValue', this.state.detailUser.division_id);
-                reactLocalStorage.set('defaultDivisionLabel', this.state.detailUser.division_name);
-                reactLocalStorage.set('defaultCityValue', this.state.detailUser.city_id);
-                reactLocalStorage.set('defaultCityLabel', this.state.detailUser.city_name);
+                setTimeout(async () => {
+                    await reactLocalStorage.set('defaultRoleValue', this.state.detailUser.role_id);
+                    await reactLocalStorage.set('defaultRoleLabel', this.state.detailUser.role_name);
+                    await reactLocalStorage.set('defaultDivisionValue', this.state.detailUser.division_id);
+                    await reactLocalStorage.set('defaultDivisionLabel', this.state.detailUser.division_name);
+                    await reactLocalStorage.set('defaultCityValue', this.state.detailUser.city_id);
+                    await reactLocalStorage.set('defaultCityLabel', this.state.detailUser.city_name);
+                    this.setState({ isLoading: true })
+                }, 100);
 
             }).catch((e) => {
             console.log(e.message)
@@ -141,7 +145,9 @@ class FormikEditProfil extends Component {
     };
 
     render() {
-        return (
+        return !this.state.isLoading ? (
+            <div className="loading" />
+        ) : (
             <Row className="mb-4">
                 <Colxx xxs="12">
                     <Card>

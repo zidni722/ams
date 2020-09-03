@@ -7,6 +7,28 @@ import ListPageHeadingBarang from "../../../containers/pages/ListPageHeadingBara
 import { apiClient } from "../../../helpers/ApiService";
 import TitleBarang from "../../../containers/pages/TitleBarang";
 import { NotificationManager } from "../../../components/common/react-notifications";
+import { reactLocalStorage } from "reactjs-localstorage";
+import { me } from "../../../constants/defaultValues";
+
+const refreshToken = async () => {
+  const password = reactLocalStorage.get('_pswrd')
+  const url = '/auth/login';
+
+  let paramsLogin = {
+    email: me.email,
+    password: password
+  };
+
+  apiClient.defaults.headers.common['Content-Type'] = 'application/json';
+
+  await apiClient.post(url, paramsLogin).then(async (result) => {
+    if (result.status === 200) {
+      await Promise.all([
+        reactLocalStorage.set('token', result.data.data.token)
+      ]);
+    }
+  })
+}
 
 function collect(props) {
   return { data: props.data };

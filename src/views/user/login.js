@@ -1,17 +1,36 @@
-import React, {Component} from "react";
-import {reactLocalStorage} from 'reactjs-localstorage';
-import {Button, Card, CardTitle, FormGroup, Label, Row} from "reactstrap";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { reactLocalStorage } from 'reactjs-localstorage';
+import { Button, Card, CardTitle, FormGroup, Label, Row } from "reactstrap";
+import { connect } from "react-redux";
 
-import {NotificationManager} from "../../components/common/react-notifications";
-import {Field, Form, Formik} from "formik";
+import { NotificationManager } from "../../components/common/react-notifications";
+import { Field, Form, Formik } from "formik";
 
-import {loginUser} from "../../redux/actions";
-import {Colxx} from "../../components/common/CustomBootstrap";
+import { loginUser } from "../../redux/actions";
+import { Colxx } from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
-import {apiClient} from "../../helpers/ApiService";
-import {Spinner} from "reactstrap"
+import { apiClient } from "../../helpers/ApiService";
+import { Spinner } from "reactstrap"
 
+const refreshToken = async (email, pwd) => {
+  const password = reactLocalStorage.get('_pswrd')
+  const url = '/auth/login';
+
+  let paramsLogin = {
+    email: email,
+    password: pwd
+  };
+
+  apiClient.defaults.headers.common['Content-Type'] = 'application/json';
+
+  await apiClient.post(url, paramsLogin).then(async (result) => {
+    if (result.status === 200) {
+      await Promise.all([
+        reactLocalStorage.set('token', result.data.data.token)
+      ]);
+    }
+  })
+}
 
 class Login extends Component {
   constructor(props) {
@@ -20,25 +39,6 @@ class Login extends Component {
       email: "",
       password: ""
     };
-    const iconCardsData = [
-      {
-        title: 'Menunggu',
-        icon1: "simple-icon-clock",
-        valueMenunggu: 0
-      },
-      {
-        title: 'Tolak',
-        icon2: "simple-icon-close",
-        valueTolak: 0
-      },
-      {
-        title: 'Selesai',
-        icon3: "simple-icon-check",
-        valueSelesai: 0
-      },
-    ]
-
-    reactLocalStorage.setObject('iconCardsData', iconCardsData)
   }
 
   onUserLogin = (values) => {
@@ -53,50 +53,59 @@ class Login extends Component {
 
         apiClient.defaults.headers.common['Content-Type'] = 'application/json';
 
-        apiClient.post(url, paramsLogin).then((result) => {
+        apiClient.post(url, paramsLogin).then(async (result) => {
           const module = 'borrows'
+          await reactLocalStorage.set('_pswrd', values.password)
 
           if (result.status === 200) {
-            reactLocalStorage.setObject('me', result.data.data);
-            reactLocalStorage.set('token', result.data.data.token);
-            reactLocalStorage.set('module', module);  
-            
-            window.onbeforeunload = () => {
-              reactLocalStorage.set('token', result.data.data.token);
-            }
-          }
-        })
-        .then(() => {
-          apiClient.get(`${module}/count-all-status`)
-              .then(res => {
+            await Promise.all([
+              reactLocalStorage.setObject('me', result.data.data),
+              reactLocalStorage.set('token', result.data.data.token),
+              reactLocalStorage.set('module', module)
+            ])
+
+            await apiClient.get('/notifications?per_page=1000').then((result) => {
+              reactLocalStorage.setObject('notifications', result.data)
+            }).catch(() => {
+              refreshToken(paramsLogin.email, paramsLogin.password)
+            })
+
+            await apiClient.get(`${module}/count-all-status`)
+            .then((res) => {
+              setTimeout(() => {
                 const responseData = res.data.data
                 const iconCardsData = [
                   {
                     title: 'Menunggu',
-                    icon1: "simple-icon-clock",
-                    valueMenunggu: responseData ? responseData.count_pending_status : 0
+                    icon: "simple-icon-clock icon-color3",
+                    value: responseData ? responseData.count_pending_status : 0
                   },
                   {
                     title: 'Tolak',
-                    icon2: "simple-icon-close",
-                    valueTolak: responseData ? responseData.count_reject_status : 0
+                    icon: "simple-icon-close icon-color1",
+                    value: responseData ? responseData.count_reject_status : 0
                   },
                   {
                     title: 'Selesai',
-                    icon3: "simple-icon-check",
-                    valueSelesai: responseData ? responseData.count_success_status : 0
+                    icon: "simple-icon-check icon-color2",
+                    value: responseData ? responseData.count_success_status : 0
                   },
                 ]
-
+      
                 reactLocalStorage.setObject('iconCardsData', iconCardsData)
-                window.location.href = "/"
-              }).catch((e) => {
+              }, 400);
+            }).catch((e) => {
+              console.log(e.message)
+            });
+
+            setTimeout(() => {
+              window.location.href = "/"
+            }, 500)
+          }
+        })
+          .catch(e => {
             console.log(e.message)
-          });
-        })
-        .catch(e => {
-          console.log(e.message)
-        })
+          })
       }
     }
   }
@@ -136,7 +145,7 @@ class Login extends Component {
 
   render() {
     const { password, email } = this.state;
-    const initialValues = {email,password};
+    const initialValues = { email, password };
 
     return (
       <Row className="h-100">
@@ -149,7 +158,7 @@ class Login extends Component {
               <CardTitle className="mb-4">
                 <IntlMessages id="user.login-title" />
                 <p className="pt-2 black text-muted mb-3">
-                Please login to your account for start the service.
+                  Please login to your account for start the service.
               </p>
               </CardTitle>
 
@@ -189,7 +198,7 @@ class Login extends Component {
                         </div>
                       )}
                     </FormGroup>
-                    <div className="d-flex justify-content-between align-items-center"><p/>
+                    <div className="d-flex justify-content-between align-items-center"><p />
                       <Button
                         color="primary"
                         className={`btn-shadow btn-multiple-state ${this.props.loading ? "show-spinner" : ""}`}

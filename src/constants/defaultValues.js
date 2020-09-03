@@ -24,7 +24,7 @@ export const searchPath = "/app/pages/search";
 export const servicePath = "https://ams-aaz-backend.herokuapp.com";
 export const me = reactLocalStorage.getObject('me');
 export const isSuccesSubmit = reactLocalStorage.get('isSuccesSubmit') || false;
-export const token = reactLocalStorage.get('token') || null;
+export let token = reactLocalStorage.get('token') || null;
 
 export const themeColorStorageKey="__theme_color"
 export const isMultiColorActive = false;

@@ -159,8 +159,16 @@ class TopNav extends Component {
     });
   };
 
-  handleLogout = () => {
-    this.props.loginUser(this.props.history);
+  handleLogout = async () => { 
+      await apiClient.get('/auth/logout')
+          .then(async (res) => {
+            if (res.status === 204) {
+              window.location.href = "/user/login";
+              await reactLocalStorage.clear()
+            }
+          }).catch((e) => {
+            console.log(e.message)
+          })
   };
 
   handlePageChange() {
@@ -228,7 +236,11 @@ class TopNav extends Component {
                 <DropdownToggle className="p-0" color="empty">
                   <span className="name mr-1">{me.name}</span>
                   <span>
-                  <img alt="Profile" src={me.photo}/>
+                  <img
+                   className="rounded-circle "
+                   alt="Profile" 
+                   src={me.photo}
+                  />
                 </span>
                 </DropdownToggle>
                 <DropdownMenu className="mt-3" right>
@@ -238,19 +250,7 @@ class TopNav extends Component {
                     Profil
                   </DropdownItem>
                   <DropdownItem divider/>
-                  <DropdownItem name="logout" onClick={
-                    () => {
-                      apiClient.get('/auth/logout')
-                          .then(res => {
-                            if (res.status === 204) {
-                              window.location.href = "/user/login";
-                              reactLocalStorage.clear()
-                            }
-                          }).catch((e) => {
-                            console.log(e.message)
-                          })
-                    }
-                  }>
+                  <DropdownItem name="logout" onClick={this.handleLogout}>
                     Sign Out
                   </DropdownItem>
                 </DropdownMenu>
