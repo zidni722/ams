@@ -31,7 +31,7 @@ class DetailKaryawan extends Component {
             detailUser: '',
             isLoading: false
         };
-
+        let title = '';
     }
 
     componentDidMount() {
@@ -64,81 +64,115 @@ class DetailKaryawan extends Component {
         return !this.state.isLoading ? (
             <div className="loading" />
         ) : (
-            <Fragment>
-                <Row>
-                    <Colxx xxs="12">
-                        <Breadcrumb heading="menu.detail-karyawan" match={this.props.match} />
-                        <div className="text-zero top-right-button-container">
-                            <UncontrolledDropdown>
-                                <DropdownToggle
-                                    caret
-                                    color="primary"
-                                    size="lg"
-                                    outline
-                                    className="top-right-button top-right-button-single">
-                                    <IntlMessages id="ACTIONS" />
-                                </DropdownToggle>
-                                <DropdownMenu>
-                                    <DropdownItem header>
-                                        <IntlMessages id="Ubah Status" />
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        <IntlMessages id="Non Aktif" />
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                        </div>
-                        <Separator className="mb-5" />
-                    </Colxx>
-                </Row>
-                <Row>
-                    <Colxx xxs="12" className="mb-5">
-                        <br />
-                    </Colxx>
-                    <Colxx xxs="12" lg="5" xl="4" className="mb-5">
-                    </Colxx>
-                    <Colxx xxs="12" lg="7" xl="4" className="mb-3">
-                        <SingleLightbox thumb={this.state.detailUser.photo} large={this.state.detailUser.photo} className="img-thumbnail card-img social-profile-img" />
-                        <Card className="mb-4">
-                            <CardBody>
-                                <div className="position-absolute card-top-buttons">
-                                    <Button outline color={"black"}
-                                        className="btn-header-primary-light icon-button"
-                                        onClick={() => {
-                                            window.location.href = "../edit-karyawan/" + this.state.detailUser.id
-                                        }}
-                                    >
-                                        <i className="simple-icon-pencil" />
-                                    </Button>
-                                </div>
-                                <div className="text-center pt-4">
-                                    <p className="list-item-heading pt-2 mb-2">
-                                        {this.state.detailUser.name}
-                                    </p>
-                                    <p className="mb-2">
-                                        {this.state.detailUser.email}
-                                    </p>
-                                    <p className="mb-3">
-                                        <Badge color={statusColor[this.state.detailUser.status]} className="mb-1 mr-1"
-                                            pill>{this.state.detailUser.status}</Badge>
-                                    </p>
-                                </div>
-                                <p className="text-muted text-small mb-2"><IntlMessages id="NPK" /></p>
-                                <p className="mb-3">{this.state.detailUser.code}</p>
-                                <p className="text-muted text-small mb-2"><IntlMessages id="Divisi" /></p>
-                                <p className="mb-3">{this.state.detailUser.division_name}</p>
-                                <p className="text-muted text-small mb-2"><IntlMessages id="Role" /></p>
-                                <p className="mb-3">{this.state.detailUser.role_name}</p>
-                                <p className="text-muted text-small mb-2"><IntlMessages id="No. Telepon" /></p>
-                                <p className="mb-3">{this.state.detailUser.phone}</p>
-                                <p className="text-muted text-small mb-2"><IntlMessages id="Alamat" /></p>
-                                <p className="mb-3">{this.state.detailUser.address}</p>
-                            </CardBody>
-                        </Card>
-                    </Colxx>
-                </Row>
-            </Fragment>
-        );
+                <Fragment>
+                    <Row>
+                        <Colxx xxs="12">
+                            <Breadcrumb heading="menu.detail-karyawan" match={this.props.match} />
+                            <div className="text-zero top-right-button-container">
+                                <UncontrolledDropdown>
+                                    <DropdownToggle
+                                        caret
+                                        color="primary"
+                                        size="lg"
+                                        outline
+                                        className="top-right-button top-right-button-single">
+                                        <IntlMessages id="ACTIONS" />
+                                    </DropdownToggle>
+                                    <DropdownMenu>
+                                        <DropdownItem>
+                                            {
+                                                this.state.detailUser.status === 'inactive' ?                                              
+                                                <Button className="btn-default"
+                                                    onClick={() => {
+                                                        const data = {
+                                                            "status": 1
+                                                          };
+                                                        apiClient.put(`users/${this.state.detailUser.id}/set-status`, data).
+                                                        then((res) => {
+                                                            if (res.status === 200) {
+                                                                setTimeout(() => {
+                                                                    this.setState({ detailUser: res.data.data })    
+                                                                }, 150)
+                                                            }
+                                                        })
+                                                    }}
+                                                >
+                                                    Aktif                                        
+                                                </Button>
+                                                : 
+                                                <Button className="btn-default"
+                                                    onClick={() => {
+                                                        const data = {
+                                                            "status": 0
+                                                        };
+                                                        apiClient.put(`users/${this.state.detailUser.id}/set-status`, data).
+                                                        then((res) => {
+                                                            if (res.status === 200) {
+                                                                setTimeout(() => {
+                                                                    this.setState({ detailUser: res.data.data })
+                                                                }, 150)
+                                                            }
+                                                        })
+                                                    }}
+                                                >
+                                                    Non Aktif
+                                                </Button>
+                                            }
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
+                            </div>
+                            <Separator className="mb-5" />
+                        </Colxx>
+                    </Row>
+                    <Row>
+                        <Colxx xxs="12" className="mb-5">
+                            <br />
+                        </Colxx>
+                        <Colxx xxs="12" lg="5" xl="4" className="mb-5">
+                        </Colxx>
+                        <Colxx xxs="12" lg="7" xl="4" className="mb-3">
+                            <SingleLightbox thumb={this.state.detailUser.photo} large={this.state.detailUser.photo} className="img-thumbnail card-img social-profile-img" />
+                            <Card className="mb-4">
+                                <CardBody>
+                                    <div className="position-absolute card-top-buttons">
+                                        <Button outline color={"black"}
+                                            className="btn-header-primary-light icon-button"
+                                            onClick={() => {
+                                                window.location.href = "../edit-karyawan/" + this.state.detailUser.id
+                                            }}
+                                        >
+                                            <i className="simple-icon-pencil" />
+                                        </Button>
+                                    </div>
+                                    <div className="text-center pt-4">
+                                        <p className="list-item-heading pt-2 mb-2">
+                                            {this.state.detailUser.name}
+                                        </p>
+                                        <p className="mb-2">
+                                            {this.state.detailUser.email}
+                                        </p>
+                                        <p className="mb-3">
+                                            <Badge color={statusColor[this.state.detailUser.status]} className="mb-1 mr-1"
+                                                pill>{this.state.detailUser.status}</Badge>
+                                        </p>
+                                    </div>
+                                    <p className="text-muted text-small mb-2"><IntlMessages id="NPK" /></p>
+                                    <p className="mb-3">{this.state.detailUser.code}</p>
+                                    <p className="text-muted text-small mb-2"><IntlMessages id="Divisi" /></p>
+                                    <p className="mb-3">{this.state.detailUser.division_name}</p>
+                                    <p className="text-muted text-small mb-2"><IntlMessages id="Role" /></p>
+                                    <p className="mb-3">{this.state.detailUser.role_name}</p>
+                                    <p className="text-muted text-small mb-2"><IntlMessages id="No. Telepon" /></p>
+                                    <p className="mb-3">{this.state.detailUser.phone}</p>
+                                    <p className="text-muted text-small mb-2"><IntlMessages id="Alamat" /></p>
+                                    <p className="mb-3">{this.state.detailUser.address}</p>
+                                </CardBody>
+                            </Card>
+                        </Colxx>
+                    </Row>
+                </Fragment>
+            );
     }
 }
 

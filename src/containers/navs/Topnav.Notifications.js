@@ -1,5 +1,5 @@
 import React from "react";
-import { UncontrolledDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
+import { UncontrolledDropdown, DropdownToggle, DropdownMenu, Button } from "reactstrap";
 import PerfectScrollbar from "react-perfect-scrollbar";
 
 import { reactLocalStorage } from "reactjs-localstorage";
@@ -21,16 +21,42 @@ const NotificationItem = ({ id, description, title, status }) => {
   }
   return (
     <div className="d-flex flex-row mb-3 pb-3 border-bottom">
-      <a href={`${link}`}>
+      <div className="btn" onClick={() => {
+        apiClient.get(`/notifications/${id}`).then((res) => {
+          if (res.status === 200) {
+            apiClient.get('/notifications?per_page=1000').then((result) => {
+              setTimeout(()=> {
+                reactLocalStorage.setObject('notifications', result.data)
+                window.location.href = link 
+              }, 100)
+            }).catch((e) => {
+              console.log(e)
+            })
+          }
+        })
+      }}>
         {
           status === 0 ? <i className="simple-icon-envelope"></i> : <i className="iconsminds-mail-open"></i>
         }
-      </a>
-      <div className="pl-3 pr-2">
-        <a href={`${link}`}>
+      </div>
+      <div className="btn pl-3 pr-2">
+        <div onClick={() => {
+          apiClient.get(`/notifications/${id}`).then((res) => {
+            if (res.status === 200) {
+              apiClient.get('/notifications?per_page=1000').then((result) => {
+                setTimeout(()=> {
+                  reactLocalStorage.setObject('notifications', result.data)
+                  window.location.href = link 
+                }, 100)
+              }).catch((e) => {
+                console.log(e)
+              })
+            }
+          })
+        }}>
           <p className="font-weight-medium mb-1">{title}</p>
           <p className="text-muted mb-0 text-small">{description}</p>
-        </a>
+        </div>
       </div>
     </div>
   );

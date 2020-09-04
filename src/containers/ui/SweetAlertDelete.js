@@ -2,6 +2,7 @@ import React from "react"
 import SweetAlert from 'react-bootstrap-sweetalert';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import { Button } from "reactstrap";
+import { apiClient } from "../../helpers/ApiService";
 
 class BasicSweetDelete extends React.Component {
   constructor(props) {
@@ -18,13 +19,26 @@ class BasicSweetDelete extends React.Component {
   }
 
   render(){
+    const assetID = uri => uri.substring(uri.lastIndexOf('/') + 1);
+
     return (
       <div className="text-zero top-right-button-container">
         <Button  
           className="mr-1 mb-1" 
           color="primary"
           size="lg" 
-          onClick={() => this.handleAlert("defaultAlert", true)} primary>Hapus Barang</Button>
+          onClick={() =>
+            apiClient.delete('/assets/' + assetID(window.location.href))
+            .then(async (res) => {
+                if(res.status === 204) {
+                  setTimeout(() => {
+                    window.location.href = '/app/menu-barang'
+                }, 100);
+                }
+            }).catch((e) => {
+                console.log(e.message)
+            }) 
+          } primary>Hapus Barang</Button>
 
         {/* <UncontrolledDropdown>
           <DropdownToggle
