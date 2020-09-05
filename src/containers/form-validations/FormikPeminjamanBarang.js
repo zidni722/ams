@@ -34,7 +34,8 @@ class FormikPeminjamanBarang extends Component {
     super(props);
     this.state = {
       asset_id: "",
-      category_id:""
+      category_id:"",
+      isAssetDisable: true
     };
 
   }
@@ -52,17 +53,17 @@ class FormikPeminjamanBarang extends Component {
       });
 
 
-    apiClient.get(`/assets`)
-      .then(res => {
-        let dataAssets = []
-        const assets = res.data.data;
-        for (const asset of assets) {
-          dataAssets.push({ value: asset.id, label: asset.name })
-        }
-        this.setState({ dataAssets });
-      }).catch((e) => {
-        console.log(e.message)
-      });
+    // apiClient.get(`/assets`)
+    //   .then(res => {
+    //     let dataAssets = []
+    //     const assets = res.data.data;
+    //     for (const asset of assets) {
+    //       dataAssets.push({ value: asset.id, label: asset.name })
+    //     }
+    //     this.setState({ dataAssets });
+    //   }).catch((e) => {
+    //     console.log(e.message)
+    //   });
   }
 
   handlerSelectChange = (e, action) => {
@@ -70,6 +71,21 @@ class FormikPeminjamanBarang extends Component {
     const name = action
     this.setState({ [name]: value });
     reactLocalStorage.set(name, value);
+
+    if (action === 'category') {
+      apiClient.get(`/assets?per_page=100&category_id=${value}`)
+      .then(res => {
+          let dataAssets = [];
+          const assets = res.data.data;
+          for (const asset of assets) {
+              dataAssets.push({ value: asset.id, label: asset.name })
+          }
+          this.setState({ dataAssets });
+      }).catch((e) => {
+          console.log(e.message)
+      })
+      this.setState({ isAssetDisable: false });
+  }
   };
 
   handleSubmit = async (event, values) => {
@@ -89,9 +105,8 @@ class FormikPeminjamanBarang extends Component {
           reactLocalStorage.set('isSuccesSubmit', true)
         }
       }).catch((e) => {
-        console.log(e.message)
         NotificationManager.error(
-          "Silahkan coba kembali beberapa saat lagi!",
+          `${e.response.data.message}`,
           "Terjadi Kesalahan",
           5000,
           () => {
@@ -140,6 +155,8 @@ class FormikPeminjamanBarang extends Component {
                               value={values.dataAssets}
                               options={this.state.dataAssets}
                               onChange={e => this.handlerSelectChange(e, 'asset')}
+                              isDisabled={this.state.isAssetDisable}
+
                             />
                           </FormGroup>
                         </Colxx>

@@ -161,7 +161,6 @@ class FormikPenambahanKaryawan extends Component {
             "email": this.state.email,
             "phone": parseInt(this.state.phone),
             "address": this.state.address,
-            // "photo": "default.jpg",
             "city_id": reactLocalStorage.get('city'),
             "role_id": reactLocalStorage.get('role'),
             "division_id": reactLocalStorage.get('division')
