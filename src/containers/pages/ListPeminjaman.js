@@ -6,7 +6,8 @@ import { ContextMenuTrigger } from "react-contextmenu";
 const statusColor = {
   pending : "outline-menunggu",
   approved : "outline-selesai",
-  rejected : "outline-tolak"
+  rejected : "outline-tolak",
+  returned : "outline-primary"
 }
 
 const ListPeminjaman = ({ borrow, collect }) => {

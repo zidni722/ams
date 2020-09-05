@@ -12,41 +12,44 @@ const notificationData = notifications ? notifications.data : null
 
 const NotificationItem = ({ id, description, title, status }) => {
   let link = ''
+  let {text : desc, link_id} = description ? JSON.parse(description) : null
+  let titleNotification = ''
+  
   switch (title) {
-    case 'procurement':
-      link = '/app/menu-peminjaman/detail-peminjaman/fcb75f9d-3698-4567-ba37-1e9613c22167'
+    case 'borrow':
+      link = '/app/menu-peminjaman/detail-peminjaman'
+      titleNotification = 'Peminjaman'
       break;
-      default:
-        link = '/app/menu-peminjaman/detail-peminjaman/fcb75f9d-3698-4567-ba37-1e9613c22167'
+    case 'return':
+      link = '/app/menu-pengembalian/detail-pengembalian'
+      titleNotification = 'Pengembalian'
+      break;
+    case 'service':
+      link = '/app/menu-perbaikan/detail-perbaikan'
+      titleNotification = 'Perbaikan'
+      break;
+    case 'procurement':
+      link = '/app/menu-pengadaan/detail-pengadaan'
+      titleNotification = 'Pengadaan'
+      break;
+    default:
+      link = '/app/menu-peminjaman/detail-peminjaman'
   }
   return (
-    <div className="d-flex flex-row mb-3 pb-3 border-bottom">
-      <div className="btn" onClick={() => {
-        apiClient.get(`/notifications/${id}`).then((res) => {
-          if (res.status === 200) {
-            apiClient.get('/notifications?per_page=1000').then((result) => {
-              setTimeout(()=> {
-                reactLocalStorage.setObject('notifications', result.data)
-                window.location.href = link 
-              }, 100)
-            }).catch((e) => {
-              console.log(e)
-            })
-          }
-        })
-      }}>
+    <div className="d-flex flex-row pl-2 mb-3 pb-3 border-bottom">
+      <div>
         {
           status === 0 ? <i className="simple-icon-envelope"></i> : <i className="iconsminds-mail-open"></i>
         }
       </div>
-      <div className="btn pl-3 pr-2">
-        <div onClick={() => {
+      <div className="pl-3 pr-2">
+        <div className="btn-notification" onClick={() => {
           apiClient.get(`/notifications/${id}`).then((res) => {
             if (res.status === 200) {
               apiClient.get('/notifications?per_page=1000').then((result) => {
                 setTimeout(()=> {
                   reactLocalStorage.setObject('notifications', result.data)
-                  window.location.href = link 
+                  window.location.href = `${link}/${link_id}` 
                 }, 100)
               }).catch((e) => {
                 console.log(e)
@@ -54,8 +57,8 @@ const NotificationItem = ({ id, description, title, status }) => {
             }
           })
         }}>
-          <p className="font-weight-medium mb-1">{title}</p>
-          <p className="text-muted mb-0 text-small">{description}</p>
+          <p className="font-weight-medium mb-1">{titleNotification}</p>
+          <p className="text-muted mb-0 text-small">{desc}</p>
         </div>
       </div>
     </div>
@@ -71,7 +74,7 @@ const TopnavNotifications = () => {
           color="empty"
         >
           <i className="simple-icon-bell" />
-          <span className="count">{notifications !== 'undefined' ? notifications.meta.total : window.location.reload()}</span>
+          <span className="count">{notifications.hasOwnProperty('meta') ? notifications.meta.total : 0}</span>
         </DropdownToggle>
         <DropdownMenu
           className="position-absolute mt-3 scroll"

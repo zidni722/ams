@@ -61,6 +61,7 @@ class FormPengembalian extends Component {
       })  
     }
   }
+  
   handleSubmit = async (event, values) => {
     event.preventDefault();
 
@@ -145,7 +146,7 @@ class FormPengembalian extends Component {
                       </thead>
                     </Table>
                   </div>
-                  <div className="pl-3 pr-5 mb-5 pt-5">
+                  <div className="pl-3 pr-5 mb-5 pt-3">
                   <Formik>
                       {({
                         handleSubmit,

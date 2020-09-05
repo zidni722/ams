@@ -9,6 +9,7 @@ import { NotificationManager } from "../../components/common/react-notifications
 import { apiClient } from "../../helpers/ApiService";
 import InputMask from "react-input-mask";
 import Select from "react-select";
+import PhoneInput from "react-phone-input-2";
 
 
 class FormikPenambahanKaryawan extends Component {
@@ -23,12 +24,15 @@ class FormikPenambahanKaryawan extends Component {
             address: "",
             code: "",
             photo: "",
+            province_id:"",
+            province:"",
             city_id: "",
             city: "",
             role_id: "",
             role: "",
             division_id: "",
-            division: ""
+            division: "",
+            isCityDisable: true
         };
 
         this.onDrop = this.onDrop.bind(this);
@@ -58,15 +62,14 @@ class FormikPenambahanKaryawan extends Component {
             }).catch((e) => {
                 console.log(e.message)
             });
-
-        apiClient.get('/cities')
+        apiClient.get('/provinces?per_page=50')
             .then(res => {
-                let dataCities = [];
-                const cities = res.data.data;
-                for (const city of cities) {
-                    dataCities.push({ value: city.id, label: city.name })
+                let dataProvinces = [];
+                const provinces = res.data.data;
+                for (const province of provinces) {
+                    dataProvinces.push({ value: province.id, label: province.name })
                 }
-                this.setState({ dataCities });
+                this.setState({ dataProvinces });
             }).catch((e) => {
                 console.log(e.message)
             })
@@ -88,6 +91,21 @@ class FormikPenambahanKaryawan extends Component {
         const name = action
         this.setState({ [name]: value });
         reactLocalStorage.set(name, value);
+
+        if (action === 'province') {
+            apiClient.get(`/cities?per_page=100&province_id=${value}`)
+            .then(res => {
+                let dataCities = [];
+                const cities = res.data.data;
+                for (const city of cities) {
+                    dataCities.push({ value: city.id, label: city.name })
+                }
+                this.setState({ dataCities });
+            }).catch((e) => {
+                console.log(e.message)
+            })
+            this.setState({ isCityDisable: false });
+        }
     };
 
     handlerSubmit = async (event, values) => {
@@ -143,7 +161,7 @@ class FormikPenambahanKaryawan extends Component {
             "email": this.state.email,
             "phone": parseInt(this.state.phone),
             "address": this.state.address,
-            "photo": "default.jpg",
+            // "photo": "default.jpg",
             "city_id": reactLocalStorage.get('city'),
             "role_id": reactLocalStorage.get('role'),
             "division_id": reactLocalStorage.get('division')
@@ -151,7 +169,7 @@ class FormikPenambahanKaryawan extends Component {
 
         apiClient.post('/users', data)
             .then(res => {
-                if (res.status === 200) {
+                if (res.status === 201) {
                     window.location.href = "./karyawan" // similar behavior as clicking on a link
                     reactLocalStorage.set('isSuccesSubmit', true)
                 }
@@ -165,7 +183,7 @@ class FormikPenambahanKaryawan extends Component {
                         this.setState({ visible: false });
                     },
                     null
-                  );
+                );
             });
     };
 
@@ -283,11 +301,22 @@ class FormikPenambahanKaryawan extends Component {
 
                                             <FormGroup className="error-l-100">
                                                 <Label>Nomor Telepon</Label>
-                                                <InputMask
+                                                <PhoneInput
                                                     className="form-control"
                                                     name="phone"
-                                                    mask="+62 9999 9999 999"
-                                                    onChange={this.handleChange}
+                                                    country='id'
+                                                    validate={{
+                                                        number: {
+                                                            value: true,
+                                                            errorMessage: "Value must be a number"
+                                                        },
+                                                        required: {
+                                                            value: true,
+                                                            errorMessage: "Please enter a number"
+                                                        }
+                                                    }}
+                                                    value={this.state.phone}
+                                                    onChange={phone => this.setState({ phone })}
                                                 />
                                                 {this.state.isValid === false ? (
                                                     <span className="invalid-feedback d-block">
@@ -299,13 +328,32 @@ class FormikPenambahanKaryawan extends Component {
                                             </FormGroup>
 
                                             <FormGroup className="error-l-50">
-                                                <Label>City</Label>
+                                                <Label>Provinsi</Label>
+                                                <Select
+                                                    name="province"
+                                                    id="province"
+                                                    options={this.state.dataProvinces}
+                                                    onChange={e => this.handlerSelectChange(e, 'province')}
+                                                    onBlur={setFieldTouched}
+                                                />
+                                                {this.state.isValid === false ? (
+                                                    <span className="invalid-feedback d-block">
+                                                        Wajib di isi!
+                                                    </span>
+                                                ) : (
+                                                        ""
+                                                    )}
+                                            </FormGroup>
+
+                                            <FormGroup className="error-l-50">
+                                                <Label>Kota</Label>
                                                 <Select
                                                     name="city"
                                                     id="city"
                                                     options={this.state.dataCities}
                                                     onChange={e => this.handlerSelectChange(e, 'city')}
                                                     onBlur={setFieldTouched}
+                                                    isDisabled={this.state.isCityDisable}
                                                 />
                                                 {this.state.isValid === false ? (
                                                     <span className="invalid-feedback d-block">

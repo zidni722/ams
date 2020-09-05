@@ -84,7 +84,7 @@ class FormikPeminjamanBarang extends Component {
 
     apiClient.post('/borrows', data)
       .then(res => {
-        if (res.status === 200) {
+        if (res.status === 201) {
           window.location.href = "./peminjaman" // similar behavior as clicking on a link
           reactLocalStorage.set('isSuccesSubmit', true)
         }

@@ -82,7 +82,7 @@ class DetailKaryawan extends Component {
                                         <DropdownItem>
                                             {
                                                 this.state.detailUser.status === 'inactive' ?                                              
-                                                <Button className="btn-default"
+                                                <div className="btn-default"
                                                     onClick={() => {
                                                         const data = {
                                                             "status": 1
@@ -98,9 +98,9 @@ class DetailKaryawan extends Component {
                                                     }}
                                                 >
                                                     Aktif                                        
-                                                </Button>
+                                                </div>
                                                 : 
-                                                <Button className="btn-default"
+                                                <div className="btn-default"
                                                     onClick={() => {
                                                         const data = {
                                                             "status": 0
@@ -116,7 +116,7 @@ class DetailKaryawan extends Component {
                                                     }}
                                                 >
                                                     Non Aktif
-                                                </Button>
+                                                </div>
                                             }
                                         </DropdownItem>
                                     </DropdownMenu>

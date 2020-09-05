@@ -88,7 +88,7 @@ class FormikPengadaan extends Component {
 
     apiClient.post('/procurements', data)
       .then(res => {
-        if (res.status === 200) {
+        if (res.status === 201) {
           window.location.href = "./pengadaan" // similar behavior as clicking on a link
           reactLocalStorage.set('isSuccesSubmit', true)
         }

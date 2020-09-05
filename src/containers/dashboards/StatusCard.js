@@ -30,7 +30,7 @@ export default class StatusCard extends Component {
             <Colxx xxs="12">
               <Sortable className="row icon-cards-row mb-2">
                 {                    
-                  data ? data.map((item, index) => {
+                  data.length > 0 ? data.map((item, index) => {
                     return (
                       <Colxx xxs="6" sm="4" md="4" className="mb-4">
                         <Card>

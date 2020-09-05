@@ -673,6 +673,19 @@ button {
   background: transparent !important;
 }
 
+.btn-empty-t {
+  background: transparent !important;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15), 0 4px 6px 2px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+.btn-notification:hover {
+  cursor: pointer;
+}
+
 .btn-lg,
 .btn-group-lg > .btn,
 .btn-group-sm > .btn {

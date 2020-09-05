@@ -196,6 +196,13 @@ class TopNav extends Component {
   };
 
   render() {
+    apiClient.get('/notifications?per_page=1000').then((result) => {
+      if (result.status === 200)
+        reactLocalStorage.setObject('notifications', result.data)
+    }).catch((e) => {
+      console.log(e);
+    })
+
     const {containerClassnames, menuClickCount} = this.props;
 
     return (

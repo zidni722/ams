@@ -146,7 +146,7 @@ class FormikTambahBarang extends Component {
 
         apiClient.post('/assets', formData)
             .then(res => {
-                if (res.status === 200) {
+                if (res.status === 201) {
                     window.location.href = "./barang" // similar behavior as clicking on a link
                     reactLocalStorage.set('isSuccesSubmit', true)
                 }

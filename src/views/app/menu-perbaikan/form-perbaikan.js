@@ -9,6 +9,7 @@ import { apiClient } from "../../../helpers/ApiService";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { me } from "../../../constants/defaultValues";
 import Select from "react-select";
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 
 const options = [
@@ -21,7 +22,9 @@ class FormPerbaikan extends Component {
     super(props);
     this.state = {
       detailBorrow: "",
-      borrow_id: ''
+      asset_id: "",
+      description:"",
+      asset: reactLocalStorage.getObject('asset')
     };
   }
   detailAsset() {
@@ -58,12 +61,47 @@ class FormPerbaikan extends Component {
       })
   };
 
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  handleSubmit = async (event, values) => {
+    event.preventDefault();
+
+    apiClient.defaults.headers.common['Content-Type'] = 'application/json';
+
+    const data = {
+      "asset_id": this.state.asset_id,
+      "description": this.state.description,
+    };
+
+    apiClient.post('/services', data)
+      .then(res => {
+        if (res.status === 200) {
+          window.location.href = "../menu-perbaikan" // similar behavior as clicking on a link
+          reactLocalStorage.set('isSuccesSubmit', true)
+        }
+      }).catch((e) => {
+        console.log(e.message)
+        NotificationManager.error(
+          "Silahkan coba kembali beberapa saat lagi!",
+          "Terjadi Kesalahan",
+          5000,
+          () => {
+            this.setState({ visible: false });
+          },
+          null
+        );
+      });
+  };
+
   render() {
     return (
       <Fragment>
         <Row>
           <Colxx xxs="12">
-            <Breadcrumb heading="menu.form-pengembalian" match={this.props.match} />
+            <Breadcrumb heading="menu.form-perbaikan" match={this.props.match} />
             <Separator className="mb-5" />
           </Colxx>
         </Row>
@@ -79,100 +117,85 @@ class FormPerbaikan extends Component {
                     <div className="list-thumbnail-mid responsive border-0 card-img-fit-t">
                       <SingleLightbox thumb={this.state.detailBorrow.asset_photo ? this.state.detailBorrow.asset_photo : "https://res.cloudinary.com/hwqpjijac/image/upload/v1598947378/default-image_vxl2p2.jpg"} large={this.state.detailBorrow.asset_photo} className="list-thumbnail-mid responsive border-0 card-img-fit" />
                     </div>
-                  </div>
-                  <div className="pl-3 pt-3">
-                    <Formik>
-                      {({
-                        handleSubmit,
-                        setFieldValue,
-                        setFieldTouched,
-                        handleChange,
-                        handleBlur,
-                        values,
-                      }) => (
+                    <div className="pl-3 pr-5 mb-5 pt-3">
+                      <Formik>
+                        {({ values }) => (
                           <Form className="av-tooltip tooltip-label-right">
                             <FormGroup className="error-l-100">
                               <Label>Barang yang akan diperbaiki</Label>
                               <Select
-                                name="borrow"
+                                name="asset"
                                 value={values.dataBorrow}
-                                options={this.state.dataBorrow}
-                                onChange={e => this.handlerSelectChange(e, 'borrow')}
+                                options={this.state.dataBorrow.asset_id}
+                                onChange={e => this.handlerSelectChange(e, 'asset_id')}
                               />
                             </FormGroup>
                           </Form>
                         )}
-                    </Formik>
+                      </Formik>
+                    </div>
                   </div>
+
                 </Colxx>
                 <Colxx xxs="12" sm="6">
-                  <div className="pt-5"><p />
-                    <Table borderless>
-                      <thead>
-                        <tr>
-                          <td className="pl-3 text-muted text-small">Kode</td>
-                          <td>{this.state.detailBorrow.asset_code}</td>
-                        </tr>
-                        <tr>
-                          <td className="pl-3 text-muted text-small">Nama Barang</td>
-                          <td>{this.state.detailBorrow.asset_name}</td>
-                        </tr>
-                        <tr>
-                          <td className="pl-3 text-muted text-small">Jenis Barang</td>
-                          <td>{this.state.detailBorrow.asset_category_name}</td>
-                        </tr>
-                        <tr>
-                          <td className="pl-3 text-muted text-small">Merk</td>
-                          <td>{this.state.detailBorrow.asset_brand}</td>
-                        </tr>
-                        <tr>
-                          <td className="pl-3 text-muted text-small">Tahun</td>
-                          <td>{this.state.detailBorrow.asset_year}</td>
-                        </tr>
-                        <tr>
-                          <td className="pl-3 text-muted text-small">Tanggal Peminjaman</td>
-                          <td>{this.state.detailBorrow.updated_at}</td>
-                        </tr>
-                      </thead>
-                    </Table>
-                  </div>
-                  <div className="pl-3 pr-5 mb-5 pt-5">
-                    <Formik>
-                      {({
-                        handleSubmit,
-                        setFieldValue,
-                        setFieldTouched,
-                        handleChange,
-                        handleBlur,
-                        values,
-                      }) => (
+                  <Form onSubmit={this.handleSubmit} className="av-tooltip tooltip-label-right">
+                    <div className="pt-5"><p />
+                      <Table borderless>
+                        <thead>
+                          <tr>
+                            <td className="pt-3 pl-3 text-muted text-small">Kode</td>
+                            <td>{this.state.detailBorrow.asset_code}</td>
+                          </tr>
+                          <tr>
+                            <td className="pt-3 pl-3 text-muted text-small">Nama Barang</td>
+                            <td>{this.state.detailBorrow.asset_name}</td>
+                          </tr>
+                          <tr>
+                            <td className="pt-3 pl-3 text-muted text-small">Jenis Barang</td>
+                            <td>{this.state.detailBorrow.asset_category_name}</td>
+                          </tr>
+                          <tr>
+                            <td className="pt-3 pl-3 text-muted text-small">Merk</td>
+                            <td>{this.state.detailBorrow.asset_brand}</td>
+                          </tr>
+                          <tr>
+                            <td className="pt-3 pl-3 text-muted text-small">Tahun</td>
+                            <td>{this.state.detailBorrow.asset_year}</td>
+                          </tr>
+                          <tr>
+                            <td className="pt-3 pl-3 text-muted text-small">Tanggal Peminjaman</td>
+                            <td>{this.state.detailBorrow.updated_at}</td>
+                          </tr>
+                        </thead>
+                      </Table>
+                    </div>
+                    <div className="pl-3 pr-5 mb-5 pt-4">
+                      <Formik>
                           <Form className="av-tooltip tooltip-label-right">
                             <FormGroup className="error-l-100">
                               <Label>Alasan Perbaikan</Label>
-                              <Select
-                                name="alasan"
-                                value={values.reactSelect}
-                                options={options}
-                                onChange={setFieldValue}
+                              <input
+                                className="form-control"
+                                name="description"
+                                component="textarea"
+                                onChange={this.handleChange}
                               />
                             </FormGroup>
                           </Form>
-                        )}
-                    </Formik>
-                  </div>
-                  <div className="pr-2 pl-2">
-                    <Button className="float-right mb-5" style={{ float: 'center' }} size="lg" color="outline-primary" type="button" onClick={() => { }}>
-                      Batal
-                                  </Button>{" "}
-                  </div>
+                      </Formik>
+                    </div>
+                    <div className="pr-5 mb-3">
+                      <Button className="float-right mb-5" style={{ float: 'right' }} size="lg" color="primary" type="submit">
+                        Kembalikan
+                    </Button>
+                      <Button className="float-right mb-5" style={{ float: 'center' }} size="lg" color="outline-primary" type="button" onClick={() => { }}>
+                        Batal
+                    </Button>
+                    </div>
+                  </Form>
                 </Colxx>
               </Row>
-              <div className="pr-5">
-
-                {/*  */}
-              </div>
             </Card>
-
           </Colxx>
         </Row>
       </Fragment>

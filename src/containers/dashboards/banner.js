@@ -12,7 +12,7 @@ class Banner extends React.Component {
           <div className="award-info text-center">
             <h1 className="mb-2 text-white">Selamat datang, <span className="name mr-1">{me.name}</span>!</h1>
             <p className="m-auto mb-0 w-75">
-              Bekerjalah dengan tulus dan ikhlash, agar semuanya tidak menjadi beban melainkan berkah.
+              Bekerjalah dengan tulus dan ikhlas, agar semuanya tidak menjadi beban melainkan berkah.
             </p>
           </div>
           <img src="/assets/img/img_right.png" alt="card-img-right" className="img-right" />

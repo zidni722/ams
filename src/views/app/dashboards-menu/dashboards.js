@@ -61,10 +61,6 @@ export default class Dashboards extends Component {
         refreshToken()
       })
 
-    apiClient.get('/notifications?per_page=1000').then((result) => {
-      reactLocalStorage.setObject('notifications', result.data)
-    })
-
     apiClient.get(`${module}/count-all-status`)
       .then((res) => {
         reactLocalStorage.remove('iconCardsData')
