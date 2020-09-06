@@ -3,25 +3,26 @@ import { Card, CardBody, CardTitle } from "reactstrap";
 import ReactTable from "react-table";
 import IntlMessages from "../../helpers/IntlMessages";
 import DataTablePagination from "../../components/DatatablePagination";
+import { reactLocalStorage } from 'reactjs-localstorage';
+import { convertDate } from "../../helpers/Utils";
 
-import User from "../../data/user";
-
+const assetHistoryBorrow = reactLocalStorage.getObject('assetHistory').hasOwnProperty('length') ? reactLocalStorage.getObject('assetHistory') : window.location.reload()
 
 const dataTableColumns = [
   {
     Header: "NPK",
-    accessor: "npk",
+    accessor: "user_code",
     Cell: props => <p className="list-item">{props.value}</p>
   },
   {
     Header: "Nama",
-    accessor: "name",
+    accessor: "user_name",
     Cell: props => <p className="text-small">{props.value}</p>
   },
   {
     Header: "Tanggal peminjaman",
-    accessor: "joiningDate",
-    Cell: props => <p className="text-small">{props.value}</p>
+    accessor: "updated_at",
+    Cell: props => <p className="text-small">{convertDate(props.value)}</p>
   },
   {
     Header: "Status",
@@ -38,9 +39,9 @@ export const DataPeminjam = props => {
           <IntlMessages id="Data Peminjam" />
         </CardTitle>
         <ReactTable
-          data={User}
+          data={assetHistoryBorrow}
           columns={dataTableColumns}
-          defaultPageSize={5}
+          defaultPageSize={10}
           showPageJump={false}
           showPageSizeOptions={false}
           PaginationComponent={DataTablePagination}

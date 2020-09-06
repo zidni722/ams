@@ -18,17 +18,20 @@ class DetailPages extends Component {
     super(props);
     this.state = {
       detailAsset: '',
-      isLoading: false
+      isLoading: false,
+      assetHistory: {}
     };
   }
   componentDidMount() {
     const assetID = uri => uri.substring(uri.lastIndexOf('/') + 1);
     apiClient.get('/assets/' + assetID(window.location.href))
       .then(res => {
-        this.setState({ detailAsset: res.data.data })
+        if (res.status === 200)
+          this.setState({ detailAsset: res.data.data })
       }).catch((e) => {
         console.log(e.message)
       })
+
     if (reactLocalStorage.get('isSuccesSubmit') === "true") {
       NotificationManager.success(
         "Anda berhasil merubah data barang",
@@ -41,8 +44,10 @@ class DetailPages extends Component {
         null
       );
     }
-    setTimeout(() => { this.setState({ isLoading: true }) }, 500)
 
+    setTimeout(() => {
+      this.setState({ isLoading: true })
+    }, 100)
   }
 
   editBarang = () => {

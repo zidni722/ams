@@ -49,7 +49,7 @@ export default class Dashboards extends Component {
     const module = reactLocalStorage.get('module') || 'borrows'
 
     if (reactLocalStorage.get('token') === 'undefined') {
-      refreshToken()
+      // refreshToken()
     }
 
     apiClient.get(`/${module}?per_page=5`)
@@ -58,7 +58,8 @@ export default class Dashboards extends Component {
         reactLocalStorage.setObject(`recent-${module}`, recentData)
       })
       .catch((e) => {
-        refreshToken()
+        console.log(e.message)
+        // refreshToken()
       })
 
     apiClient.get(`${module}/count-all-status`)
@@ -89,7 +90,8 @@ export default class Dashboards extends Component {
           this.setState({ status: iconCardsData })
         }, 300);
       }).catch((e) => {
-        refreshToken()
+        console.log(e.message)
+        // refreshToken()
       });
   }
 

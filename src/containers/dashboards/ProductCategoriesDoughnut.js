@@ -15,6 +15,7 @@ import {DoughnutChart} from "../../components/charts"
 
 import { doughnutChartData } from "../../data/charts";
 import {reactLocalStorage} from "reactjs-localstorage";
+import {me} from "../../constants/defaultValues";
 
 const convertModuleToIndo = (module) => {
   let moduleIndo = ''
@@ -76,14 +77,17 @@ const ProductCategoriesDoughnut = (controls = true) => {
                 }>
                   <IntlMessages id="Perbaikan" />
                 </DropdownItem>
-                <DropdownItem onClick={
-                  () => {
-                    reactLocalStorage.set('module', 'procurements')
-                    window.location.reload();
-                  }
-                }>
-                  <IntlMessages id="Pengadaan" />
-                </DropdownItem>
+                {
+                  me.role_name.toLowerCase() !== 'employee' &&
+                  <DropdownItem onClick={
+                    () => {
+                      reactLocalStorage.set('module', 'procurements')
+                      window.location.reload();
+                    }
+                  }>
+                    <IntlMessages id="Pengadaan" />
+                  </DropdownItem>
+                }
               </DropdownMenu>
             </UncontrolledDropdown>
           </div>

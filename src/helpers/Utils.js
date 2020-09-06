@@ -1,4 +1,5 @@
 import { defaultDirection } from "../constants/defaultValues";
+import moment from 'moment'
 
 export const mapOrder = (array, order, key) => {
   array.sort(function (a, b) {
@@ -56,3 +57,16 @@ export const setDirection = localValue => {
   localStorage.setItem("direction", direction);
 };
 
+export const convertDate = (date) => {
+  let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2)
+    month = '0' + month;
+  if (day.length < 2)
+    day = '0' + day;
+
+  return [year, month, day].join('-');
+}

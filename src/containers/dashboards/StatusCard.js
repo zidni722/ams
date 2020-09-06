@@ -6,19 +6,20 @@ import Sortable from "react-sortablejs";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { apiClient } from "../../helpers/ApiService";
 
-const data = reactLocalStorage.getObject('iconCardsData')
-
 export default class StatusCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: {},
-      isLoading: true
+      isLoading: false
     };
   }
 
   componentDidMount() {
-  
+    const data = reactLocalStorage.getObject('iconCardsData')
+    setTimeout(() => {
+      this.setState({data: data, isLoading: true})
+    }, 350)
   }
 
   render() {
@@ -29,8 +30,8 @@ export default class StatusCard extends Component {
           <Row>
             <Colxx xxs="12">
               <Sortable className="row icon-cards-row mb-2">
-                {                    
-                  data.length > 0 ? data.map((item, index) => {
+                {
+                  this.state.data.length > 0 ? this.state.data.map((item, index) => {
                     return (
                       <Colxx xxs="6" sm="4" md="4" className="mb-4">
                         <Card>
