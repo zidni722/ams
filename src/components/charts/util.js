@@ -1,3 +1,4 @@
+import moment from "moment";
 
 import { ThemeColors } from "../../helpers/ThemeColors";
 
@@ -11,6 +12,19 @@ export const chartTooltip = {
     xPadding: 15,
     yPadding: 15,
     cornerRadius: 0.15
+  }
+
+  export const formatDate = (date, format = 'YYYY-MM-DDTHH:mm:ssZ', utc = false) => {
+    let formatedDate = date
+    if(date){
+        formatedDate = moment(date)
+        if(utc)
+            formatedDate = moment(date).utc().utcOffset(0)
+        if (!format)
+            format = 'YYYY-MM-DDTHH:mm:ssZ'
+        formatedDate = formatedDate.format(format)
+    }
+    return formatedDate
   }
   
   export const centerTextPlugin = {

@@ -79,7 +79,6 @@ class FormPerbaikan extends Component {
           reactLocalStorage.set('isSuccesSubmit', true)
         }
       }).catch((e) => {
-        console.log(e.message)
         NotificationManager.error(
           `${e.response.data.data}`,
           "Terjadi Kesalahan",

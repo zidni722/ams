@@ -8,7 +8,7 @@ const DetailPerbaikan = React.lazy(() =>
   import(/* webpackChunkName: "detail-perbaikan" */ './detail-perbaikan')
 );
 const FormEditPerbaikan = React.lazy(() =>
-  import(/* webpackChunkName: "form-edit-pengadaan" */ './form-update-perbaikan')
+  import(/* webpackChunkName: "form-edit-perbaikan" */ './form-update-perbaikan')
 );
 const FormPerbaikan = React.lazy(() =>
   import(/* webpackChunkName: "form-perbaikan" */ './form-perbaikan')

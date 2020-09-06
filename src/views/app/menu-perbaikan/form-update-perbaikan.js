@@ -3,7 +3,7 @@ import { Row} from "reactstrap";
 import { Colxx, Separator } from "../../../components/common/CustomBootstrap";
 import Breadcrumb from "../../../containers/navs/Breadcrumb";
 
-import FormikEditPengadaan from "../../../containers/form-validations/FormikEditPengadaan";
+import FormikEditPerbaikan from "../../../containers/form-validations/FormikEditPerbaikan";
 
 export default class FormUpdatePerbaikan extends Component {
   render() {
@@ -21,7 +21,7 @@ export default class FormUpdatePerbaikan extends Component {
         <Row>
           <Colxx xxs="12" lg="3" className="mb-3"/>
           <Colxx xxs="12" lg="6" className="mb-3">
-            <FormikEditPengadaan />
+            <FormikEditPerbaikan />
           </Colxx>
         </Row>
       </Fragment>

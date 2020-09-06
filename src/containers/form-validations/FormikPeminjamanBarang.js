@@ -5,7 +5,6 @@ import * as Yup from "yup";
 
 import { Row, Card, CardBody, FormGroup, Label, Button } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
-import { FormikReactSelect } from "./FormikFields";
 import { NotificationManager } from "../../components/common/react-notifications";
 
 import { apiClient } from "../../helpers/ApiService";

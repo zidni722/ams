@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Row, Card, Button, CardBody, CardTitle, DropdownMenu, UncontrolledDropdown, DropdownToggle, DropdownItem, Table, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Row, Card, CardBody, CardTitle, Table} from "reactstrap";
 import Breadcrumb from "../../../containers/navs/Breadcrumb";
 import { Separator, Colxx } from "../../../components/common/CustomBootstrap";
 import { injectIntl } from "react-intl";
@@ -49,7 +49,7 @@ class DetailPerbaikan extends Component {
             <Colxx xxs="12">
               <Breadcrumb heading="menu.detail-perbaikan" match={this.props.match} />
               {
-                me.role_name.toLowerCase() == 'super admin' &&
+                me.role_name.toLowerCase() !== 'employee' &&
                 <SweetAlertCallback />
               }
               <Separator className="mb-5" />

@@ -42,7 +42,7 @@ class BasicSweetCallback extends React.Component {
               if (module === 'pengadaan') {
                 window.location.href = "/app/menu-pengadaan/form-update-pengadaan/" + reactLocalStorage.get('currentProcurementID')
               } else if (module === 'perbaikan') {
-                window.location.href = "/app/menu-pengadaan/form-update-perbaikan/" + reactLocalStorage.get('currentServiceID')
+                window.location.href = "/app/menu-perbaikan/form-update-perbaikan/" + reactLocalStorage.get('currentServiceID')
               } else {
                 this.handleAlert("setujuAlert", true)
               }
