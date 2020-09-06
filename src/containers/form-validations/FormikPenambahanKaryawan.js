@@ -24,15 +24,16 @@ class FormikPenambahanKaryawan extends Component {
             address: "",
             code: "",
             photo: "",
-            province_id:"",
-            province:"",
+            province_id: "",
+            province: "",
             city_id: "",
             city: "",
             role_id: "",
             role: "",
             division_id: "",
             division: "",
-            isCityDisable: true
+            isCityDisable: true,
+            isLoading: false
         };
 
         this.onDrop = this.onDrop.bind(this);
@@ -62,6 +63,7 @@ class FormikPenambahanKaryawan extends Component {
             }).catch((e) => {
                 console.log(e.message)
             });
+
         apiClient.get('/provinces?per_page=50')
             .then(res => {
                 let dataProvinces = [];
@@ -73,6 +75,7 @@ class FormikPenambahanKaryawan extends Component {
             }).catch((e) => {
                 console.log(e.message)
             })
+        setTimeout(() => { this.setState({ isLoading: true }) }, 500)
     }
 
     onDrop(photo) {
@@ -94,16 +97,16 @@ class FormikPenambahanKaryawan extends Component {
 
         if (action === 'province') {
             apiClient.get(`/cities?per_page=100&province_id=${value}`)
-            .then(res => {
-                let dataCities = [];
-                const cities = res.data.data;
-                for (const city of cities) {
-                    dataCities.push({ value: city.id, label: city.name })
-                }
-                this.setState({ dataCities });
-            }).catch((e) => {
-                console.log(e.message)
-            })
+                .then(res => {
+                    let dataCities = [];
+                    const cities = res.data.data;
+                    for (const city of cities) {
+                        dataCities.push({ value: city.id, label: city.name })
+                    }
+                    this.setState({ dataCities });
+                }).catch((e) => {
+                    console.log(e.message)
+                })
             this.setState({ isCityDisable: false });
         }
     };
@@ -173,9 +176,8 @@ class FormikPenambahanKaryawan extends Component {
                     reactLocalStorage.set('isSuccesSubmit', true)
                 }
             }).catch((e) => {
-                console.log(e.message)
                 NotificationManager.error(
-                    "Silahkan coba kembali beberapa saat lagi!",
+                    `${e.response.data.message}`,
                     "Terjadi Kesalahan",
                     5000,
                     () => {
@@ -187,30 +189,15 @@ class FormikPenambahanKaryawan extends Component {
     };
 
     render() {
-        return (
-            <Row className="mb-4">
-                <Colxx xxs="12">
-                    <Card>
-                        <CardBody>
-                            <Formik
-                                initialValues={this.state}
-                                onSubmit={fields => {
-                                    NotificationManager.success(
-                                        "Karyawan berhasil ditambahkan",
-                                        "Registrasi Berhasil",
-                                        3000,
-                                        null,
-                                        null,
-                                        +JSON.stringify(fields, null, 4)
-                                    );
-                                    this.handlerSubmit.bind(this, fields)
-                                }}>
-                                {({
-                                    setFieldTouched,
-                                    errors,
-                                    touched,
-                                    isSubmitting
-                                }) => (
+        return !this.state.isLoading ? (
+            <div className="loading" />
+        ) : (
+                <Row className="mb-4">
+                    <Colxx xxs="12">
+                        <Card>
+                            <CardBody>
+                                <Formik>
+                                    {({ setFieldTouched }) => (
                                         <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
                                             <FormGroup className="error-l-50">
                                                 <Label>NPK</Label>
@@ -396,12 +383,12 @@ class FormikPenambahanKaryawan extends Component {
                                             </div>
                                         </Form>
                                     )}
-                            </Formik>
-                        </CardBody>
-                    </Card>
-                </Colxx>
-            </Row>
-        );
+                                </Formik>
+                            </CardBody>
+                        </Card>
+                    </Colxx>
+                </Row>
+            );
     }
 }
 

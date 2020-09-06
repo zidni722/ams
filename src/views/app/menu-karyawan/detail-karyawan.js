@@ -165,6 +165,10 @@ class DetailKaryawan extends Component {
                                     <p className="mb-3">{this.state.detailUser.role_name}</p>
                                     <p className="text-muted text-small mb-2"><IntlMessages id="No. Telepon" /></p>
                                     <p className="mb-3">{this.state.detailUser.phone}</p>
+                                    <p className="text-muted text-small mb-2"><IntlMessages id="Provinsi" /></p>
+                                    <p className="mb-3">{this.state.detailUser.province_name}</p>
+                                    <p className="text-muted text-small mb-2"><IntlMessages id="Kota" /></p>
+                                    <p className="mb-3">{this.state.detailUser.city_name}</p>
                                     <p className="text-muted text-small mb-2"><IntlMessages id="Alamat" /></p>
                                     <p className="mb-3">{this.state.detailUser.address}</p>
                                 </CardBody>

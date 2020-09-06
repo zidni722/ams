@@ -34,8 +34,9 @@ class FormikPeminjamanBarang extends Component {
     super(props);
     this.state = {
       asset_id: "",
-      category_id:"",
-      isAssetDisable: true
+      category_id: "",
+      isAssetDisable: true,
+      isLoading: false
     };
 
   }
@@ -47,23 +48,13 @@ class FormikPeminjamanBarang extends Component {
         for (const category of categories) {
           dataCategories.push({ value: category.id, label: category.name })
         }
-        this.setState({ dataCategories });
+        setTimeout(() => {
+          this.setState({ dataCategories })
+          this.setState({ isLoading: true })
+        }, 1000)
       }).catch((e) => {
         console.log(e.message)
       });
-
-
-    // apiClient.get(`/assets`)
-    //   .then(res => {
-    //     let dataAssets = []
-    //     const assets = res.data.data;
-    //     for (const asset of assets) {
-    //       dataAssets.push({ value: asset.id, label: asset.name })
-    //     }
-    //     this.setState({ dataAssets });
-    //   }).catch((e) => {
-    //     console.log(e.message)
-    //   });
   }
 
   handlerSelectChange = (e, action) => {
@@ -74,18 +65,18 @@ class FormikPeminjamanBarang extends Component {
 
     if (action === 'category') {
       apiClient.get(`/assets?per_page=100&category_id=${value}`)
-      .then(res => {
+        .then(res => {
           let dataAssets = [];
           const assets = res.data.data;
           for (const asset of assets) {
-              dataAssets.push({ value: asset.id, label: asset.name })
+            dataAssets.push({ value: asset.id, label: asset.name })
           }
           this.setState({ dataAssets });
-      }).catch((e) => {
+        }).catch((e) => {
           console.log(e.message)
-      })
+        })
       this.setState({ isAssetDisable: false });
-  }
+    }
   };
 
   handleSubmit = async (event, values) => {
@@ -104,7 +95,8 @@ class FormikPeminjamanBarang extends Component {
           window.location.href = "./peminjaman" // similar behavior as clicking on a link
           reactLocalStorage.set('isSuccesSubmit', true)
         }
-      }).catch((e) => {
+      })
+      .catch((e) => {
         NotificationManager.error(
           `${e.response.data.message}`,
           "Terjadi Kesalahan",
@@ -118,19 +110,15 @@ class FormikPeminjamanBarang extends Component {
   };
 
   render() {
-    return (
-      <Row className="mb-4">
-        <Colxx xxs="12" lg="12" xl="12" className="mb-3">
-          <Card className="d-flex flex-row mb-3">
-            <CardBody>
-              <Formik >
-                {({
-                  setFieldValue,
-                  setFieldTouched,
-                  values,
-                  errors,
-                  touched,
-                }) => (
+    return !this.state.isLoading ? (
+      <div className="loading" />
+    ) : (
+        <Row className="mb-4">
+          <Colxx xxs="12" lg="12" xl="12" className="mb-3">
+            <Card className="d-flex flex-row mb-3">
+              <CardBody>
+                <Formik >
+                  {({ values }) => (
 
                     <Form onSubmit={this.handleSubmit} className="av-tooltip tooltip-label-right">
                       <FormGroup row>
@@ -170,12 +158,12 @@ class FormikPeminjamanBarang extends Component {
 
                     </Form>
                   )}
-              </Formik>
-            </CardBody>
-          </Card>
-        </Colxx>
-      </Row>
-    );
+                </Formik>
+              </CardBody>
+            </Card>
+          </Colxx>
+        </Row>
+      );
   }
 }
 

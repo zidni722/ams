@@ -5,6 +5,7 @@ import IntlMessages from "../../helpers/IntlMessages";
 import {reactLocalStorage} from 'reactjs-localstorage';
 import { apiClient } from "../../helpers/ApiService";
 import { NotificationManager } from "../../components/common/react-notifications";
+import { me } from "../../constants/defaultValues";
 
 class BasicSweetCallback extends React.Component {
   constructor(props) {
@@ -39,7 +40,9 @@ class BasicSweetCallback extends React.Component {
               let module = reactLocalStorage.get('module-action') ? reactLocalStorage.get('module-action') : 'peminjaman'
 
               if (module === 'pengadaan') {
-                window.location.href = "../../../app/menu-pengadaan/form-update-pengadaan/" + reactLocalStorage.get('currentProcurementID')
+                window.location.href = "/app/menu-pengadaan/form-update-pengadaan/" + reactLocalStorage.get('currentProcurementID')
+              } else if (module === 'perbaikan') {
+                window.location.href = "/app/menu-pengadaan/form-update-perbaikan/" + reactLocalStorage.get('currentServiceID')
               } else {
                 this.handleAlert("setujuAlert", true)
               }
@@ -76,7 +79,11 @@ class BasicSweetCallback extends React.Component {
                   break;
                 case 'pengadaan' :
                   uuid = reactLocalStorage.get('currentProcurementID');
-                  path = "returns";
+                  path = "procuremnets";
+                  break;
+                case 'perbaikan' :
+                  uuid = reactLocalStorage.get('currentServiceID');
+                  path = "services";
                   break;
                 default: 
                   break;
@@ -92,6 +99,25 @@ class BasicSweetCallback extends React.Component {
                 });    
               } else if (module === 'pengadaan') {
                 apiClient.put(`/${path}/` + uuid + '/approve?action=true')
+                .then((result) => {
+                  if (result.status === 200) {
+                    this.handleAlert("basicAlert", false)
+                    this.handleAlert("confirmsetujuAlert", true)
+                  }
+                });   
+              } else if (module === 'perbaikan') {
+                const formData = new FormData();
+
+                formData.append('action', 'approve')
+
+                if (me.role_name.toLowerCase() === 'super admin') {
+                  formData.append('invoice_number', this.state.name)
+                  formData.append('brand', this.state.brand)
+                  formData.append('year', this.state.year)
+                }
+
+                
+                apiClient.put(`/${path}/` + uuid)
                 .then((result) => {
                   if (result.status === 200) {
                     this.handleAlert("basicAlert", false)

@@ -7,6 +7,9 @@ const Perbaikan = React.lazy(() =>
 const DetailPerbaikan = React.lazy(() =>
   import(/* webpackChunkName: "detail-perbaikan" */ './detail-perbaikan')
 );
+const FormEditPerbaikan = React.lazy(() =>
+  import(/* webpackChunkName: "form-edit-pengadaan" */ './form-update-perbaikan')
+);
 const FormPerbaikan = React.lazy(() =>
   import(/* webpackChunkName: "form-perbaikan" */ './form-perbaikan')
 );
@@ -21,6 +24,10 @@ const MenuPerbaikan = ({ match }) => (
       <Route
         path={`${match.url}/detail-perbaikan`}
         render={props => <DetailPerbaikan {...props} />}
+      />
+      <Route
+        path={`${match.url}/form-update-perbaikan`}
+        render={props => <FormEditPerbaikan {...props} />}
       />
       <Route
         path={`${match.url}/form-perbaikan`}

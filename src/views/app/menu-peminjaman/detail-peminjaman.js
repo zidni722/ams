@@ -14,7 +14,8 @@ class DetailPeminjaman extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detailBorrow: ''
+      detailBorrow: '',
+      isLoading: false
     };
     reactLocalStorage.set('sweetAlertTitle', 'peminjaman')
     reactLocalStorage.set('module-action', 'peminjaman')
@@ -26,15 +27,20 @@ class DetailPeminjaman extends Component {
 
     apiClient.get("/borrows/" + borrowID(window.location.href))
       .then(res => {
+        setTimeout(() => {
         console.log(res.data)
         this.setState({ detailBorrow: res.data.data })
+        this.setState({ isLoading: true })
+        }, 100)
       }).catch((e) => {
         console.log(e.message)
       })
   }
 
   render() {
-    return (
+    return !this.state.isLoading ? (
+      <div className="loading" />
+    ) : (
       <Fragment>
         <Row>
           <Colxx xxs="12">

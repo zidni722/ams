@@ -49,6 +49,8 @@ class Perbaikan extends Component {
   }
   componentDidMount() {
     this.dataListRender();
+
+    
   }
 
   toggleModal = () => {

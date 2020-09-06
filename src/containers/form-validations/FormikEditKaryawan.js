@@ -51,14 +51,14 @@ class FormikEditKaryawan extends Component {
                 console.log(e.message)
             });
 
-        apiClient.get('/cities')
-            .then((res) => {
-                let dataCities = [];
-                const cities = res.data.data;
-                for (const city of cities) {
-                    dataCities.push({ value: city.id, label: city.name })
+        apiClient.get('/provinces?per_page=50')
+            .then(res => {
+                let dataProvinces = [];
+                const provinces = res.data.data;
+                for (const province of provinces) {
+                    dataProvinces.push({ value: province.id, label: province.name })
                 }
-                this.setState({ dataCities });
+                this.setState({ dataProvinces });
             }).catch((e) => {
                 console.log(e.message)
             })
@@ -74,6 +74,7 @@ class FormikEditKaryawan extends Component {
                 await this.setState({ email: this.state.detailUser.email })
                 await this.setState({ role: this.state.detailUser.role_id })
                 await this.setState({ division: this.state.detailUser.division_id })
+                await this.setState({ province: this.state.detailUser.province_id })
                 await this.setState({ city: this.state.detailUser.city_id })
                 await this.setState({ phone: this.state.detailUser.phone })
                 await this.setState({ address: this.state.detailUser.address })
@@ -82,11 +83,15 @@ class FormikEditKaryawan extends Component {
                 await reactLocalStorage.set('defaultRoleLabel_editKaryawan', this.state.detailUser.role_name);
                 await reactLocalStorage.set('defaultDivisionValue_editKaryawan', this.state.detailUser.division_id);
                 await reactLocalStorage.set('defaultDivisionLabel_editKaryawan', this.state.detailUser.division_name);
+                await reactLocalStorage.set('defaultProvinceValue_editKaryawan', this.state.detailUser.province_id);
+                await reactLocalStorage.set('defaultProvinceLabel_editKaryawan', this.state.detailUser.province_name);
                 await reactLocalStorage.set('defaultCityValue_editKaryawan', this.state.detailUser.city_id);
                 await reactLocalStorage.set('defaultCityLabel_editKaryawan', this.state.detailUser.city_name);
             }).catch((e) => {
                 console.log(e.message)
             })
+        setTimeout(() => { this.setState({ isLoading: true }) }, 500)
+
     }
 
     onDrop(photo) {
@@ -105,7 +110,23 @@ class FormikEditKaryawan extends Component {
         const name = action
         this.setState({ [name]: value });
         reactLocalStorage.set(name, value);
+
+        if (action === 'province') {
+            apiClient.get(`/cities?per_page=100&province_id=${value}`)
+                .then(res => {
+                    let dataCities = [];
+                    const cities = res.data.data;
+                    for (const city of cities) {
+                        dataCities.push({ value: city.id, label: city.name })
+                    }
+                    this.setState({ dataCities });
+                }).catch((e) => {
+                    console.log(e.message)
+                })
+            this.setState({ isCityDisable: false });
+        }
     };
+
 
     handlerSubmit = async (event, values) => {
         event.preventDefault();
@@ -141,9 +162,8 @@ class FormikEditKaryawan extends Component {
                                 reactLocalStorage.set('isSuccesSubmit', true)
                             }
                         }).catch((e) => {
-                            console.log(e.message)
                             NotificationManager.error(
-                                "Silahkan coba kembali beberapa saat lagi!",
+                                `${e.response.data.message}`,
                                 "Terjadi Kesalahan",
                                 5000,
                                 () => {
@@ -154,9 +174,8 @@ class FormikEditKaryawan extends Component {
                         });
                 }
             }).catch((e) => {
-                console.log(e.message)
                 NotificationManager.error(
-                    "Silahkan coba kembali beberapa saat lagi!",
+                    `${e.response.data.message}`,
                     "Terjadi Kesalahan",
                     5000,
                     () => {
@@ -263,7 +282,26 @@ class FormikEditKaryawan extends Component {
                                                 </FormGroup>
 
                                                 <FormGroup className="error-l-50">
-                                                    <Label>City</Label>
+                                                    <Label>Provinsi</Label>
+                                                    <Select
+                                                        name="province"
+                                                        id="province"
+                                                        options={this.state.dataProvinces}
+                                                        defaultValue={{ value: reactLocalStorage.get('defaultProvinceValue_editKaryawan'), label: reactLocalStorage.get('defaultProvinceLabel_editKaryawan') }}
+                                                        onChange={e => this.handlerSelectChange(e, 'province')}
+                                                        onBlur={setFieldTouched}
+                                                    />
+                                                    {this.state.isValid === false ? (
+                                                        <span className="invalid-feedback d-block">
+                                                            Wajib di isi!
+                                                        </span>
+                                                    ) : (
+                                                            ""
+                                                        )}
+                                                </FormGroup>
+
+                                                <FormGroup className="error-l-50">
+                                                    <Label>Kota</Label>
                                                     <Select
                                                         name="city"
                                                         id="city"

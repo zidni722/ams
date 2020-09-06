@@ -21,7 +21,8 @@ class FormikEditPengadaan extends Component {
       category: "",
       description: "",
       'categories': '',
-      'procurement': ''
+      'procurement': '',
+      isLoading: false
     };
   }
 
@@ -58,19 +59,8 @@ class FormikEditPengadaan extends Component {
       }).catch((e) => {
         console.log(e.message)
       });
-  }
+    setTimeout(() => { this.setState({ isLoading: true }) }, 500)
 
-  componentDidUpdate() {
-    if (this.props.error) {
-      NotificationManager.warning(
-        this.props.error,
-        "Login Error",
-        3000,
-        null,
-        null,
-        ''
-      );
-    }
   }
 
   handleChange = (e) => {
@@ -103,9 +93,8 @@ class FormikEditPengadaan extends Component {
           console.log(res.data);
         }
       }).catch((e) => {
-        console.log(e.message)
         NotificationManager.error(
-          "Silahkan coba kembali beberapa saat lagi!",
+          `${e.response.data.message}`,
           "Terjadi Kesalahan",
           5000,
           () => {
@@ -124,12 +113,8 @@ class FormikEditPengadaan extends Component {
             <CardBody>
               <Formik enableReinitialize={true}>
                 {({
-                  setFieldValue,
-                  setFieldTouched,
-                  handleChange,
-                  values,
                   errors,
-                  touched,
+                  touched
                 }) => (
 
                     <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">

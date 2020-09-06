@@ -3,13 +3,15 @@ import React, { Component } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { Button, Card, CardBody, FormGroup, Label, Row, Input, FormFeedback } from "reactstrap";
+import { Button, Card, CardBody, FormGroup, Label, Row, FormFeedback } from "reactstrap";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { FormikReactSelect } from "./FormikFields";
 import { NotificationManager } from "../../components/common/react-notifications";
+import InputMask from "react-input-mask";
 
 import { apiClient } from "../../helpers/ApiService";
 import { reactLocalStorage } from "reactjs-localstorage";
+import Select from "react-select";
 
 const SignupSchema = Yup.object().shape({
     code: Yup.string()
@@ -52,7 +54,8 @@ class FormikTambahBarang extends Component {
             qty: "",
             price: "",
             image: "",
-            isValid: null
+            isValid: null,
+            isLoading: false
         };
     }
 
@@ -68,23 +71,19 @@ class FormikTambahBarang extends Component {
             }).catch((e) => {
                 console.log(e.message)
             });
-    }
+        setTimeout(() => { this.setState({ isLoading: true }) }, 500)
 
-    componentDidUpdate() {
-        if (this.props.error) {
-            NotificationManager.warning(
-                this.props.error,
-                "Login Error",
-                3000,
-                null,
-                null,
-                ''
-            );
-        }
     }
 
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
+    };
+
+    handlerSelectChange = (e, action) => {
+        const { value } = e;
+        const name = action
+        this.setState({ [name]: value });
+        reactLocalStorage.set(name, value);
     };
 
     handleFileChange = (e) => {
@@ -100,11 +99,7 @@ class FormikTambahBarang extends Component {
             this.setState({ isValid: false })
         }
 
-        if (this.state.name.length > 0) {
-            this.setState({ isValid: true })
-        } else if (this.state.name.length === 0) {
-            this.setState({ isValid: false })
-        }
+
 
         if (this.state.brand.length > 0) {
             this.setState({ isValid: true })
@@ -151,9 +146,8 @@ class FormikTambahBarang extends Component {
                     reactLocalStorage.set('isSuccesSubmit', true)
                 }
             }).catch((e) => {
-                console.log(e.message)
                 NotificationManager.error(
-                    "Silahkan coba kembali beberapa saat lagi!",
+                    `${e.response.data.message}`,
                     "Terjadi Kesalahan",
                     5000,
                     () => {
@@ -183,12 +177,11 @@ class FormikTambahBarang extends Component {
                                         <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
                                             <FormGroup className="error-l-100">
                                                 <Label>Kode Barang</Label>
-                                                <Input
+                                                <InputMask
                                                     className="form-control"
-                                                    onChange={this.handleChange}
                                                     name="code"
-                                                    valid={this.state.isValid === true}
-                                                    invalid={this.state.isValid === false}
+                                                    mask="aaa-999999"
+                                                    onChange={this.handleChange}
                                                 />
                                                 {this.state.isValid === false ? (
                                                     <span className="invalid-feedback d-block">
@@ -218,14 +211,12 @@ class FormikTambahBarang extends Component {
 
                                             <FormGroup className="error-l-100">
                                                 <Label>Jenis Barang</Label>
-                                                <FormikReactSelect
+                                                <Select
                                                     name="category"
                                                     id="category"
                                                     value={values.dataCategory}
-                                                    isMulti={false}
                                                     options={this.state.dataCategory}
-                                                    onChange={setFieldValue}
-                                                    onBlur={setFieldTouched}
+                                                    onChange={e => this.handlerSelectChange(e, 'category')}
                                                     valid={this.state.isValid === true}
                                                     invalid={this.state.isValid === false}
                                                 />

@@ -38,7 +38,8 @@ class FormikPengadaan extends Component {
       brand: "",
       year: "",
       category: "",
-      description: ""
+      description: "",
+      isLoading: false
     };
   }
 
@@ -50,23 +51,13 @@ class FormikPengadaan extends Component {
         for (const category of categories) {
           dataCategory.push({ value: category.id, label: category.name })
         }
+
         this.setState({ dataCategory });
       }).catch((e) => {
         console.log(e.message)
       });
-  }
+    setTimeout(() => { this.setState({ isLoading: true }) }, 500)
 
-  componentDidUpdate() {
-    if (this.props.error) {
-      NotificationManager.warning(
-        this.props.error,
-        "Login Error",
-        3000,
-        null,
-        null,
-        ''
-      );
-    }
   }
 
   handleChange = (e) => {
@@ -93,9 +84,8 @@ class FormikPengadaan extends Component {
           reactLocalStorage.set('isSuccesSubmit', true)
         }
       }).catch((e) => {
-        console.log(e.message)
         NotificationManager.error(
-          "Silahkan coba kembali beberapa saat lagi!",
+          `${e.response.data.message}`,
           "Terjadi Kesalahan",
           5000,
           () => {
@@ -107,108 +97,110 @@ class FormikPengadaan extends Component {
   };
 
   render() {
-    return (
-      <Row className="mb-4">
-        <Colxx xxs="12" lg="12" xl="12" className="mb-3">
-          <Card className="d-flex flex-row mb-3">
-            <CardBody>
-              <Formik validationSchema={SignupSchema}>
-                {({
-                  setFieldValue,
-                  setFieldTouched,
-                  handleChange,
-                  values,
-                  errors,
-                  touched,
-                }) => (
+    return !this.state.isLoading ? (
+      <div className="loading" />
+    ) : (
+        <Row className="mb-4">
+          <Colxx xxs="12" lg="12" xl="12" className="mb-3">
+            <Card className="d-flex flex-row mb-3">
+              <CardBody>
+                <Formik validationSchema={SignupSchema}>
+                  {({
+                    setFieldValue,
+                    setFieldTouched,
+                    handleChange,
+                    values,
+                    errors,
+                    touched,
+                  }) => (
 
-                    <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
-                      <FormGroup className="error-l-100">
-                        <Label>Nama Barang</Label>
-                        <input className="form-control"
-                          onChange={this.handleChange}
-                          name="name"
-                        />
-                        {errors.firstName && touched.firstName ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.name}
-                          </div>
-                        ) : null}
-                      </FormGroup>
+                      <Form onSubmit={this.handlerSubmit} className="av-tooltip tooltip-label-right">
+                        <FormGroup className="error-l-100">
+                          <Label>Nama Barang</Label>
+                          <input className="form-control"
+                            onChange={this.handleChange}
+                            name="name"
+                          />
+                          {errors.firstName && touched.firstName ? (
+                            <div className="invalid-feedback d-block">
+                              {errors.name}
+                            </div>
+                          ) : null}
+                        </FormGroup>
 
-                      <FormGroup className="error-l-100">
-                        <Label>Jenis Barang</Label>
-                        <FormikReactSelect
-                          name="category"
-                          id="category"
-                          value={values.dataCategory}
-                          isMulti={false}
-                          options={this.state.dataCategory}
-                          onChange={setFieldValue}
-                          onBlur={setFieldTouched}
-                        />
-                        {errors.categories && touched.categories ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.categories}
-                          </div>
-                        ) : null}
-                      </FormGroup>
+                        <FormGroup className="error-l-100">
+                          <Label>Jenis Barang</Label>
+                          <FormikReactSelect
+                            name="category"
+                            id="category"
+                            value={values.dataCategory}
+                            isMulti={false}
+                            options={this.state.dataCategory}
+                            onChange={setFieldValue}
+                            onBlur={setFieldTouched}
+                          />
+                          {errors.categories && touched.categories ? (
+                            <div className="invalid-feedback d-block">
+                              {errors.categories}
+                            </div>
+                          ) : null}
+                        </FormGroup>
 
-                      <FormGroup className="error-l-100">
-                        <Label>Merek</Label>
-                        <input className="form-control"
-                          onChange={this.handleChange}
-                          name="brand"
-                        />
-                        {errors.firstName && touched.firstName ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.firstName}
-                          </div>
-                        ) : null}
-                      </FormGroup>
+                        <FormGroup className="error-l-100">
+                          <Label>Merek</Label>
+                          <input className="form-control"
+                            onChange={this.handleChange}
+                            name="brand"
+                          />
+                          {errors.firstName && touched.firstName ? (
+                            <div className="invalid-feedback d-block">
+                              {errors.firstName}
+                            </div>
+                          ) : null}
+                        </FormGroup>
 
-                      <FormGroup className="error-l-50">
-                        <Label>Tahun</Label>
-                        <input
-                          className="form-control"
-                          onChange={this.handleChange}
-                          name="year"
-                          type="year"
-                        />
-                        {errors.npk && touched.npk ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.npk}
-                          </div>
-                        ) : null}
-                      </FormGroup>
+                        <FormGroup className="error-l-50">
+                          <Label>Tahun</Label>
+                          <input
+                            className="form-control"
+                            onChange={this.handleChange}
+                            name="year"
+                            type="year"
+                          />
+                          {errors.npk && touched.npk ? (
+                            <div className="invalid-feedback d-block">
+                              {errors.npk}
+                            </div>
+                          ) : null}
+                        </FormGroup>
 
-                      <FormGroup className="error-l-100">
-                        <Label>Deskripsi</Label>
-                        <input className="form-control"
-                          onChange={this.handleChange}
-                          name="description"
-                        />
-                        {errors.firstName && touched.firstName ? (
-                          <div className="invalid-feedback d-block">
-                            {errors.firstName}
-                          </div>
-                        ) : null}
-                      </FormGroup>
+                        <FormGroup className="error-l-100">
+                          <Label>Deskripsi</Label>
+                          <input className="form-control"
+                            onChange={this.handleChange}
+                            name="description"
+                          />
+                          {errors.firstName && touched.firstName ? (
+                            <div className="invalid-feedback d-block">
+                              {errors.firstName}
+                            </div>
+                          ) : null}
+                        </FormGroup>
 
-                      <div className="d-flex justify-content-between align-items-center"><p />
-                        <Button color="primary" size="lg" type="submit">
-                          Submit
+                        <div className="d-flex justify-content-between align-items-center"><p />
+                          <Button color="primary" size="lg" type="submit">
+                            Submit
                       </Button>
-                      </div>
+                        </div>
 
-                    </Form>
-                  )}
-              </Formik>
-            </CardBody>
-          </Card>
-        </Colxx>
-      </Row>
-    );
+                      </Form>
+                    )}
+                </Formik>
+              </CardBody>
+            </Card>
+          </Colxx>
+        </Row>
+      );
   }
 }
 

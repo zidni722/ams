@@ -7,6 +7,7 @@ import ListPageHeadingBarang from "../../../containers/pages/ListPageHeadingBara
 import { apiClient } from "../../../helpers/ApiService";
 import TitleBarang from "../../../containers/pages/TitleBarang";
 import { NotificationManager } from "../../../components/common/react-notifications";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 function collect(props) {
   return { data: props.data };
@@ -42,6 +43,19 @@ class DataListPages extends Component {
   }
   componentDidMount() {
     this.dataListRender();
+
+    if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+      NotificationManager.success(
+        "Anda Berhasil Menambahkan Barang Baru",
+        "Penambahan Barang Berhasil",
+        1000000000,
+        () => {
+          reactLocalStorage.set('isSuccesSubmit', false)
+          this.setState({ visible: false });
+        },
+        null
+      );
+    }
   }
 
   toggleModal = () => {

@@ -13,11 +13,6 @@ import { me } from "../../../constants/defaultValues";
 import { NotificationManager } from "../../../components/common/react-notifications";
 
 
-const options = [
-  { value: "Resign", label: "Resign" },
-  { value: "Ganti Baru", label: "Ganti Baru" }
-];
-
 class FormPengembalian extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +20,8 @@ class FormPengembalian extends Component {
       detailReturn: "",
       detailBorrow: "",
       borrow_id: '',
-      asset_id:''
+      asset_id:'',
+      isLoading: false
     };
   }
 
@@ -61,7 +57,7 @@ class FormPengembalian extends Component {
       })  
     }
   }
-  
+
   handleSubmit = async (event, values) => {
     event.preventDefault();
 
@@ -148,14 +144,7 @@ class FormPengembalian extends Component {
                   </div>
                   <div className="pl-3 pr-5 mb-5 pt-3">
                   <Formik>
-                      {({
-                        handleSubmit,
-                        setFieldValue,
-                        setFieldTouched,
-                        handleChange,
-                        handleBlur,
-                        values,
-                      }) => (
+                      {({ values }) => (
                           <Form className="av-tooltip tooltip-label-right">
                             <FormGroup className="error-l-100">
                               <Label>Barang yang akan dikembalikan</Label>
