@@ -5,13 +5,35 @@ import IntlMessages from "../../helpers/IntlMessages";
 import DataTablePagination from "../../components/DatatablePagination";
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { convertDate } from "../../helpers/Utils";
-
-const assetHistoryBorrow = reactLocalStorage.getObject('assetHistory').hasOwnProperty('length') ? reactLocalStorage.getObject('assetHistory') : window.location.reload()
+import { apiClient } from "../../helpers/ApiService";
 
 export default class TablePeminjamBarang extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      assetHistoryBorrow: {},
+      isLoading: false
+    }
+  }
+
+  componentDidMount() {
+    const assetID = uri => uri.substring(uri.lastIndexOf('/') + 1)
+    apiClient.get('/assets/' + assetID(window.location.href) + '/history')
+      .then(res => {
+        if (res.status === 200) {
+          setTimeout(() => {
+            this.setState({
+              assetHistoryBorrow: res.data.data,
+              isLoading: true
+            })
+          }, 100)
+        }
+      }).catch((e) => {
+        console.log(e.message)
+      })
+  }
 
   render() {
-
     const dataTableColumns = [
       {
         Header: "NPK",
@@ -34,24 +56,26 @@ export default class TablePeminjamBarang extends React.Component {
         Cell: props => <p className="text-small">{props.value}</p>
       }
     ];
-    
-    return (
-      <Card className="mb-4">
-      <CardBody>
-        <CardTitle>
-          <IntlMessages id="Data Peminjam" />
-        </CardTitle>
-        <ReactTable
-          data={assetHistoryBorrow}
-          columns={dataTableColumns}
-          defaultPageSize={10}
-          showPageJump={false}
-          showPageSizeOptions={false}
-          PaginationComponent={DataTablePagination}
-          className={"react-table-fixed-height"}
-        /><br/>
-      </CardBody>
-    </Card>
-    )
+
+    return !this.state.isLoading ? (
+      <div className="loading" />
+    ) : (
+        <Card className="mb-4">
+          <CardBody>
+            <CardTitle>
+              <IntlMessages id="Data Peminjam" />
+            </CardTitle>
+            <ReactTable
+              data={this.state.assetHistoryBorrow}
+              columns={dataTableColumns}
+              defaultPageSize={10}
+              showPageJump={false}
+              showPageSizeOptions={false}
+              PaginationComponent={DataTablePagination}
+              className={"react-table-fixed-height"}
+            /><br />
+          </CardBody>
+        </Card>
+      )
   }
 }

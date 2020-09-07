@@ -19,7 +19,7 @@ class DetailPages extends Component {
     this.state = {
       detailAsset: '',
       isLoading: false,
-      assetHistory: {}
+      borrowedAssetCount: {}
     };
   }
 
@@ -29,6 +29,14 @@ class DetailPages extends Component {
       .then(res => {
         if (res.status === 200)
           this.setState({ detailAsset: res.data.data })
+      }).catch((e) => {
+        console.log(e.message)
+      })
+
+    apiClient.get('/assets/' + assetID(window.location.href) + '/history?status=1')
+      .then(res => {
+        if (res.status === 200)
+          this.setState({ borrowedAssetCount: res.data.meta.total })
       }).catch((e) => {
         console.log(e.message)
       })
@@ -79,7 +87,7 @@ class DetailPages extends Component {
           <Row>
             <Colxx xxs="12" lg="5" xl="5" className="col-left">
               <Card className="mb-3">
-                <SingleLightbox thumb={this.state.detailAsset.image} large={this.state.detailAsset.image} className="responsive card-img-top" />
+                <SingleLightbox thumb={this.state.detailAsset.image ? this.state.detailAsset.image : "https://res.cloudinary.com/hwqpjijac/image/upload/v1598947378/default-image_vxl2p2.jpg"} large={this.state.detailAsset.image ? this.state.detailAsset.image : "https://res.cloudinary.com/hwqpjijac/image/upload/v1598947378/default-image_vxl2p2.jpg"} className="responsive card-img-top" />
                 <div className="position-absolute card-top-buttons">
                   <Button outline color={"white"} className="icon-button" onClick={this.editBarang}>
                     <i className="simple-icon-pencil" />
@@ -104,10 +112,10 @@ class DetailPages extends Component {
                   <p className="mb-3">
                     <IntlMessages id="Stok Barang" />
                     <span className="float-right text-muted">
-                      {this.state.detailAsset.qty}/{this.state.detailAsset.qty}
+                      {this.state.detailAsset.qty - this.state.borrowedAssetCount}/{this.state.detailAsset.qty}
                     </span>
                   </p>
-                  <Progress value={(this.state.detailAsset.qty / this.state.detailAsset.qty) * 100} className="mb-3" />
+                  <Progress value={((this.state.detailAsset.qty - this.state.borrowedAssetCount) / this.state.detailAsset.qty) * 100} className="mb-3" />
                 </div>
 
               </Card>
