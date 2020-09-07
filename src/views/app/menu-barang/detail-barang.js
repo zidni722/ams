@@ -5,7 +5,7 @@ import { Separator, Colxx } from "../../../components/common/CustomBootstrap";
 import { injectIntl } from "react-intl";
 import SingleLightbox from "../../../components/pages/SingleLightbox";
 import IntlMessages from "../../../helpers/IntlMessages";
-import { DataPeminjam } from "../../../containers/ui/TablePeminjam";
+import TablePeminjamBarang from "../../../containers/ui/TablePeminjamBarang";
 import { apiClient } from "../../../helpers/ApiService";
 import SweetAlertDelete from "../../../containers/ui/SweetAlertDelete";
 import { reactLocalStorage } from 'reactjs-localstorage';
@@ -22,6 +22,7 @@ class DetailPages extends Component {
       assetHistory: {}
     };
   }
+
   componentDidMount() {
     const assetID = uri => uri.substring(uri.lastIndexOf('/') + 1);
     apiClient.get('/assets/' + assetID(window.location.href))
@@ -112,7 +113,7 @@ class DetailPages extends Component {
               </Card>
             </Colxx>
             <Colxx xxs="12" lg="7" xl="7" className="col-right">
-              <DataPeminjam />
+              <TablePeminjamBarang />
             </Colxx>
           </Row>
         </Fragment>
