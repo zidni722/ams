@@ -88,7 +88,6 @@ export default class Dashboards extends Component {
         }, 300);
       }).catch((e) => {
         console.log(e.message)
-        // refreshToken()
       });
   }
 

@@ -28,6 +28,11 @@ export default class CategoriesDoughnut extends React.Component {
     };
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ isLoading: true })
+    }, 100)
+  }
 
   render() {
     return !this.state.isLoading ? (
