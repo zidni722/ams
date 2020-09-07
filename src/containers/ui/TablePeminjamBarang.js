@@ -3,7 +3,6 @@ import { Card, CardBody, CardTitle } from "reactstrap";
 import ReactTable from "react-table";
 import IntlMessages from "../../helpers/IntlMessages";
 import DataTablePagination from "../../components/DatatablePagination";
-import { reactLocalStorage } from 'reactjs-localstorage';
 import { convertDate } from "../../helpers/Utils";
 import { apiClient } from "../../helpers/ApiService";
 
@@ -26,7 +25,7 @@ export default class TablePeminjamBarang extends React.Component {
               assetHistoryBorrow: res.data.data,
               isLoading: true
             })
-          }, 100)
+          }, 300)
         }
       }).catch((e) => {
         console.log(e.message)

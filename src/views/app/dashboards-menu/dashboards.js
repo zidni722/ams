@@ -2,9 +2,8 @@ import React, { Component, Fragment } from "react";
 import { Row } from "reactstrap";
 import { Colxx, Separator } from "../../../components/common/CustomBootstrap";
 import Breadcrumb from "../../../containers/navs/Breadcrumb";
-import IconCardsCarousel from '../../../containers/dashboards/IconCardsCarousel';
 import StatusCard from '../../../containers/dashboards/StatusCard';
-import ProductCategoriesDoughnut from '../../../containers/dashboards/ProductCategoriesDoughnut'
+import CategoriesDoughnut from '../../../containers/dashboards/CategoriesDoughnut'
 import BestSellers from '../../../containers/dashboards/BestSellers'
 import IntlMessages from "../../../helpers/IntlMessages";
 import Banner from "../../../containers/dashboards/banner";
@@ -49,7 +48,6 @@ export default class Dashboards extends Component {
     const module = reactLocalStorage.get('module') || 'borrows'
 
     if (reactLocalStorage.get('token') === 'undefined') {
-      // refreshToken()
     }
 
     apiClient.get(`/${module}?per_page=5`)
@@ -59,7 +57,6 @@ export default class Dashboards extends Component {
       })
       .catch((e) => {
         console.log(e.message)
-        // refreshToken()
       })
 
     apiClient.get(`${module}/count-all-status`)
@@ -123,7 +120,7 @@ export default class Dashboards extends Component {
               <StatusCard />
               <Row>
                 <Colxx md="12" className="mb-4">
-                  <ProductCategoriesDoughnut />
+                  <CategoriesDoughnut />
                 </Colxx>
               </Row>
             </Colxx>
