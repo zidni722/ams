@@ -6,6 +6,8 @@ import ListItemPengadaan from "../../../containers/pages/ListPengadaan";
 import { apiClient } from "../../../helpers/ApiService";
 import TitlePengadaan from "../../../containers/pages/TitlePengadaan";
 import ListPageHeadingPengadaan from "../../../containers/pages/ListPageHeadingPengadaan";
+import { reactLocalStorage } from "reactjs-localstorage";
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 function collect(props) {
   return { data: props.data };
@@ -43,6 +45,18 @@ class Pengadaan extends Component {
   }
   componentDidMount() {
     this.dataListRender();
+    if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+      NotificationManager.success(
+        "Anda berhasil mengajukan pengadaan barang",
+        "Pengadaan Barang Berhasil",
+        1000000000,
+        () => {
+          reactLocalStorage.set('isSuccesSubmit', false)
+          this.setState({ visible: false });
+        },
+        null
+      );
+    }
   }
 
   changeOrderBy = column => {

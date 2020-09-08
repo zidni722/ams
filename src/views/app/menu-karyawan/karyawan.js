@@ -49,7 +49,7 @@ class Karyawan extends Component {
 
     if (reactLocalStorage.get('isSuccesSubmit') === "true") {
       NotificationManager.success(
-        "Anda Berhasil Menambahkan Karyawan Baru",
+        "Anda berhasil menambahkan karyawan baru",
         "Penambahan Karyawan Berhasil",
         1000000000,
         () => {

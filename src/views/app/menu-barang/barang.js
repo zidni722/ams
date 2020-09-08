@@ -46,7 +46,7 @@ class DataListPages extends Component {
 
     if (reactLocalStorage.get('isSuccesSubmit') === "true") {
       NotificationManager.success(
-        "Anda Berhasil Menambahkan Barang Baru",
+        "Anda berhasil menambahkan barang baru",
         "Penambahan Barang Berhasil",
         1000000000,
         () => {

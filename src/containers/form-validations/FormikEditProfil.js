@@ -65,9 +65,9 @@ class FormikEditProfil extends Component {
 
             }).catch((e) => {
                 console.log(e.message)
-            // setTimeout(() => { this.setState({ isLoading: true }) }, 500)
+                // setTimeout(() => { this.setState({ isLoading: true }) }, 500)
 
-    })
+            })
 
         apiClient.get('/provinces?per_page=50')
             .then(res => {

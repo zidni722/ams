@@ -75,7 +75,7 @@ class FormPerbaikan extends Component {
     apiClient.post('/services', data)
       .then(res => {
         if (res.status === 201) {
-          window.location.href = "../menu-perbaikan" // similar behavior as clicking on a link
+          window.location.href = "./menu-perbaikan" // similar behavior as clicking on a link
           reactLocalStorage.set('isSuccesSubmit', true)
         }
       }).catch((e) => {

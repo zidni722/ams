@@ -6,6 +6,8 @@ import ListItemPerbaikan from "../../../containers/pages/ListPerbaikan";
 import { apiClient } from "../../../helpers/ApiService";
 import TitlePerbaikan from "../../../containers/pages/TitlePerbaikan";
 import ListPageHeadingPerbaikan from "../../../containers/pages/ListPageHeadingPerbaikan";
+import { reactLocalStorage } from "reactjs-localstorage";
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 function collect(props) {
   return { data: props.data };
@@ -50,7 +52,18 @@ class Perbaikan extends Component {
   componentDidMount() {
     this.dataListRender();
 
-    
+    if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+      NotificationManager.success(
+        "Anda berhasil mengajukan perbaikan barang",
+        "Perbaikan Barang Berhasil",
+        1000000000,
+        () => {
+          reactLocalStorage.set('isSuccesSubmit', false)
+          this.setState({ visible: false });
+        },
+        null
+      );
+    }
   }
 
   toggleModal = () => {

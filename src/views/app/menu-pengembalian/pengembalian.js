@@ -5,6 +5,8 @@ import ListPengembalian from "../../../containers/pages/ListPengembalian";
 import TitlePengembalian from "../../../containers/pages/TitlePengembalian";
 import { apiClient } from "../../../helpers/ApiService";
 import ListPageHeadingPengembalian from "../../../containers/pages/ListPageHeadingPengembalian";
+import { reactLocalStorage } from "reactjs-localstorage";
+import { NotificationManager } from "../../../components/common/react-notifications";
 
 function collect(props) {
   return { data: props.data };
@@ -48,6 +50,19 @@ class Pengembalian extends Component {
   }
   componentDidMount() {
     this.dataListRender();
+    
+    if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+      NotificationManager.success(
+        "Anda berhasil mengajukan pengembalian barang",
+        "Pengembalian Barang Berhasil",
+        1000000000,
+        () => {
+          reactLocalStorage.set('isSuccesSubmit', false)
+          this.setState({ visible: false });
+        },
+        null
+      );
+    }
   }
 
   toggleModal = () => {

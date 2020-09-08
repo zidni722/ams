@@ -32,7 +32,7 @@ class UserProfil extends Component {
       });
     if (reactLocalStorage.get('isSuccesSubmit') === "true") {
       NotificationManager.success(
-        "Anda berhasil data profil",
+        "Anda berhasil mengubah data profil",
         "Perubahan Data Berhasil",
         1000000000,
         () => {
@@ -52,6 +52,16 @@ class UserProfil extends Component {
           <Row>
             <Colxx xxs="12">
               <Breadcrumb heading="menu.profil" match={this.props.match} />
+              <div className="text-zero top-right-button-container">
+                <Button
+                  className="mr-1 mb-1"
+                  color="primary"
+                  size="lg"
+                  onClick={() =>
+                    {window.location.href = "./ganti-password"}} outline >
+                    Ganti Password
+              </Button>
+              </div>
               <div className="text-zero top-right-button-container"></div>
               <Separator className="mb-5" />
             </Colxx>

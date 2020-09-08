@@ -61,6 +61,8 @@ module.exports = {
   "menu.profil": "Profil",
   "menu.menu-profil": "Menu Profil",
   "menu.edit-profil": "Edit Profil",
+  "menu.ganti-password": "Ganti Password",
+
 
   "menu.dashboards-menu": "Dashboards Menu",
   "menu.menu-barang": "Menu Barang",

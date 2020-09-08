@@ -8,6 +8,7 @@ import ListPageHeadingPeminjaman from "../../../containers/pages/ListPageHeading
 import { apiClient } from "../../../helpers/ApiService";
 import TitlePeminjaman from "../../../containers/pages/TitlePeminjaman";
 import { NotificationManager } from "../../../components/common/react-notifications";
+import { reactLocalStorage } from "reactjs-localstorage";
 
 function collect(props) {
   return { data: props.data };
@@ -49,6 +50,19 @@ class Peminjaman extends Component {
   }
   componentDidMount() {
     this.dataListRender();
+
+    if (reactLocalStorage.get('isSuccesSubmit') === "true") {
+      NotificationManager.success(
+        "Anda berhasil mengajukan peminjaman barang",
+        "Peminjaman Barang Berhasil",
+        1000000000,
+        () => {
+          reactLocalStorage.set('isSuccesSubmit', false)
+          this.setState({ visible: false });
+        },
+        null
+      );
+    }
   }
 
   toggleModal = () => {
@@ -113,8 +127,6 @@ class Peminjaman extends Component {
     }
     return -1;
   }
-
-
 
   dataListRender() {
     const {
