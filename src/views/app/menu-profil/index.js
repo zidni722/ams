@@ -4,6 +4,9 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 const UserProfil = React.lazy(() =>
   import(/* webpackChunkName: "profil" */ './profil')
 );
+const GantiPassword = React.lazy(() =>
+  import(/* webpackChunkName: "edit-profil" */ './ganti-password')
+);
 const EditProfil = React.lazy(() =>
   import(/* webpackChunkName: "edit-profil" */ './edit-profil')
 );
@@ -14,6 +17,10 @@ const MenuProfil = ({ match }) => (
       <Route
         path={`${match.url}/profil`}
         render={props => <UserProfil {...props} />}
+      />
+      <Route
+        path={`${match.url}/ganti-password`}
+        render={props => <GantiPassword {...props} />}
       />
       <Route
         path={`${match.url}/edit-profil`}

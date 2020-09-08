@@ -3,21 +3,21 @@ import { Row } from "reactstrap";
 import { Colxx, Separator } from "../../../components/common/CustomBootstrap";
 import Breadcrumb from "../../../containers/navs/Breadcrumb";
 
-import FormikEditProfil from "../../../containers/form-validations/FormikEditProfil";
+import FormikGantiPassword from "../../../containers/form-validations/FormikGantiPassword";
 
-export default class EditProfil extends Component {
+export default class GantiPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false
+      isLoading: true
     };
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({ isLoading: true })
-    }, 200)
-  }
+  // componentDidMount() {
+  //   setTimeout(() => {
+  //     this.setState({ isLoading: true })
+  //   }, 200)
+  // }
 
   render() {
     return !this.state.isLoading ? (
@@ -36,7 +36,7 @@ export default class EditProfil extends Component {
           <Row>
             <Colxx xxs="12" lg="3" className="mb-3" />
             <Colxx xxs="12" lg="6" className="mb-3">
-              <FormikEditProfil />
+              <FormikGantiPassword />
             </Colxx>
           </Row>
         </Fragment>

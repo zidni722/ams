@@ -225,7 +225,6 @@ class FormikEditProfil extends Component {
                                                 <Label>Provinsi</Label>
                                                 <Select
                                                     name="province"
-                                                    // id="province"
                                                     defaultValue={{ value: reactLocalStorage.get('defaultProvinceValue'), label: reactLocalStorage.get('defaultProvinceLabel') }}
                                                     options={this.state.dataProvinces}
                                                     onChange={e => this.handlerSelectChange(e, 'province')}

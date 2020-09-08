@@ -228,6 +228,7 @@ class DataListPages extends Component {
               })}{" "}
               <Pagination
                 currentPage={this.state.currentPage}
+                // numberLimit={this.state.numberLimit}
                 totalPage={Math.ceil(this.state.totalPage/this.state.totalItemCount)}
                 onChangePage={i => this.onChangePage(i)}
               />

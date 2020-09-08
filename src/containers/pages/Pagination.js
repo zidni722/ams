@@ -1,6 +1,7 @@
 import React from "react";
 import { Colxx } from "../../components/common/CustomBootstrap";
 import { Nav, NavItem, NavLink } from "reactstrap";
+
 class Pagination extends React.Component {
   componentDidMount() {}
   onChangePage(e) {
@@ -11,8 +12,8 @@ class Pagination extends React.Component {
       totalPage = 0,
       currentPage = 1,
       numberLimit = 5,
-      lastIsActive = true,
-      firstIsActive = true
+      lastIsActive = false,
+      firstIsActive = false
     } = this.props;
 
     let startPoint = 1;

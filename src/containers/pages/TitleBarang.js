@@ -24,7 +24,7 @@ const TitleBarang = () => {
             <IntlMessages id="Tahun" />
           </p>
           <p className="mb-1 text-p text-small font-weight-semibold w-50">
-            <IntlMessages id="Stok" />
+            <IntlMessages id="Total Stok" />
           </p>
         </CardBody>
       </div>

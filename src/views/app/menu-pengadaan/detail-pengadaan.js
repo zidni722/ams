@@ -70,11 +70,10 @@ class DetailPeminjaman extends Component {
             </Colxx>
           </Row>
           <Row>
-            <Colxx xxs="12" lg="8" xl="8" className="col-left">
+            <Colxx xxs="12" lg="6" xl="6" className="col-left">
               <Card className="mb-3">
                 <CardBody>
-                  <CardTitle> Data Pengadaan Barang</CardTitle>
-                  <SingleLightbox thumb={this.state.detailProcurement.invoice} large={this.state.detailProcurement.invoice} className="responsive card-img-top" />
+                <SingleLightbox thumb={this.state.detailProcurement.invoice ? this.state.detailProcurement.invoice : "https://res.cloudinary.com/hwqpjijac/image/upload/v1598947378/default-image_vxl2p2.jpg"} large={this.state.detailProcurement.invoice ? this.state.detailProcurement.invoice : "https://res.cloudinary.com/hwqpjijac/image/upload/v1598947378/default-image_vxl2p2.jpg"} className="responsive card-img-top" />
                   <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Nama Barang" /></p>
                   <p className="pl-3">{this.state.detailProcurement.name}</p>
                   <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Jenis Barang" /></p>
@@ -89,7 +88,7 @@ class DetailPeminjaman extends Component {
               </Card>
             </Colxx>
             {me.role_name.toLowerCase() == 'super admin' &&
-              <Colxx xxs="12" lg="4" xl="4" className="col-right">
+              <Colxx xxs="12" lg="6" xl="6" className="col-right">
                 <Card className="mb-4">
                   <CardBody>
                     <CardTitle> Data Pengaju</CardTitle>

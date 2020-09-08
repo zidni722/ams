@@ -93,7 +93,16 @@ class DetailPages extends Component {
                     <i className="simple-icon-pencil" />
                   </Button>
                 </div>
-                <p className="text-muted text-small pl-3 pt-5"><IntlMessages id="Kode Barang" /></p>
+                <div className="pl-3 pr-3 pt-3 mb-4">
+                  <p className="mb-3">
+                    <IntlMessages id="Stok Barang" />
+                    <span className="float-right text-muted">
+                      {this.state.detailAsset.qty - this.state.borrowedAssetCount}/{this.state.detailAsset.qty}
+                    </span>
+                  </p>
+                  <Progress value={((this.state.detailAsset.qty - this.state.borrowedAssetCount) / this.state.detailAsset.qty) * 100} className="mb-3" />
+                </div>
+                <p className="text-muted text-small pl-3"><IntlMessages id="Kode Barang" /></p>
                 <p className="pl-3">{this.state.detailAsset.code}</p>
                 <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Nama Barang" /></p>
                 <p className="pl-3">{this.state.detailAsset.name}</p>
@@ -107,17 +116,6 @@ class DetailPages extends Component {
                 <p className="pl-3">{this.state.detailAsset.price}</p>
                 <p className="text-muted text-small pl-3 pt-2 mb-3"><IntlMessages id="Deskripsi" /></p>
                 <p className="pl-3">{this.state.detailAsset.desc}</p>
-
-                <div className="pl-3 pr-3 pt-3 mb-4">
-                  <p className="mb-3">
-                    <IntlMessages id="Stok Barang" />
-                    <span className="float-right text-muted">
-                      {this.state.detailAsset.qty - this.state.borrowedAssetCount}/{this.state.detailAsset.qty}
-                    </span>
-                  </p>
-                  <Progress value={((this.state.detailAsset.qty - this.state.borrowedAssetCount) / this.state.detailAsset.qty) * 100} className="mb-3" />
-                </div>
-
               </Card>
             </Colxx>
             <Colxx xxs="12" lg="7" xl="7" className="col-right">
