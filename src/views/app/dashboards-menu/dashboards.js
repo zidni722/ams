@@ -10,6 +10,8 @@ import Banner from "../../../containers/dashboards/banner";
 import { reactLocalStorage } from "reactjs-localstorage";
 import { apiClient } from "../../../helpers/ApiService";
 import { me } from "../../../constants/defaultValues";
+import { ThemeColors } from '../../../helpers/ThemeColors';
+const colors = ThemeColors();
 
 const refreshToken = async () => {
   const password = reactLocalStorage.get('_pswrd')
@@ -64,25 +66,47 @@ export default class Dashboards extends Component {
         reactLocalStorage.remove('iconCardsData')
         setTimeout(() => {
           const responseData = res.data.data
+          const done = responseData ? parseInt(responseData.count_success_status) : 0
+          const pending = responseData ? parseInt(responseData.count_pending_status) : 0
+          const reject = responseData ? parseInt(responseData.count_reject_status) : 0
+
           const iconCardsData = [
             {
               title: 'Menunggu',
               icon: "simple-icon-clock icon-color3",
-              value: responseData ? responseData.count_pending_status : 0
+              value: pending
             },
             {
               title: 'Tolak',
               icon: "simple-icon-close icon-color1",
-              value: responseData ? responseData.count_reject_status : 0
+              value: reject
             },
             {
               title: 'Selesai',
               icon: "simple-icon-check icon-color2",
-              value: responseData ? responseData.count_success_status : 0
+              value: done
             },
           ]
 
+          const doughnutData = {
+            labels: ['Selesai', 'Tolak', 'Menunggu'],
+            datasets: [
+              {
+                label: '',
+                borderColor: [colors.themeColor8, colors.themeColor7, colors.themeColor9],
+                backgroundColor: [
+                  colors.themeColor8_10,
+                  colors.themeColor7_10,
+                  colors.themeColor9_10
+                ],
+                borderWidth: 2,
+                data: [done,reject,pending]
+              }
+            ]
+          }
+
           reactLocalStorage.setObject('iconCardsData', iconCardsData)
+          reactLocalStorage.setObject('doughnutData', doughnutData)
           this.setState({ isLoading: true })
           this.setState({ status: iconCardsData })
         }, 300);

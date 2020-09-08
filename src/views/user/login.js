@@ -36,12 +36,14 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      isLoading: false
     };
   }
 
   onUserLogin = (values) => {
     if (!this.props.loading) {
+      this.setState({isLoading: true})
       if (values.email !== "" && values.password !== "") {
         const url = '/auth/login';
 
@@ -159,7 +161,7 @@ class Login extends Component {
                     Please login to your account for start the service.
                   </p>
                 </CardTitle>
-
+                {this.state.isLoading && <div className="loading" />}
                 <Formik
                     initialValues={initialValues}
                     onSubmit={this.onUserLogin}>
@@ -201,8 +203,8 @@ class Login extends Component {
                               color="primary"
                               className={`btn-shadow btn-multiple-state ${this.props.loading ? "show-spinner" : ""}`}
                               size="lg"
+                              type="submit"
                           >
-                            <Spinner color="primary"/>
                             <span className="label"><IntlMessages id="user.login-button"/></span>
                           </Button>
                         </div>
