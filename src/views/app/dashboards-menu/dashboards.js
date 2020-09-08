@@ -74,17 +74,21 @@ export default class Dashboards extends Component {
             {
               title: 'Menunggu',
               icon: "simple-icon-clock icon-color3",
-              value: pending
+              value: pending,
+              valueColor: "lead text-center icon-color3"
             },
             {
               title: 'Tolak',
               icon: "simple-icon-close icon-color1",
-              value: reject
+              value: reject,
+              valueColor: "lead text-center icon-color1"
+
             },
             {
               title: 'Selesai',
               icon: "simple-icon-check icon-color2",
-              value: done
+              value: done,
+              valueColor: "lead text-center icon-color2"
             },
           ]
 

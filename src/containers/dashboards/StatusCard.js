@@ -40,7 +40,7 @@ export default class StatusCard extends Component {
                             <p className="card-text font-weight-semibold mb-0">
                               {item.title}
                             </p>
-                            <p className="lead text-center icon-color3">{item.value}</p>
+                            <p className={`${item.valueColor}`}>{item.value}</p>
                           </CardBody>
                         </Card>
                       </Colxx>
